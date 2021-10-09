@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ModbusRTU;
 
 namespace M334_8_10_21
 {
@@ -56,9 +57,9 @@ namespace M334_8_10_21
         int sig_main_hobbyshirt;    //Lamp main Ходоб рубка
         #endregion
 
-        //machine machineleft = new machine()
-        //machine machinemid = new machine();
-        //machine machine_right = new machine();
+        machine machineleft = new machine();
+        machine machinemid = new machine();
+        machine machine_right = new machine();
     }
     public class machine
     {
@@ -117,7 +118,24 @@ namespace M334_8_10_21
         int vl_speed_engine;        //Tốc độ vòng quay động cơ
         int vl_mainlineoilpressure; //Áp suất đường dẫn chính
         #endregion  
-        public machine(bool bt_hydraulic_oil_pump, bool bt_preliminary_pump)
+
+        public machine()
+        {
+
+        }
+        public void startauto()
+        {
+
+        }
+        public void startmanual()
+        {
+
+        }
+        public void controlspeed()
+        {
+
+        }
+        public void presenttomain()
         {
 
         }

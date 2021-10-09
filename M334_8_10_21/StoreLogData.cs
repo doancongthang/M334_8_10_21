@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace M334_8_10_21
+namespace ModbusRTU
 {
     /// <summary>
     /// Store Log-Data in a File
