@@ -55,6 +55,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Exceptions\Exceptions.cs" />
+    <Compile Include="ModbusProtocol\AdvancedModbusClient.cs" />
+    <Compile Include="ModbusProtocol\ModbusClient.cs" />
+    <Compile Include="ModbusProtocol\ModbusServer.cs" />
+    <Compile Include="pinmapfunction.cs" />
+    <Compile Include="StoreLogData.cs" />
+    <Compile Include="WorkflowModbus.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,17 +70,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="EasyModbus.StoreLogData.cs" />
-    <Compile Include="Exceptions\Exceptions.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ModbusProtocol\EasyModbus.ModbusClient.Core.cs" />
-    <Compile Include="ModbusProtocol\EasyModbus.ModbusClient.Helpers.cs" />
-    <Compile Include="ModbusProtocol\EasyModbus.ModbusClient.Protocol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -99,5 +101,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

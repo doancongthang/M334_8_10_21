@@ -23,8 +23,6 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using System;
 using System.Runtime.Serialization;
-using M334_8_10_21;
-
 
 namespace M334_8_10_21.Exceptions
 {

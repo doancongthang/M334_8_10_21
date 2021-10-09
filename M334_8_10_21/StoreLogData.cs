@@ -25,8 +25,6 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Text;
-using M334_8_10_21;
-
 
 namespace M334_8_10_21
 {
@@ -35,7 +33,7 @@ namespace M334_8_10_21
     /// </summary>
     public sealed class StoreLogData
     {
-    	private String filename = null;
+        private String filename = null;
         private static volatile StoreLogData instance;
         private static object syncObject = new Object();
 
@@ -77,7 +75,7 @@ namespace M334_8_10_21
                 return;
 
             using (System.IO.StreamWriter file =
-                new System.IO.StreamWriter(Filename, true))
+            new System.IO.StreamWriter(Filename, true))
             {
                 file.WriteLine(message);
             }
@@ -93,7 +91,7 @@ namespace M334_8_10_21
             try
             {
                 using (System.IO.StreamWriter file =
-                    new System.IO.StreamWriter(Filename, true))
+                new System.IO.StreamWriter(Filename, true))
                 {
                     file.WriteLine(timestamp.ToString("dd.MM.yyyy H:mm:ss.ff ") + message);
                 }
@@ -103,20 +101,20 @@ namespace M334_8_10_21
 
             }
         }
-        
+
         /// <summary>
         /// Gets or Sets the Filename to Store Strings in a File
         /// </summary>
-		public string Filename
-		{
-			get
-			{
-				return filename;
-			}
-			set
-			{
-				filename = value;
-			}
-		}
+        public string Filename
+        {
+            get
+            {
+                return filename;
+            }
+            set
+            {
+                filename = value;
+            }
+        }
     }
 }
