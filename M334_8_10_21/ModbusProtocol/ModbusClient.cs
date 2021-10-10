@@ -144,8 +144,6 @@ namespace ModbusRTU
                     serialport.ReadTimeout = connectTimeout;
                     serialport.Open();
                     connected = true;
-
-
                 }
                 if (ConnectedChanged != null)
                     try
