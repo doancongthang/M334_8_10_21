@@ -56,12 +56,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Exceptions\Exceptions.cs" />
+    <Compile Include="Machine.cs" />
     <Compile Include="ModbusProtocol\AdvancedModbusClient.cs" />
     <Compile Include="ModbusProtocol\ModbusClient.cs" />
     <Compile Include="ModbusProtocol\ModbusServer.cs" />
     <Compile Include="pinmapfunction.cs" />
     <Compile Include="StoreLogData.cs" />
-    <Compile Include="WorkflowModbus.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

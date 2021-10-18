@@ -22,13 +22,17 @@ namespace M334_8_10_21
     public partial class MainWindow : Window
     {
         public ModbusRTU.ModbusClient modbusClient;
+
+        Machine machineleft = new Machine();
+        Machine machinemidl = new Machine();
+        Machine machineright = new Machine();
         public MainWindow()
         {
             InitializeComponent();
             modbusClient = new ModbusRTU.ModbusClient();
             modbusClient.ReceiveDataChanged += new ModbusRTU.ModbusClient.ReceiveDataChangedHandler(UpdateReceiveData);
-            modbusClient.SendDataChanged += new ModbusRTU.ModbusClient.SendDataChangedHandler(UpdateSendData);
-            modbusClient.ConnectedChanged += new ModbusRTU.ModbusClient.ConnectedChangedHandler(UpdateConnectedChanged);
+            //modbusClient.SendDataChanged += new ModbusRTU.ModbusClient.SendDataChangedHandler(UpdateSendData);
+            //modbusClient.ConnectedChanged += new ModbusRTU.ModbusClient.ConnectedChangedHandler(UpdateConnectedChanged);
             modbusClient.LogFileFilename = "logFiletxt.txt";
 
             //modbusClient.Baudrate = 9600;
@@ -42,7 +46,9 @@ namespace M334_8_10_21
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-
+            machineleft.startmanual();
+            machinemidl.startmanual();
+            machineright.startmanual();
         }
     }
 }
