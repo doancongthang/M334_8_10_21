@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:M334_8_10_21"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="button" Content="Connect" HorizontalAlignment="Left" Margin="679,18,0,0" VerticalAlignment="Top" Height="46" Width="104" Click="button_Click"/>
+        Title="MainWindow" Height="361" Width="708">
+    <Grid Margin="0,0,0,-2">
+        <Button x:Name="btConnect"      Content="Connect"       HorizontalAlignment="Left" Margin="10,9,0,0"    VerticalAlignment="Top" Height="26" Width="70" Click="btConnect_Click" Background="#FF7CEF0D"/>
+        <Button x:Name="btDisconnect"   Content="Disconnect"    HorizontalAlignment="Left" Margin="10,38,0,0"   VerticalAlignment="Top" Height="26" Width="70" Click="btDisconnect_Click" Background="#FFEF550D"/>
+        <Button x:Name="bt_FC02"        Content="Read Discrete Inputs - FC2"    HorizontalAlignment="Left" Margin="10,203,0,0"      VerticalAlignment="Top"     Height="26" Width="150" Click="btFC02_Click" HorizontalContentAlignment ="Left"     Background="#FFA5EF0D"/>
+        <Button x:Name="bt_FC05"        Content="Write Single Coil - FC5"       HorizontalAlignment="Left" Margin="10,241,0,0"      VerticalAlignment="Top"     Height="26" Width="150" Click="btFC05_Click" HorizontalContentAlignment ="Left"     Background="#FFA5EF0D"/>
+        <Button x:Name="bt_FC15"        Content="Write Multiple Coils - FC15"   HorizontalAlignment="Left" Margin="10,278,0,0"      VerticalAlignment="Top"     Height="26" Width="150" Click="btFC15_Click" HorizontalContentAlignment ="Left"     Background="#FFA5EF0D"/>
 
     </Grid>
 </Window>

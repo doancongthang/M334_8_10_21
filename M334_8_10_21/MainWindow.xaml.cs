@@ -35,8 +35,8 @@ namespace M334_8_10_21
             //modbusClient.ConnectedChanged += new ModbusRTU.ModbusClient.ConnectedChangedHandler(UpdateConnectedChanged);
             modbusClient.LogFileFilename = "logFiletxt.txt";
 
-            //modbusClient.Baudrate = 9600;
-            //modbusClient.UnitIdentifier = 2;
+            modbusClient.Baudrate = 9600;
+            modbusClient.UnitIdentifier = 2;
         }
         void UpdateReceiveData(object sender)
         {
@@ -44,11 +44,45 @@ namespace M334_8_10_21
         }
         delegate void UpdateReceiveDataCallback();
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void btDisconnect_Click(object sender, RoutedEventArgs e)
         {
-            machineleft.startmanual();
-            machinemidl.startmanual();
-            machineright.startmanual();
+
+        }
+
+        private void btConnect_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btFC02_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (!modbusClient.Connected)
+                {
+                    btConnect_Click(null, null);
+                }
+                bool[] serverResponse = modbusClient.ReadDiscreteInputs(int.Parse(txtStartingAddressInput.Text) - 1, int.Parse(txtNumberOfValuesInput.Text));
+                lsbAnswerFromServer.Items.Clear();
+                for (int i = 0; i < serverResponse.Length; i++)
+                {
+                    lsbAnswerFromServer.Items.Add(serverResponse[i]);
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message, "Exception Reading values from Server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btFC05_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btFC15_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

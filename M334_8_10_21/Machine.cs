@@ -12,13 +12,20 @@ namespace M334_8_10_21
     {
         #region Signal start
         bool sw_start_auto;             //SW choose mode start. Lựa chọn chế độ khởi động
-        bool bt_start;                  //Button start
-        bool bt_on_preminary_pump;      //Bt bật Bơm sơ bộ
-        bool bt_off_preminary_pump;     //Bt tắt bơm sơ bộ
-        bool bt_on_low_airpressure;     //Bật quay áp thấp
-        bool bt_on_hig_airpressure;     //Bở van khí khởi động (Bật khí cao áp)
+        bool btn_start;                 //Button start
+        bool btn_on_preminary_pump;     //Bt bật Bơm sơ bộ
+        bool btn_off_preminary_pump;    //Bt tắt bơm sơ bộ
+        bool btn_on_low_airpressure;    //Bật quay áp thấp
+        bool btn_on_hig_airpressure;    //Mở van khí khởi động (Bật khí cao áp)
 
+        
+        bool sig_vnd;                   //Tín hiệu khí thấp áp
+        bool sig_vvd;                   //Tín hiệu khí cao áp
+        bool sig_mpa;                   //Signal MPA    Áp suất dầu nhờn đạt 4KG/cm2
         bool sig_count_rotate;          //Tín hiệu đếm đủ số vòng quay. 
+        bool sig_starting_forbidden;    //Tín hiệu cấm khởi động
+        bool sig_upper_oil;             //Tín hiệu cao áp suất dầu nhờn
+        bool sig_oil_supply;            //Tín hiệu cung cấp dầu.
         #endregion
 
         #region Signal and controll speed
@@ -29,19 +36,18 @@ namespace M334_8_10_21
 
         bool sig_nopressure;            //Signal no pressure
 
-        bool bt_up;                     //Bt Up
-        bool bt_down;                   //Bt Down
-        bool bt_quickdown;              //Bt giảm nhanh
-        bool bt_estop;                  //Bt Emergency Stop
+        bool btn_up;                     //Bt Up
+        bool btn_down;                   //Bt Down
+        bool btn_quickdown;              //Bt giảm nhanh
+        bool btn_estop;                  //Bt Emergency Stop
         #endregion
 
         #region Signal controll pump
-        bool sw_zero_fuel_supply;   //SW zero fuel supply
-        bool sig_mpa;               //Signal MPA
+        bool sw_zero_fuel_supply;       //SW zero fuel supply
 
-        bool sig_pumping_out;       //Signal Pumping out
+        bool sig_pumping_out;           //Signal Pumping out
         bool sig_oil_isnot_pumpingout;  //Signal Oil is not pumping out
-        bool sw_pumpout;            //Bơm hút dầu nhờn
+        bool sw_pumpout;                //Bơm hút dầu nhờn
         #endregion
 
         #region Signal Alarm and protect
@@ -55,7 +61,7 @@ namespace M334_8_10_21
         bool sig_phi_s2;                //Canh bao mạt sắt 2
         bool sig_phi_s3;                //Canh bao mạt sắt 3
 
-        bool bt_burn;                   //Nut nhan đốt mạt sắt
+        bool btn_burn;                  //Nut nhan đốt mạt sắt
         bool sw_protect;                //SW bảo vệ Auto/Manual
         #endregion
 
@@ -73,7 +79,7 @@ namespace M334_8_10_21
         }
         public bool startmanual()
         {
-            return bt_start;
+            return btn_start;
         }
         public bool controlspeed()
         {

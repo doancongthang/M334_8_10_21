@@ -11,22 +11,22 @@ namespace M334_8_10_21
     {
         #region Maincontrol
         // Tong so 11 bien
-        public bool power;             //Bt Power
+        public bool SW_power;           //Bt Power
 
-        public bool SW1;               //SW1 Switch mode Oil, Water
-        public bool SW2;               //SW2 Switch mode on Energy
-        public bool SW3;               //SW3 Switch mode Pump
+        public bool SW1;                //SW1 Switch mode Oil, Water
+        public bool SW2;                //SW2 Switch mode on Energy
+        public bool SW3;                //SW3 Switch mode Pump
 
-        public bool checklight;        //Bt check all light
-        public bool oilafterfil;       //Bt check oil after fil
+        public bool btn_checklight;     //Bt check all light
+        public bool btn_oilafterfil;    //Bt check oil after fil
 
-        public bool rswleft;           //Rotate SW position left
-        public bool rswright;          //Rotate SW position right
-        public bool rswmid;            //Rotate SW position middle
+        public bool rswleft;            //Rotate SW position left
+        public bool rswright;           //Rotate SW position right
+        public bool rswmid;             //Rotate SW position middle
 
-        public bool callbehindcabin;   //Bt call KMO   Gọi khoang máy sau
-        public bool callheadcabin;     //Bt call HMO   Gọi khoang máy trước
-        public bool wheelhouse;        //Bt ходоб рубка
+        public bool callbehindcabin;    //Bt call KMO   Gọi khoang máy sau
+        public bool callheadcabin;      //Bt call HMO   Gọi khoang máy trước
+        public bool wheelhouse;         //Bt ходоб рубка
         #endregion
 
         #region Main show
@@ -39,8 +39,8 @@ namespace M334_8_10_21
         public int hydraulics;             //Pressure hydraulics               
         public int pressurefuel;           //Pressure fuel                     
         public int pressureptk;            //Pressure ptk                      
-        public int vloilafterfil;          //Value oil after filt              
-        public int vloilbeforefil;         //Value oil before filt             
+        public int vloilafterfilter;       //Value oil after filter 
+        public int vloilbeforefilter;      //Value oil before filter         
 
         public int time_hours;
         public int time_minute;
