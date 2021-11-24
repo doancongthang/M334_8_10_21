@@ -7,11 +7,11 @@ using ModbusRTU;
 
 namespace M334_8_10_21
 {
-    public class Pinmapfunction
+    public class Orionsystem
     {
         #region Maincontrol
         // Tong so 11 bien
-        public bool SW_power;           //Bt Power
+        public bool SW_power;           //SW Power
 
         public bool SW1;                //SW1 Switch mode Oil, Water
         public bool SW2;                //SW2 Switch mode on Energy
@@ -24,28 +24,28 @@ namespace M334_8_10_21
         public bool rswright;           //Rotate SW position right
         public bool rswmid;             //Rotate SW position middle
 
-        public bool callbehindcabin;    //Bt call KMO   Gọi khoang máy sau
-        public bool callheadcabin;      //Bt call HMO   Gọi khoang máy trước
-        public bool wheelhouse;         //Bt ходоб рубка
+        public bool btn_callbehindcabin;    //Bt call KMO   Gọi khoang máy sau
+        public bool btn_callheadcabin;      //Bt call HMO   Gọi khoang máy trước
+        public bool btn_wheelhouse;         //Bt ходоб рубка
         #endregion
 
         #region Main show
         // Hien thi len dong ho 9 bien + 1 bien thoi gian                      
-        public int temperature_water_in;   //Temperature water input           
-        public int temperature_water_out;  //Temperature water out             
-        public int temperature_oil_in;     //Temperature oil in                
-        public int temperature_oil_out;    //Temperature oil output            
-        public int reverse_air_pressure;   //Reverse air pressure              
-        public int hydraulics;             //Pressure hydraulics               
-        public int pressurefuel;           //Pressure fuel                     
-        public int pressureptk;            //Pressure ptk                      
-        public int vloilafterfilter;       //Value oil after filter 
-        public int vloilbeforefilter;      //Value oil before filter         
+        public int vl_temperature_water_in;     //Temperature water input           
+        public int vl_temperature_water_out;    //Temperature water out             
+        public int vl_temperature_oil_in;       //Temperature oil in                
+        public int vl_temperature_oil_out;      //Temperature oil output            
+        public int vl_reverse_air_pressure;     //Reverse air pressure              
+        public int vl_hydraulics;               //Pressure hydraulics               
+        public int vl_pressurefuel;             //Pressure fuel                     
+        public int vl_pressureptk;              //Pressure ptk                      
+        public int vl_oilafterfilter;           //Value oil after filter 
+        public int vl_oilbeforefilter;          //Value oil before filter         
 
-        public int time_hours;
-        public int time_minute;
-        public int time_second;
-        public int time_month;
+        public int vl_time_hours;
+        public int vl_time_minute;
+        public int vl_time_second;
+        public int vl_time_month;
 
         public int sig_main_pump;          //Lamp main pump                    
         public int sig_remote_pump;        //Lamp remote pump                  

@@ -18,28 +18,28 @@ namespace M334_8_10_21
         bool btn_on_low_airpressure;    //Bật quay áp thấp
         bool btn_on_hig_airpressure;    //Mở van khí khởi động (Bật khí cao áp)
 
-        
-        bool sig_vnd;                   //Tín hiệu khí thấp áp
-        bool sig_vvd;                   //Tín hiệu khí cao áp
         bool sig_mpa;                   //Signal MPA    Áp suất dầu nhờn đạt 4KG/cm2
+        bool sig_vnd;                   //Tín hiệu khí thấp áp
         bool sig_count_rotate;          //Tín hiệu đếm đủ số vòng quay. 
+        bool sig_vvd;                   //Tín hiệu khí cao áp
+
         bool sig_starting_forbidden;    //Tín hiệu cấm khởi động
         bool sig_upper_oil;             //Tín hiệu cao áp suất dầu nhờn
         bool sig_oil_supply;            //Tín hiệu cung cấp dầu.
         #endregion
 
         #region Signal and controll speed
-        bool sig_higspeed;              //Signal high speed
+        bool sig_highspeed;             //Signal high speed
         bool sig_goahead;               //Signal up
         bool sig_gobehind;              //Signal down
-        bool sig_park;                  //Signal park at position
+        bool sig_park;                  //Signal park at position  //Dừng đỗ
 
         bool sig_nopressure;            //Signal no pressure
 
-        bool btn_up;                     //Bt Up
-        bool btn_down;                   //Bt Down
-        bool btn_quickdown;              //Bt giảm nhanh
-        bool btn_estop;                  //Bt Emergency Stop
+        bool btn_up;                    //Bt Up
+        bool btn_down;                  //Bt Down
+        bool btn_quickdown;             //Bt giảm nhanh
+        bool btn_estop;                 //Bt Emergency Stop
         #endregion
 
         #region Signal controll pump
@@ -67,9 +67,9 @@ namespace M334_8_10_21
 
         #region Signal After start to main show
         // 3 giá trị
-        int vl_temperature_gas;     //Nhiệt độ 
-        int vl_speed_engine;        //Tốc độ vòng quay động cơ
-        int vl_mainlineoilpressure; //Áp suất đường dẫn chính
+        int vl_temperature_gas;     //Giá trị nhiệt độ 
+        int vl_speed_engine;        //Giá trị tốc độ vòng quay động cơ
+        int vl_mainlineoilpressure; //Giá trị áp suất đường dẫn chính
         #endregion
 
         #region Khối chức năng

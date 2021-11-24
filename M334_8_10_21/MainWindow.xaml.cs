@@ -56,23 +56,23 @@ namespace M334_8_10_21
 
         private void btFC02_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (!modbusClient.Connected)
-                {
-                    btConnect_Click(null, null);
-                }
-                bool[] serverResponse = modbusClient.ReadDiscreteInputs(int.Parse(txtStartingAddressInput.Text) - 1, int.Parse(txtNumberOfValuesInput.Text));
-                lsbAnswerFromServer.Items.Clear();
-                for (int i = 0; i < serverResponse.Length; i++)
-                {
-                    lsbAnswerFromServer.Items.Add(serverResponse[i]);
-                }
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message, "Exception Reading values from Server", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //try
+            //{
+            //    if (!modbusClient.Connected)
+            //    {
+            //        btConnect_Click(null, null);
+            //    }
+            //    bool[] serverResponse = modbusClient.ReadDiscreteInputs(int.Parse(txtStartingAddressInput.Text) - 1, int.Parse(txtNumberOfValuesInput.Text));
+            //    lsbAnswerFromServer.Items.Clear();
+            //    for (int i = 0; i < serverResponse.Length; i++)
+            //    {
+            //        lsbAnswerFromServer.Items.Add(serverResponse[i]);
+            //    }
+            //}
+            //catch (Exception exc)
+            //{
+            //    MessageBox.Show(exc.Message, "Exception Reading values from Server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         private void btFC05_Click(object sender, RoutedEventArgs e)
