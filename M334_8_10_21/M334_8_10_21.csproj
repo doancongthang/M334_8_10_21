@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Connection\Connection.cs" />
     <Compile Include="Exceptions\Exceptions.cs" />
     <Compile Include="Machine\Machine.cs" />
     <Compile Include="ModbusProtocol\AdvancedModbusClient.cs" />

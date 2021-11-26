@@ -12,16 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
 using ModbusRTU;
 
 namespace M334_8_10_21
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// </summary> 
     public partial class MainWindow : Window
     {
         public ModbusRTU.ModbusClient modbusClient;
+        public delegate void ThreadStart();
 
         Machine machineleft = new Machine();
         Machine machinemidl = new Machine();
@@ -29,6 +31,7 @@ namespace M334_8_10_21
         public MainWindow()
         {
             InitializeComponent();
+            
             modbusClient = new ModbusRTU.ModbusClient();
             modbusClient.ReceiveDataChanged += new ModbusRTU.ModbusClient.ReceiveDataChangedHandler(UpdateReceiveData);
             //modbusClient.SendDataChanged += new ModbusRTU.ModbusClient.SendDataChangedHandler(UpdateSendData);
@@ -37,6 +40,29 @@ namespace M334_8_10_21
 
             modbusClient.Baudrate = 9600;
             modbusClient.UnitIdentifier = 2;
+
+
+
+
+
+
+
+
+
+
+
+            bool a = true;
+            bool b = false;
+
+            bool check = machineleft.startauto(a,b);
+
+
+
+
+
+
+
+
         }
         void UpdateReceiveData(object sender)
         {
@@ -81,6 +107,11 @@ namespace M334_8_10_21
         }
 
         private void btFC15_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        public void connection()
         {
 
         }
