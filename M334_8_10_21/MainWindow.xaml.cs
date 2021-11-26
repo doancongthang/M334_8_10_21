@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,11 +11,12 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Threading;
-using ModbusRTU;
+using System.Windows.Threading;
+using M334_8_10_21;
 
 namespace M334_8_10_21
 {
@@ -22,7 +25,7 @@ namespace M334_8_10_21
     /// </summary> 
     public partial class MainWindow : Window
     {
-        public ModbusRTU.ModbusClient modbusClient;
+        public M334_8_10_21.ModbusClient modbusClient;
         public delegate void ThreadStart();
 
         Machine machineleft = new Machine();
@@ -32,10 +35,10 @@ namespace M334_8_10_21
         {
             InitializeComponent();
             
-            modbusClient = new ModbusRTU.ModbusClient();
-            modbusClient.ReceiveDataChanged += new ModbusRTU.ModbusClient.ReceiveDataChangedHandler(UpdateReceiveData);
-            //modbusClient.SendDataChanged += new ModbusRTU.ModbusClient.SendDataChangedHandler(UpdateSendData);
-            //modbusClient.ConnectedChanged += new ModbusRTU.ModbusClient.ConnectedChangedHandler(UpdateConnectedChanged);
+            modbusClient = new M334_8_10_21.ModbusClient();
+            modbusClient.ReceiveDataChanged += new M334_8_10_21.ModbusClient.ReceiveDataChangedHandler(UpdateReceiveData);
+            //modbusClient.SendDataChanged += new M334_8_10_21.ModbusClient.SendDataChangedHandler(UpdateSendData);
+            //modbusClient.ConnectedChanged += new M334_8_10_21.ModbusClient.ConnectedChangedHandler(UpdateConnectedChanged);
             modbusClient.LogFileFilename = "logFiletxt.txt";
 
             modbusClient.Baudrate = 9600;
@@ -64,8 +67,50 @@ namespace M334_8_10_21
 
 
         }
+        //delegate void UpdateReceiveDataCallback();
         void UpdateReceiveData(object sender)
         {
+            //if (textBox1.InvokeRequired)
+            {
+                //UpdateReceiveDataCallback d = new UpdateReceiveDataCallback(updateReceiveTextBox);
+                //this.Invoke(d, new object[] {  });
+            }
+            //else
+            {
+                //textBox1.AppendText(receiveData);
+            }
+        }
+        private void UpdateConnectedChanged(object sender)
+        {
+            if (modbusClient.Connected)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        private void angle_Click1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
+        private void Bug_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            DoubleAnimation animation = new DoubleAnimation
+            {
+                From = 0,
+                To = 360,
+                RepeatBehavior = RepeatBehavior.Forever,
+                Duration = new Duration(TimeSpan.FromSeconds(1))
+            };
+
+            second.RenderTransform.BeginAnimation(RotateTransform.AngleProperty, animation);
 
         }
         delegate void UpdateReceiveDataCallback();

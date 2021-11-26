@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -103,5 +106,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Img\background-1.jpg" />
+    <Resource Include="Img\clock-den.jpg" />
+    <Resource Include="Img\gauge-1.png" />
+    <Resource Include="Img\gauge-2.png" />
+    <Resource Include="Img\gauge-3.png" />
+    <Resource Include="Img\gauge-4.png" />
+    <Resource Include="Img\mltech-icon-site.png" />
+    <Resource Include="Img\rpm.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

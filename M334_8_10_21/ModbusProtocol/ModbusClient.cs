@@ -29,7 +29,7 @@ using System.Reflection;
 using System.Text;
 using System.Collections.Generic;
 
-namespace ModbusRTU
+namespace M334_8_10_21
 {
     /// <summary>
     /// Implements a ModbusClient.
@@ -81,9 +81,9 @@ namespace ModbusRTU
         /// <param name="port">Listening port of the Master device (should be 502)</param>
         public ModbusClient(string ipAddress, int port)
         {
-            if (debug) StoreLogData.Instance.Store("ModbusRTU library initialized for Modbus-TCP, IPAddress: " + ipAddress + ", Port: " + port, System.DateTime.Now);
+            if (debug) StoreLogData.Instance.Store("M334_8_10_21 library initialized for Modbus-TCP, IPAddress: " + ipAddress + ", Port: " + port, System.DateTime.Now);
 #if (!COMMERCIAL)
-            Console.WriteLine("ModbusRTU Client Library Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            Console.WriteLine("M334_8_10_21 Client Library Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
             Console.WriteLine("Copyright (c) Stefan Rossmann Engineering Solutions");
             Console.WriteLine();
 #endif
@@ -97,9 +97,9 @@ namespace ModbusRTU
         /// <param name="serialPort">Serial-Port Name e.G. "COM1"</param>
         public ModbusClient(string serialPort)
         {
-            if (debug) StoreLogData.Instance.Store("ModbusRTU library initialized for Modbus-RTU, COM-Port: " + serialPort, System.DateTime.Now);
+            if (debug) StoreLogData.Instance.Store("M334_8_10_21 library initialized for Modbus-RTU, COM-Port: " + serialPort, System.DateTime.Now);
 #if (!COMMERCIAL)
-            Console.WriteLine("ModbusRTU Client Library Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            Console.WriteLine("M334_8_10_21 Client Library Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
             Console.WriteLine("Copyright (c) Stefan Rossmann Engineering Solutions");
             Console.WriteLine();
 #endif
@@ -119,9 +119,9 @@ namespace ModbusRTU
         /// </summary>
         public ModbusClient()
         {
-            if (debug) StoreLogData.Instance.Store("ModbusRTU library initialized for Modbus-TCP", System.DateTime.Now);
+            if (debug) StoreLogData.Instance.Store("M334_8_10_21 library initialized for Modbus-TCP", System.DateTime.Now);
 #if (!COMMERCIAL)
-            Console.WriteLine("ModbusRTU Client Library Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            Console.WriteLine("M334_8_10_21 Client Library Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
             Console.WriteLine("Copyright (c) Stefan Rossmann Engineering Solutions");
             Console.WriteLine();
 #endif
@@ -164,7 +164,7 @@ namespace ModbusRTU
                 var success = result.AsyncWaitHandle.WaitOne(connectTimeout);
                 if (!success)
                 {
-                    throw new ModbusRTU.Exceptions.ConnectionException("connection timed out");
+                    throw new M334_8_10_21.Exceptions.ConnectionException("connection timed out");
                 }
                 tcpClient.EndConnect(result);
 
@@ -202,7 +202,7 @@ namespace ModbusRTU
                 var success = result.AsyncWaitHandle.WaitOne(connectTimeout);
                 if (!success)
                 {
-                    throw new ModbusRTU.Exceptions.ConnectionException("connection timed out");
+                    throw new M334_8_10_21.Exceptions.ConnectionException("connection timed out");
                 }
                 tcpClient.EndConnect(result);
 
@@ -222,7 +222,7 @@ namespace ModbusRTU
         }
 
         /// <summary>
-        /// Converts two ModbusRegisters to Float - Example: ModbusRTU.ModbusClient.ConvertRegistersToFloat(modbusClient.ReadHoldingRegisters(19,2))
+        /// Converts two ModbusRegisters to Float - Example: M334_8_10_21.ModbusClient.ConvertRegistersToFloat(modbusClient.ReadHoldingRegisters(19,2))
         /// </summary>
         /// <param name="registers">Two Register values received from Modbus</param>
         /// <returns>Connected float value</returns>
@@ -386,7 +386,7 @@ namespace ModbusRTU
         }
 
         /// <summary>
-        /// Converts float to two ModbusRegisters - Example:  modbusClient.WriteMultipleRegisters(24, ModbusRTU.ModbusClient.ConvertFloatToTwoRegisters((float)1.22));
+        /// Converts float to two ModbusRegisters - Example:  modbusClient.WriteMultipleRegisters(24, M334_8_10_21.ModbusClient.ConvertFloatToTwoRegisters((float)1.22));
         /// </summary>
         /// <param name="floatValue">Float value which has to be converted into two registers</param>
         /// <returns>Register values</returns>
@@ -875,12 +875,12 @@ namespace ModbusRTU
                 if (!serialport.IsOpen)
                 {
                     if (debug) StoreLogData.Instance.Store("SerialPortNotOpenedException Throwed", System.DateTime.Now);
-                    throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                    throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                 }
             if (tcpClient == null & !udpFlag & serialport == null)
             {
                 if (debug) StoreLogData.Instance.Store("ConnectionException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ConnectionException("connection error");
+                throw new M334_8_10_21.Exceptions.ConnectionException("connection error");
             }
             if (startingAddress > 65535 | quantity > 2000)
             {
@@ -997,22 +997,22 @@ namespace ModbusRTU
             if (data[7] == 0x82 & data[8] == 0x01)
             {
                 if (debug) StoreLogData.Instance.Store("FunctionCodeNotSupportedException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                throw new M334_8_10_21.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
             }
             if (data[7] == 0x82 & data[8] == 0x02)
             {
                 if (debug) StoreLogData.Instance.Store("StartingAddressInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                throw new M334_8_10_21.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
             }
             if (data[7] == 0x82 & data[8] == 0x03)
             {
                 if (debug) StoreLogData.Instance.Store("QuantityInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.QuantityInvalidException("quantity invalid");
+                throw new M334_8_10_21.Exceptions.QuantityInvalidException("quantity invalid");
             }
             if (data[7] == 0x82 & data[8] == 0x04)
             {
                 if (debug) StoreLogData.Instance.Store("ModbusException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ModbusException("error reading");
+                throw new M334_8_10_21.Exceptions.ModbusException("error reading");
             }
             if (serialport != null)
             {
@@ -1023,7 +1023,7 @@ namespace ModbusRTU
                     if (NumberOfRetries <= countRetries)
                     {
                         countRetries = 0;
-                        throw new ModbusRTU.Exceptions.CRCCheckFailedException("Response CRC check failed");
+                        throw new M334_8_10_21.Exceptions.CRCCheckFailedException("Response CRC check failed");
                     }
                     else
                     {
@@ -1071,12 +1071,12 @@ namespace ModbusRTU
                 if (!serialport.IsOpen)
                 {
                     if (debug) StoreLogData.Instance.Store("SerialPortNotOpenedException Throwed", System.DateTime.Now);
-                    throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                    throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                 }
             if (tcpClient == null & !udpFlag & serialport == null)
             {
                 if (debug) StoreLogData.Instance.Store("ConnectionException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ConnectionException("connection error");
+                throw new M334_8_10_21.Exceptions.ConnectionException("connection error");
             }
             if (startingAddress > 65535 | quantity > 2000)
             {
@@ -1192,22 +1192,22 @@ namespace ModbusRTU
             if (data[7] == 0x81 & data[8] == 0x01)
             {
                 if (debug) StoreLogData.Instance.Store("FunctionCodeNotSupportedException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                throw new M334_8_10_21.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
             }
             if (data[7] == 0x81 & data[8] == 0x02)
             {
                 if (debug) StoreLogData.Instance.Store("StartingAddressInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                throw new M334_8_10_21.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
             }
             if (data[7] == 0x81 & data[8] == 0x03)
             {
                 if (debug) StoreLogData.Instance.Store("QuantityInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.QuantityInvalidException("quantity invalid");
+                throw new M334_8_10_21.Exceptions.QuantityInvalidException("quantity invalid");
             }
             if (data[7] == 0x81 & data[8] == 0x04)
             {
                 if (debug) StoreLogData.Instance.Store("ModbusException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ModbusException("error reading");
+                throw new M334_8_10_21.Exceptions.ModbusException("error reading");
             }
             if (serialport != null)
             {
@@ -1218,7 +1218,7 @@ namespace ModbusRTU
                     if (NumberOfRetries <= countRetries)
                     {
                         countRetries = 0;
-                        throw new ModbusRTU.Exceptions.CRCCheckFailedException("Response CRC check failed");
+                        throw new M334_8_10_21.Exceptions.CRCCheckFailedException("Response CRC check failed");
                     }
                     else
                     {
@@ -1266,12 +1266,12 @@ namespace ModbusRTU
                 if (!serialport.IsOpen)
                 {
                     if (debug) StoreLogData.Instance.Store("SerialPortNotOpenedException Throwed", System.DateTime.Now);
-                    throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                    throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                 }
             if (tcpClient == null & !udpFlag & serialport == null)
             {
                 if (debug) StoreLogData.Instance.Store("ConnectionException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ConnectionException("connection error");
+                throw new M334_8_10_21.Exceptions.ConnectionException("connection error");
             }
             if (startingAddress > 65535 | quantity > 125)
             {
@@ -1383,22 +1383,22 @@ namespace ModbusRTU
             if (data[7] == 0x83 & data[8] == 0x01)
             {
                 if (debug) StoreLogData.Instance.Store("FunctionCodeNotSupportedException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                throw new M334_8_10_21.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
             }
             if (data[7] == 0x83 & data[8] == 0x02)
             {
                 if (debug) StoreLogData.Instance.Store("StartingAddressInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                throw new M334_8_10_21.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
             }
             if (data[7] == 0x83 & data[8] == 0x03)
             {
                 if (debug) StoreLogData.Instance.Store("QuantityInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.QuantityInvalidException("quantity invalid");
+                throw new M334_8_10_21.Exceptions.QuantityInvalidException("quantity invalid");
             }
             if (data[7] == 0x83 & data[8] == 0x04)
             {
                 if (debug) StoreLogData.Instance.Store("ModbusException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ModbusException("error reading");
+                throw new M334_8_10_21.Exceptions.ModbusException("error reading");
             }
             if (serialport != null)
             {
@@ -1409,7 +1409,7 @@ namespace ModbusRTU
                     if (NumberOfRetries <= countRetries)
                     {
                         countRetries = 0;
-                        throw new ModbusRTU.Exceptions.CRCCheckFailedException("Response CRC check failed");
+                        throw new M334_8_10_21.Exceptions.CRCCheckFailedException("Response CRC check failed");
                     }
                     else
                     {
@@ -1467,12 +1467,12 @@ namespace ModbusRTU
                 if (!serialport.IsOpen)
                 {
                     if (debug) StoreLogData.Instance.Store("SerialPortNotOpenedException Throwed", System.DateTime.Now);
-                    throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                    throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                 }
             if (tcpClient == null & !udpFlag & serialport == null)
             {
                 if (debug) StoreLogData.Instance.Store("ConnectionException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ConnectionException("connection error");
+                throw new M334_8_10_21.Exceptions.ConnectionException("connection error");
             }
             if (startingAddress > 65535 | quantity > 125)
             {
@@ -1586,22 +1586,22 @@ namespace ModbusRTU
             if (data[7] == 0x84 & data[8] == 0x01)
             {
                 if (debug) StoreLogData.Instance.Store("FunctionCodeNotSupportedException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                throw new M334_8_10_21.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
             }
             if (data[7] == 0x84 & data[8] == 0x02)
             {
                 if (debug) StoreLogData.Instance.Store("StartingAddressInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                throw new M334_8_10_21.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
             }
             if (data[7] == 0x84 & data[8] == 0x03)
             {
                 if (debug) StoreLogData.Instance.Store("QuantityInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.QuantityInvalidException("quantity invalid");
+                throw new M334_8_10_21.Exceptions.QuantityInvalidException("quantity invalid");
             }
             if (data[7] == 0x84 & data[8] == 0x04)
             {
                 if (debug) StoreLogData.Instance.Store("ModbusException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ModbusException("error reading");
+                throw new M334_8_10_21.Exceptions.ModbusException("error reading");
             }
             if (serialport != null)
             {
@@ -1612,7 +1612,7 @@ namespace ModbusRTU
                     if (NumberOfRetries <= countRetries)
                     {
                         countRetries = 0;
-                        throw new ModbusRTU.Exceptions.CRCCheckFailedException("Response CRC check failed");
+                        throw new M334_8_10_21.Exceptions.CRCCheckFailedException("Response CRC check failed");
                     }
                     else
                     {
@@ -1668,12 +1668,12 @@ namespace ModbusRTU
                 if (!serialport.IsOpen)
                 {
                     if (debug) StoreLogData.Instance.Store("SerialPortNotOpenedException Throwed", System.DateTime.Now);
-                    throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                    throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                 }
             if (tcpClient == null & !udpFlag & serialport == null)
             {
                 if (debug) StoreLogData.Instance.Store("ConnectionException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ConnectionException("connection error");
+                throw new M334_8_10_21.Exceptions.ConnectionException("connection error");
             }
             byte[] coilValue = new byte[2];
             this.transactionIdentifier = BitConverter.GetBytes((uint)transactionIdentifierInternal);
@@ -1787,22 +1787,22 @@ namespace ModbusRTU
             if (data[7] == 0x85 & data[8] == 0x01)
             {
                 if (debug) StoreLogData.Instance.Store("FunctionCodeNotSupportedException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                throw new M334_8_10_21.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
             }
             if (data[7] == 0x85 & data[8] == 0x02)
             {
                 if (debug) StoreLogData.Instance.Store("StartingAddressInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                throw new M334_8_10_21.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
             }
             if (data[7] == 0x85 & data[8] == 0x03)
             {
                 if (debug) StoreLogData.Instance.Store("QuantityInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.QuantityInvalidException("quantity invalid");
+                throw new M334_8_10_21.Exceptions.QuantityInvalidException("quantity invalid");
             }
             if (data[7] == 0x85 & data[8] == 0x04)
             {
                 if (debug) StoreLogData.Instance.Store("ModbusException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ModbusException("error reading");
+                throw new M334_8_10_21.Exceptions.ModbusException("error reading");
             }
             if (serialport != null)
             {
@@ -1813,7 +1813,7 @@ namespace ModbusRTU
                     if (NumberOfRetries <= countRetries)
                     {
                         countRetries = 0;
-                        throw new ModbusRTU.Exceptions.CRCCheckFailedException("Response CRC check failed");
+                        throw new M334_8_10_21.Exceptions.CRCCheckFailedException("Response CRC check failed");
                     }
                     else
                     {
@@ -1853,12 +1853,12 @@ namespace ModbusRTU
                 if (!serialport.IsOpen)
                 {
                     if (debug) StoreLogData.Instance.Store("SerialPortNotOpenedException Throwed", System.DateTime.Now);
-                    throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                    throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                 }
             if (tcpClient == null & !udpFlag & serialport == null)
             {
                 if (debug) StoreLogData.Instance.Store("ConnectionException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ConnectionException("connection error");
+                throw new M334_8_10_21.Exceptions.ConnectionException("connection error");
             }
             byte[] registerValue = new byte[2];
             this.transactionIdentifier = BitConverter.GetBytes((uint)transactionIdentifierInternal);
@@ -1964,22 +1964,22 @@ namespace ModbusRTU
             if (data[7] == 0x86 & data[8] == 0x01)
             {
                 if (debug) StoreLogData.Instance.Store("FunctionCodeNotSupportedException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                throw new M334_8_10_21.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
             }
             if (data[7] == 0x86 & data[8] == 0x02)
             {
                 if (debug) StoreLogData.Instance.Store("StartingAddressInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                throw new M334_8_10_21.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
             }
             if (data[7] == 0x86 & data[8] == 0x03)
             {
                 if (debug) StoreLogData.Instance.Store("QuantityInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.QuantityInvalidException("quantity invalid");
+                throw new M334_8_10_21.Exceptions.QuantityInvalidException("quantity invalid");
             }
             if (data[7] == 0x86 & data[8] == 0x04)
             {
                 if (debug) StoreLogData.Instance.Store("ModbusException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ModbusException("error reading");
+                throw new M334_8_10_21.Exceptions.ModbusException("error reading");
             }
             if (serialport != null)
             {
@@ -1990,7 +1990,7 @@ namespace ModbusRTU
                     if (NumberOfRetries <= countRetries)
                     {
                         countRetries = 0;
-                        throw new ModbusRTU.Exceptions.CRCCheckFailedException("Response CRC check failed");
+                        throw new M334_8_10_21.Exceptions.CRCCheckFailedException("Response CRC check failed");
                     }
                     else
                     {
@@ -2035,12 +2035,12 @@ namespace ModbusRTU
                 if (!serialport.IsOpen)
                 {
                     if (debug) StoreLogData.Instance.Store("SerialPortNotOpenedException Throwed", System.DateTime.Now);
-                    throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                    throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                 }
             if (tcpClient == null & !udpFlag & serialport == null)
             {
                 if (debug) StoreLogData.Instance.Store("ConnectionException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ConnectionException("connection error");
+                throw new M334_8_10_21.Exceptions.ConnectionException("connection error");
             }
             this.transactionIdentifier = BitConverter.GetBytes((uint)transactionIdentifierInternal);
             this.protocolIdentifier = BitConverter.GetBytes((int)0x0000);
@@ -2160,22 +2160,22 @@ namespace ModbusRTU
             if (data[7] == 0x8F & data[8] == 0x01)
             {
                 if (debug) StoreLogData.Instance.Store("FunctionCodeNotSupportedException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                throw new M334_8_10_21.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
             }
             if (data[7] == 0x8F & data[8] == 0x02)
             {
                 if (debug) StoreLogData.Instance.Store("StartingAddressInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                throw new M334_8_10_21.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
             }
             if (data[7] == 0x8F & data[8] == 0x03)
             {
                 if (debug) StoreLogData.Instance.Store("QuantityInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.QuantityInvalidException("quantity invalid");
+                throw new M334_8_10_21.Exceptions.QuantityInvalidException("quantity invalid");
             }
             if (data[7] == 0x8F & data[8] == 0x04)
             {
                 if (debug) StoreLogData.Instance.Store("ModbusException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ModbusException("error reading");
+                throw new M334_8_10_21.Exceptions.ModbusException("error reading");
             }
             if (serialport != null)
             {
@@ -2186,7 +2186,7 @@ namespace ModbusRTU
                     if (NumberOfRetries <= countRetries)
                     {
                         countRetries = 0;
-                        throw new ModbusRTU.Exceptions.CRCCheckFailedException("Response CRC check failed");
+                        throw new M334_8_10_21.Exceptions.CRCCheckFailedException("Response CRC check failed");
                     }
                     else
                     {
@@ -2230,12 +2230,12 @@ namespace ModbusRTU
                 if (!serialport.IsOpen)
                 {
                     if (debug) StoreLogData.Instance.Store("SerialPortNotOpenedException Throwed", System.DateTime.Now);
-                    throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                    throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                 }
             if (tcpClient == null & !udpFlag & serialport == null)
             {
                 if (debug) StoreLogData.Instance.Store("ConnectionException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ConnectionException("connection error");
+                throw new M334_8_10_21.Exceptions.ConnectionException("connection error");
             }
             this.transactionIdentifier = BitConverter.GetBytes((uint)transactionIdentifierInternal);
             this.protocolIdentifier = BitConverter.GetBytes((int)0x0000);
@@ -2344,22 +2344,22 @@ namespace ModbusRTU
             if (data[7] == 0x90 & data[8] == 0x01)
             {
                 if (debug) StoreLogData.Instance.Store("FunctionCodeNotSupportedException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                throw new M334_8_10_21.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
             }
             if (data[7] == 0x90 & data[8] == 0x02)
             {
                 if (debug) StoreLogData.Instance.Store("StartingAddressInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                throw new M334_8_10_21.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
             }
             if (data[7] == 0x90 & data[8] == 0x03)
             {
                 if (debug) StoreLogData.Instance.Store("QuantityInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.QuantityInvalidException("quantity invalid");
+                throw new M334_8_10_21.Exceptions.QuantityInvalidException("quantity invalid");
             }
             if (data[7] == 0x90 & data[8] == 0x04)
             {
                 if (debug) StoreLogData.Instance.Store("ModbusException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ModbusException("error reading");
+                throw new M334_8_10_21.Exceptions.ModbusException("error reading");
             }
             if (serialport != null)
             {
@@ -2370,7 +2370,7 @@ namespace ModbusRTU
                     if (NumberOfRetries <= countRetries)
                     {
                         countRetries = 0;
-                        throw new ModbusRTU.Exceptions.CRCCheckFailedException("Response CRC check failed");
+                        throw new M334_8_10_21.Exceptions.CRCCheckFailedException("Response CRC check failed");
                     }
                     else
                     {
@@ -2421,12 +2421,12 @@ namespace ModbusRTU
                 if (!serialport.IsOpen)
                 {
                     if (debug) StoreLogData.Instance.Store("SerialPortNotOpenedException Throwed", System.DateTime.Now);
-                    throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                    throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                 }
             if (tcpClient == null & !udpFlag & serialport == null)
             {
                 if (debug) StoreLogData.Instance.Store("ConnectionException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ConnectionException("connection error");
+                throw new M334_8_10_21.Exceptions.ConnectionException("connection error");
             }
             if (startingAddressRead > 65535 | quantityRead > 125 | startingAddressWrite > 65535 | values.Length > 121)
             {
@@ -2548,22 +2548,22 @@ namespace ModbusRTU
             if (data[7] == 0x97 & data[8] == 0x01)
             {
                 if (debug) StoreLogData.Instance.Store("FunctionCodeNotSupportedException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                throw new M334_8_10_21.Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
             }
             if (data[7] == 0x97 & data[8] == 0x02)
             {
                 if (debug) StoreLogData.Instance.Store("StartingAddressInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                throw new M334_8_10_21.Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
             }
             if (data[7] == 0x97 & data[8] == 0x03)
             {
                 if (debug) StoreLogData.Instance.Store("QuantityInvalidException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.QuantityInvalidException("quantity invalid");
+                throw new M334_8_10_21.Exceptions.QuantityInvalidException("quantity invalid");
             }
             if (data[7] == 0x97 & data[8] == 0x04)
             {
                 if (debug) StoreLogData.Instance.Store("ModbusException Throwed", System.DateTime.Now);
-                throw new ModbusRTU.Exceptions.ModbusException("error reading");
+                throw new M334_8_10_21.Exceptions.ModbusException("error reading");
             }
             response = new int[quantityRead];
             for (int i = 0; i < quantityRead; i++)

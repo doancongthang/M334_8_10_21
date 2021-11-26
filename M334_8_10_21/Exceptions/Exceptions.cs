@@ -24,7 +24,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using System;
 using System.Runtime.Serialization;
 
-namespace ModbusRTU.Exceptions
+namespace M334_8_10_21.Exceptions
 {
 	/// <summary>
 	/// Exception to be thrown if serial port is not opened

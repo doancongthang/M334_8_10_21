@@ -31,7 +31,7 @@ using System.Threading;
 using System.Net.NetworkInformation;
 using System.IO.Ports;
 
-namespace ModbusRTU
+namespace M334_8_10_21
 {
     #region class ModbusProtocol
     /// <summary>
@@ -39,7 +39,7 @@ namespace ModbusRTU
     /// </summary>
     public class ModbusProtocol
     {
-        public enum ProtocolType { ModbusTCP = 0, ModbusUDP = 1, ModbusRTU = 2 };
+        public enum ProtocolType { ModbusTCP = 0, ModbusUDP = 1, M334_8_10_21 = 2 };
         public DateTime timeStamp;
         public bool request;
         public bool response;
@@ -405,7 +405,7 @@ namespace ModbusRTU
                     catch (Exception) { }
                 }
                 tcpHandler = new TCPHandler(LocalIPAddress, port);
-                if (debug) StoreLogData.Instance.Store($"ModbusRTU Server listing for incomming data at Port {port}, local IP {LocalIPAddress}", System.DateTime.Now);
+                if (debug) StoreLogData.Instance.Store($"M334_8_10_21 Server listing for incomming data at Port {port}, local IP {LocalIPAddress}", System.DateTime.Now);
                 tcpHandler.dataChanged += new TCPHandler.DataChanged(ProcessReceivedData);
                 tcpHandler.numberOfClientsChanged += new TCPHandler.NumberOfClientsChanged(numberOfClientsChanged);
             }
@@ -413,7 +413,7 @@ namespace ModbusRTU
             {
                 if (serialport == null)
                 {
-                    if (debug) StoreLogData.Instance.Store("ModbusRTU RTU-Server listing for incomming data at Serial Port " + serialPort, System.DateTime.Now);
+                    if (debug) StoreLogData.Instance.Store("M334_8_10_21 RTU-Server listing for incomming data at Serial Port " + serialPort, System.DateTime.Now);
                     serialport = new SerialPort();
                     serialport.PortName = serialPort;
                     serialport.BaudRate = this.baudrate;
@@ -434,7 +434,7 @@ namespace ModbusRTU
                         {
                             IPEndPoint localEndoint = new IPEndPoint(LocalIPAddress, port);
                             udpClient = new UdpClient(localEndoint);
-                            if (debug) StoreLogData.Instance.Store($"ModbusRTU Server listing for incomming data at Port {port}, local IP {LocalIPAddress}", System.DateTime.Now);
+                            if (debug) StoreLogData.Instance.Store($"M334_8_10_21 Server listing for incomming data at Port {port}, local IP {LocalIPAddress}", System.DateTime.Now);
                             udpClient.Client.ReceiveTimeout = 1000;
                             iPEndPoint = new IPEndPoint(IPAddress.Any, port);
                             PortChanged = false;
@@ -899,7 +899,7 @@ namespace ModbusRTU
                     if (serialFlag)
                     {
                         if (!serialport.IsOpen)
-                            throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                            throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                         //Create CRC
                         sendData.crc = ModbusClient.calculateCRC(data, Convert.ToUInt16(data.Length - 8), 6);
                         byteData = BitConverter.GetBytes((int)sendData.crc);
@@ -1026,7 +1026,7 @@ namespace ModbusRTU
                     if (serialFlag)
                     {
                         if (!serialport.IsOpen)
-                            throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                            throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                         //Create CRC
                         sendData.crc = ModbusClient.calculateCRC(data, Convert.ToUInt16(data.Length - 8), 6);
                         byteData = BitConverter.GetBytes((int)sendData.crc);
@@ -1142,7 +1142,7 @@ namespace ModbusRTU
                     if (serialFlag)
                     {
                         if (!serialport.IsOpen)
-                            throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                            throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                         //Create CRC
                         sendData.crc = ModbusClient.calculateCRC(data, Convert.ToUInt16(data.Length - 8), 6);
                         byteData = BitConverter.GetBytes((int)sendData.crc);
@@ -1258,7 +1258,7 @@ namespace ModbusRTU
                     if (serialFlag)
                     {
                         if (!serialport.IsOpen)
-                            throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                            throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                         //Create CRC
                         sendData.crc = ModbusClient.calculateCRC(data, Convert.ToUInt16(data.Length - 8), 6);
                         byteData = BitConverter.GetBytes((int)sendData.crc);
@@ -1385,7 +1385,7 @@ namespace ModbusRTU
                     if (serialFlag)
                     {
                         if (!serialport.IsOpen)
-                            throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                            throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                         //Create CRC
                         sendData.crc = ModbusClient.calculateCRC(data, Convert.ToUInt16(data.Length - 8), 6);
                         byteData = BitConverter.GetBytes((int)sendData.crc);
@@ -1508,7 +1508,7 @@ namespace ModbusRTU
                     if (serialFlag)
                     {
                         if (!serialport.IsOpen)
-                            throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                            throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                         //Create CRC
                         sendData.crc = ModbusClient.calculateCRC(data, Convert.ToUInt16(data.Length - 8), 6);
                         byteData = BitConverter.GetBytes((int)sendData.crc);
@@ -1648,7 +1648,7 @@ namespace ModbusRTU
                     if (serialFlag)
                     {
                         if (!serialport.IsOpen)
-                            throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                            throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                         //Create CRC
                         sendData.crc = ModbusClient.calculateCRC(data, Convert.ToUInt16(data.Length - 8), 6);
                         byteData = BitConverter.GetBytes((int)sendData.crc);
@@ -1772,7 +1772,7 @@ namespace ModbusRTU
                     if (serialFlag)
                     {
                         if (!serialport.IsOpen)
-                            throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                            throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                         //Create CRC
                         sendData.crc = ModbusClient.calculateCRC(data, Convert.ToUInt16(data.Length - 8), 6);
                         byteData = BitConverter.GetBytes((int)sendData.crc);
@@ -1903,7 +1903,7 @@ namespace ModbusRTU
                     if (serialFlag)
                     {
                         if (!serialport.IsOpen)
-                            throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                            throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                         //Create CRC
                         sendData.crc = ModbusClient.calculateCRC(data, Convert.ToUInt16(data.Length - 8), 6);
                         byteData = BitConverter.GetBytes((int)sendData.crc);
@@ -1991,7 +1991,7 @@ namespace ModbusRTU
                     if (serialFlag)
                     {
                         if (!serialport.IsOpen)
-                            throw new ModbusRTU.Exceptions.SerialPortNotOpenedException("serial port not opened");
+                            throw new M334_8_10_21.Exceptions.SerialPortNotOpenedException("serial port not opened");
                         //Create CRC
                         sendData.crc = ModbusClient.calculateCRC(data, Convert.ToUInt16(data.Length - 8), 6);
                         byteData = BitConverter.GetBytes((int)sendData.crc);
@@ -2184,7 +2184,7 @@ namespace ModbusRTU
             public Int16[] localArray = new Int16[65535];
             ModbusServer modbusServer;
 
-            public HoldingRegisters(ModbusRTU.ModbusServer modbusServer)
+            public HoldingRegisters(M334_8_10_21.ModbusServer modbusServer)
             {
                 this.modbusServer = modbusServer;
             }
@@ -2205,7 +2205,7 @@ namespace ModbusRTU
             public Int16[] localArray = new Int16[65535];
             ModbusServer modbusServer;
 
-            public InputRegisters(ModbusRTU.ModbusServer modbusServer)
+            public InputRegisters(M334_8_10_21.ModbusServer modbusServer)
             {
                 this.modbusServer = modbusServer;
             }
@@ -2226,7 +2226,7 @@ namespace ModbusRTU
             public bool[] localArray = new bool[65535];
             ModbusServer modbusServer;
 
-            public Coils(ModbusRTU.ModbusServer modbusServer)
+            public Coils(M334_8_10_21.ModbusServer modbusServer)
             {
                 this.modbusServer = modbusServer;
             }
@@ -2247,7 +2247,7 @@ namespace ModbusRTU
             public bool[] localArray = new bool[65535];
             ModbusServer modbusServer;
 
-            public DiscreteInputs(ModbusRTU.ModbusServer modbusServer)
+            public DiscreteInputs(M334_8_10_21.ModbusServer modbusServer)
             {
                 this.modbusServer = modbusServer;
             }

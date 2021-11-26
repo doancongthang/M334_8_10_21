@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ModbusRTU
+namespace M334_8_10_21
 {
     public partial class ModbusClient
     {

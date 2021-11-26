@@ -13,13 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
-using ModbusRTU;
 
 namespace M334_8_10_21
 {
     public class connection
     {
-  
+        public M334_8_10_21.ModbusClient modbusClient;
 
     }
 }
