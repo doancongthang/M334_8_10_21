@@ -25,47 +25,71 @@ namespace M334_8_10_21
     /// </summary> 
     public partial class MainWindow : Window
     {
-        public M334_8_10_21.ModbusClient modbusClient;
+        //public M334_8_10_21.ModbusClient modbusClient;
         public delegate void ThreadStart();
 
         Machine machineleft = new Machine();
         Machine machinemidl = new Machine();
         Machine machineright = new Machine();
+        connection ketnoi = new connection();
+        connection ketnoi2 = new connection();
+        connection ketnoi3 = new connection();
         public MainWindow()
         {
             InitializeComponent();
-            
-            modbusClient = new M334_8_10_21.ModbusClient();
-            modbusClient.ReceiveDataChanged += new M334_8_10_21.ModbusClient.ReceiveDataChangedHandler(UpdateReceiveData);
+
+            //modbusClient = new M334_8_10_21.ModbusClient();
+            //modbusClient.ReceiveDataChanged += new M334_8_10_21.ModbusClient.ReceiveDataChangedHandler(UpdateReceiveData);
             //modbusClient.SendDataChanged += new M334_8_10_21.ModbusClient.SendDataChangedHandler(UpdateSendData);
             //modbusClient.ConnectedChanged += new M334_8_10_21.ModbusClient.ConnectedChangedHandler(UpdateConnectedChanged);
-            modbusClient.LogFileFilename = "logFiletxt.txt";
+            //modbusClient.LogFileFilename = "logFiletxt.txt";
+            //connection();
 
-            modbusClient.Baudrate = 9600;
-            modbusClient.UnitIdentifier = 2;
+            ketnoi.deviceconnect();
+            while (true)
+            {
+                //ketnoi.selectid(1);
+                //ketnoi.on_all_larm();
+                //Thread.Sleep(500);
+                //ketnoi.off_all_larm();
+                //Thread.Sleep(500);
 
 
+                //ketnoi.selectid(2);
+                //ketnoi.on_all_larm();
+                //Thread.Sleep(500);
+                //ketnoi.off_all_larm();
+                //Thread.Sleep(500);
 
+                //ketnoi.selectid(3);
+                //ketnoi.on_all_larm();
+                //Thread.Sleep(500);
+                //ketnoi.off_all_larm();
+                //Thread.Sleep(500);
 
+                ketnoi.selectid(1);
+                ketnoi.on_all_larm();
+                ketnoi.selectid(2);
+                ketnoi.on_all_larm();
+                ketnoi.selectid(3);
+                ketnoi.on_all_larm();
+                Thread.Sleep(1000);
 
+                ketnoi.selectid(1);
+                ketnoi.off_all_larm();
+                ketnoi.selectid(2);
+                ketnoi.off_all_larm();
+                ketnoi.selectid(3);
+                ketnoi.off_all_larm();
+                Thread.Sleep(1000);
 
-
-
-
+            }
 
 
             bool a = true;
             bool b = false;
 
             bool check = machineleft.startauto(a,b);
-
-
-
-
-
-
-
-
         }
         //delegate void UpdateReceiveDataCallback();
         void UpdateReceiveData(object sender)
@@ -82,11 +106,11 @@ namespace M334_8_10_21
         }
         private void UpdateConnectedChanged(object sender)
         {
-            if (modbusClient.Connected)
+            //if (modbusClient.Connected)
             {
 
             }
-            else
+            //else
             {
 
             }
@@ -95,7 +119,6 @@ namespace M334_8_10_21
         {
 
         }
-
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
@@ -156,9 +179,12 @@ namespace M334_8_10_21
 
         }
 
-        public void connection()
-        {
-
-        }
+        //public void connection()
+        //{
+            //modbusClient.Connect();
+            //modbusClient.Baudrate = 9600;
+            //modbusClient.UnitIdentifier = 1;
+            //modbusClient.Port = 3;
+        //}
     }
 }

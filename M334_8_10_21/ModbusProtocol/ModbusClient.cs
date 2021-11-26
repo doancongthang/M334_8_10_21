@@ -2669,10 +2669,15 @@ namespace M334_8_10_21
                 return false;
         }
 
+        internal void WriteMultipleCoils(int v1, int v2)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Gets or Sets the IP-Address of the Server.
         /// </summary>
-		public string IPAddress
+        public string IPAddress
         {
             get
             {
