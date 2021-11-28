@@ -16,18 +16,34 @@ namespace M334_8_10_21.Services
         W_OFFTEST,
         TEST
     }
+
+    enum STMC
+    {
+        IDLE,
+        PROCESS_AUTO_START,
+        PROCESS_MANUAL
+    }
+
     class LogicServices
     {
         StateMachine stateMachine;
+        STMC stateMc1, stateMc2, stateMc3;
         public Machine mc1;
         public Machine mc2;
         public Machine mc3;
+
+        public int countdown_hydraulics_pump = 0;
+        public int sec = 0;
+
         public LogicServices(Machine _mc1, Machine _mc2, Machine _mc3)
         {
             mc1 = _mc1;
             mc2 = _mc2;
             mc3 = _mc3;
             stateMachine = StateMachine.MACHINE_OFF;
+            stateMc1 = STMC.IDLE;
+            stateMc2 = STMC.IDLE;
+            stateMc3 = STMC.IDLE;
         }
 
         private async void loopUpdateActionsStateMachine()
@@ -52,8 +68,8 @@ namespace M334_8_10_21.Services
                         }
                         if (Orionsystem.btn_checklight == false)
                             stateMachine = StateMachine.TEST;
-                        else
-                            stateMachine = StateMachine.HYDRAULICS_PUMP;
+                        countdown_hydraulics_pump = Params.COUNT_HYDRAULICS_PUMP;
+                        stateMachine = StateMachine.HYDRAULICS_PUMP;
                         //stateMachine = StateMachine.HYDRAULICS_PUMP;
                         break;
                     case StateMachine.HYDRAULICS_PUMP:
@@ -65,7 +81,10 @@ namespace M334_8_10_21.Services
                         {
                             stateMachine = StateMachine.MACHINE_OFF;
                         }
-                        stateMachine = StateMachine.READY_HYDRAULICS_PUPM;
+                        if (countdown_hydraulics_pump == 0)
+                        {
+                            stateMachine = StateMachine.READY_HYDRAULICS_PUPM;
+                        }
                         break;
                     case StateMachine.READY_HYDRAULICS_PUPM:
                         if (Orionsystem.SW_power == false)
@@ -111,7 +130,7 @@ namespace M334_8_10_21.Services
                         mc2.offmachine();
                         mc3.offmachine();
                         Orionsystem.off_orion();
-                        break; 
+                        break;
                     case StateMachine.MACHINE_ON:
                         //stateMachine = StateMachine.MACHINE_OFF;
                         Orionsystem.sig_mainhas_pressure = false;
@@ -119,21 +138,14 @@ namespace M334_8_10_21.Services
                         mc1.sig_park = true;
                         mc2.sig_park = true;
                         mc3.sig_park = true;
-
-                        mc1.startauto();
-                        mc2.startauto();
-                        mc3.startauto();
                         break;
                     case StateMachine.HYDRAULICS_PUMP:
                         Orionsystem.sig_mainno_pressure = true;
-                        await Task.Delay(3000);             //Waiting Pump
+                        Orionsystem.vl_hydraulics = (int)((Params.COUNT_HYDRAULICS_PUMP - countdown_hydraulics_pump) * 0.3);
                         break;
                     case StateMachine.READY_HYDRAULICS_PUPM:
                         Orionsystem.sig_mainhas_pressure = true;
                         Orionsystem.sig_mainno_pressure = false;
-                        mc1.startauto();
-                        mc2.startauto();
-                        mc3.startauto();
                         break;
                     case StateMachine.W_OFFTEST:
                         Orionsystem.sig_mainhas_pressure = true;
@@ -153,48 +165,72 @@ namespace M334_8_10_21.Services
                         Orionsystem.on_all_sig_main();
                         break;
                 }
-                await Task.Delay(10);
+                await Task.Delay(1);
             }
-
-
-            //*/
-
-            //for test button
-            //while(true)
-            //{
-            //    Console.WriteLine("Trang thai nut nhan:" + Orionsystem.btn_checklight);
-            //    if (Orionsystem.btn_checklight == true)
-            //    {
-            //        //mc1.on_all_sig();
-            //        //mc2.on_all_sig();
-            //        //mc3.on_all_sig();
-            //        //Orionsystem.on_all_sig_main();
-
-            //        mc1.off_all_sig();
-            //        mc2.off_all_sig();
-            //        mc3.off_all_sig();
-            //        Orionsystem.off_all_sig_main();
-            //    }
-            //    if (Orionsystem.btn_checklight == false)
-            //    {
-            //        mc1.on_all_sig();
-            //        mc2.on_all_sig();
-            //        mc3.on_all_sig();
-            //        Orionsystem.on_all_sig_main();
-
-
-            //        //mc1.off_all_sig();
-            //        //mc2.off_all_sig();
-            //        //mc3.off_all_sig();
-            //        //Orionsystem.off_all_sig_main();
-            //    }
-            //    await Task.Delay(10);
-            //}    
         }
+        private async void parallel1_updateMachine()
+        {
+            while (true)
+            {
+                if (stateMachine == StateMachine.MACHINE_OFF)
+                {
+                    stateMc1 = STMC.IDLE;
+                    stateMc2 = STMC.IDLE;
+                    stateMc3 = STMC.IDLE;
+                }
+                if (stateMachine == StateMachine.READY_HYDRAULICS_PUPM)
+                {
+                    switch (stateMc1)
+                    {
+                        case STMC.IDLE:
+                            if (mc1.sw_start_auto == true && mc1.btn_start == false)
+                                stateMc1 = STMC.PROCESS_AUTO_START;
+                            if (mc1.sw_start_auto == false)
+                                stateMc1 = STMC.PROCESS_MANUAL;
+                            break;
+                        case STMC.PROCESS_MANUAL:
+                            if (mc1.sw_start_auto == true)
+                                stateMc1 = STMC.PROCESS_AUTO_START;
 
+                            break;
+                        case STMC.PROCESS_AUTO_START:
+                                mc1.sig_mpa = true;
+                                sec = 10;
+                                mc1.sig_vvd = true;
+                                sec = 10;
+                                mc1.sig_vnd = true;
+                                sec = 10;
+                                mc1.sig_count_rotate = true;
+                            break;
+                    }
+                }
+                await Task.Delay(1);
+            }
+        }
+        private async void Timer1Second()
+        {
+            while (true)
+            {
+                if (countdown_hydraulics_pump > 0)
+                    countdown_hydraulics_pump--;
+                await Task.Delay(100);
+            }
+        }
+        private async void TimerSecond()
+        {
+            while (true)
+            {
+                if (sec > 0)
+                    sec--;
+                await Task.Delay(100);
+            }
+        }
         public void Subcribe()
         {
             Task control = Task.Run(() => loopUpdateActionsStateMachine());  // Khởi chạy loop services
+            Task timer1s = Task.Run(() => Timer1Second());
+            Task timer2 = Task.Run(() => TimerSecond());
+            Task stateEachMachine1 = Task.Run(() => parallel1_updateMachine());
         }
     }
 }

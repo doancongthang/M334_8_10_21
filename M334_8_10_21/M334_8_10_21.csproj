@@ -61,6 +61,7 @@
     <Compile Include="Connection\Connection.cs" />
     <Compile Include="Exceptions\Exceptions.cs" />
     <Compile Include="Machine\Machine.cs" />
+    <Compile Include="Machine\Params.cs" />
     <Compile Include="ModbusProtocol\AdvancedModbusClient.cs" />
     <Compile Include="ModbusProtocol\ModbusClient.cs" />
     <Compile Include="ModbusProtocol\ModbusServer.cs" />

@@ -222,23 +222,16 @@ namespace M334_8_10_21
 
             //btn_burn = false;
             //sw_protect = false;
-
             vl_temperature_gas = 0;
             vl_speed_engine = 0;
             vl_mainlineoilpressure = 0;
         }
         public void startauto()
         {
-            if(btn_start == false & sw_start_auto== true)
-            {
-                sig_mpa = true;
-
-                sig_vvd = true;
-
-                sig_vnd = true;
-
-                sig_count_rotate = true;
-            }    
+            sig_mpa = true;
+            sig_vvd = true;
+            sig_vnd = true;
+            sig_count_rotate = true;
         }
         public bool startmanual()
         {
@@ -284,9 +277,11 @@ namespace M334_8_10_21
         public static int vl_temperature_oil_in;       //Temperature oil in                
         public static int vl_temperature_oil_out;      //Temperature oil output            
         public static int vl_reverse_air_pressure;     //Reverse air pressure              
-        public static int vl_hydraulics;               //Pressure hydraulics               
         public static int vl_pressurefuel;             //Pressure fuel                     
-        public static int vl_pressureptk;              //Pressure ptk                      
+        public static int vl_pressureptk;              //Pressure ptk
+        public static int vl_hydraulicpressure_gidravl;//Pressure gidravl
+
+        public static int vl_hydraulics;               //Pressure hydraulics        phụ thuộc vào 2 giá trị bên dưới. công tắc bật trước lọc và sau lọc thì show giá trị này lên               
         public static int vl_oilafterfilter;           //Value oil after filter 
         public static int vl_oilbeforefilter;          //Value oil before filter         
 

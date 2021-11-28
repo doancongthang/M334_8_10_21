@@ -472,14 +472,14 @@ namespace M334_8_10_21.Services
                                 coilsToSend1[28] = mc1.sig_pumping_MPA;
                                 coilsToSend1[29] = mc1.sig_count_rotate;
                                 modbusClient.WriteMultipleCoils(0, coilsToSend1);
-                                int[] gausdwin = new int[6];
-                                gausdwin[0] = 20;
-                                gausdwin[1] = 20;
-                                gausdwin[2] = 20;
-                                gausdwin[3] = 20;
-                                gausdwin[4] = 20;
-                                gausdwin[5] = 20;
-                                modbusClient.WriteMultipleRegisters(0, gausdwin);
+                                int[] gausdwin8inch = new int[6];
+                                gausdwin8inch[0] = Orionsystem.vl_temperature_oil_out;
+                                gausdwin8inch[1] = Orionsystem.vl_temperature_oil_in;
+                                gausdwin8inch[2] = Orionsystem.vl_pressureptk;
+                                gausdwin8inch[3] = Orionsystem.vl_reverse_air_pressure;
+                                gausdwin8inch[4] = Orionsystem.vl_pressurefuel;
+                                gausdwin8inch[5] = Orionsystem.vl_hydraulicpressure_gidravl;
+                                modbusClient.WriteMultipleRegisters(0, gausdwin8inch);
                                 break;
                             case 2:
                                 modbusClient.UnitIdentifier = 2;
@@ -578,6 +578,14 @@ namespace M334_8_10_21.Services
                                 coilsToSend2[28] = mc1.sig_temperature_oil;
                                 coilsToSend2[29] = mc1.sig_pressure_oil;
                                 modbusClient.WriteMultipleCoils(0, coilsToSend2);
+                                int[] gausdwin7inch = new int[6];
+                                gausdwin7inch[0] = Orionsystem.vl_time_hours;
+                                gausdwin7inch[1] = Orionsystem.vl_time_minute;
+                                gausdwin7inch[2] = Orionsystem.vl_time_second;
+                                gausdwin7inch[3] = Orionsystem.vl_time_month;
+                                gausdwin7inch[4] = Orionsystem.vl_hydraulics;
+                                gausdwin7inch[5] = 20;
+                                modbusClient.WriteMultipleRegisters(0, gausdwin7inch);
                                 break;
                             case 3:
                                 modbusClient.UnitIdentifier = 3;
@@ -656,7 +664,7 @@ namespace M334_8_10_21.Services
                 }
                 boardId++;
                 if (boardId > 3) boardId = 1;
-                await Task.Delay(10);
+                await Task.Delay(1);
             }
         }
         public void on_all_larm()
