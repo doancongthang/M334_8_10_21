@@ -232,8 +232,11 @@ namespace M334_8_10_21
             if(btn_start == false & sw_start_auto== true)
             {
                 sig_mpa = true;
+
                 sig_vvd = true;
+
                 sig_vnd = true;
+
                 sig_count_rotate = true;
             }    
         }

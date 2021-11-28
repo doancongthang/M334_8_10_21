@@ -61,6 +61,11 @@ namespace M334_8_10_21.Services
                             stateMachine = StateMachine.TEST;
                         if (Orionsystem.btn_checklight == false)
                             stateMachine = StateMachine.TEST;
+                        if (Orionsystem.SW_power == false)
+                        {
+                            stateMachine = StateMachine.MACHINE_OFF;
+                        }
+                        stateMachine = StateMachine.READY_HYDRAULICS_PUPM;
                         break;
                     case StateMachine.READY_HYDRAULICS_PUPM:
                         if (Orionsystem.SW_power == false)
@@ -76,10 +81,14 @@ namespace M334_8_10_21.Services
                         {
                             stateMachine = StateMachine.TEST;
                         }
-                        if (Orionsystem.btn_checklight == true)
+                        if (Orionsystem.SW_power == false)
                         {
-                            stateMachine = StateMachine.HYDRAULICS_PUMP;
+                            stateMachine = StateMachine.MACHINE_OFF;
                         }
+                        //if (Orionsystem.btn_checklight == true)
+                        //{
+                        //    stateMachine = StateMachine.HYDRAULICS_PUMP;
+                        //}
                         break;
                     case StateMachine.TEST:
                         if (Orionsystem.btn_checklight == true & Orionsystem.SW_power == false)
@@ -102,11 +111,15 @@ namespace M334_8_10_21.Services
                         mc2.offmachine();
                         mc3.offmachine();
                         Orionsystem.off_orion();
-                        break;
+                        break; 
                     case StateMachine.MACHINE_ON:
                         //stateMachine = StateMachine.MACHINE_OFF;
                         Orionsystem.sig_mainhas_pressure = false;
                         Orionsystem.sig_mainno_pressure = true;
+                        mc1.sig_park = true;
+                        mc2.sig_park = true;
+                        mc3.sig_park = true;
+
                         mc1.startauto();
                         mc2.startauto();
                         mc3.startauto();
@@ -114,7 +127,6 @@ namespace M334_8_10_21.Services
                     case StateMachine.HYDRAULICS_PUMP:
                         Orionsystem.sig_mainno_pressure = true;
                         await Task.Delay(3000);             //Waiting Pump
-                        stateMachine = StateMachine.READY_HYDRAULICS_PUPM;
                         break;
                     case StateMachine.READY_HYDRAULICS_PUPM:
                         Orionsystem.sig_mainhas_pressure = true;

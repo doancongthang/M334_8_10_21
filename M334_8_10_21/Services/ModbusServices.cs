@@ -472,6 +472,14 @@ namespace M334_8_10_21.Services
                                 coilsToSend1[28] = mc1.sig_pumping_MPA;
                                 coilsToSend1[29] = mc1.sig_count_rotate;
                                 modbusClient.WriteMultipleCoils(0, coilsToSend1);
+                                int[] gausdwin = new int[6];
+                                gausdwin[0] = 20;
+                                gausdwin[1] = 20;
+                                gausdwin[2] = 20;
+                                gausdwin[3] = 20;
+                                gausdwin[4] = 20;
+                                gausdwin[5] = 20;
+                                modbusClient.WriteMultipleRegisters(0, gausdwin);
                                 break;
                             case 2:
                                 modbusClient.UnitIdentifier = 2;
