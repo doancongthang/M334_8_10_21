@@ -21,7 +21,6 @@ namespace M334_8_10_21
     {
         //public M334_8_10_21.ModbusClient modbusClient;
         ModbusClient modbusClient = new ModbusClient();
-
         public void deviceconnect(string comport)
         {
             //try

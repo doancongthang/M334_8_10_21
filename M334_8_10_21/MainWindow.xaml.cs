@@ -111,9 +111,10 @@ namespace M334_8_10_21
             LogicServices logic = new LogicServices(mc1, mc2, mc3);
             mb.Connect();
             //mb.Subcribe();
-            mb.Subcribe();
             logic.Subcribe();
+            mb.Subcribe();
 
+            //mb.updatedata();
             //mb.blink();
         }
 

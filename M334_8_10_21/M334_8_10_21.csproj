@@ -61,11 +61,9 @@
     <Compile Include="Connection\Connection.cs" />
     <Compile Include="Exceptions\Exceptions.cs" />
     <Compile Include="Machine\Machine.cs" />
-    <Compile Include="ModbusProcess\ModbusProcess.cs" />
     <Compile Include="ModbusProtocol\AdvancedModbusClient.cs" />
     <Compile Include="ModbusProtocol\ModbusClient.cs" />
     <Compile Include="ModbusProtocol\ModbusServer.cs" />
-    <Compile Include="Orionsystem\Orionsystem.cs" />
     <Compile Include="SaveLogData\StoreLogData.cs" />
     <Compile Include="Services\LogicServices.cs" />
     <Compile Include="Services\ModbusServices.cs" />

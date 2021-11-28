@@ -19,9 +19,9 @@ namespace M334_8_10_21.Services
     class LogicServices
     {
         StateMachine stateMachine;
-        private Machine mc1;
-        private Machine mc2;
-        private Machine mc3;
+        public Machine mc1;
+        public Machine mc2;
+        public Machine mc3;
         public LogicServices(Machine _mc1, Machine _mc2, Machine _mc3)
         {
             mc1 = _mc1;
@@ -104,14 +104,32 @@ namespace M334_8_10_21.Services
             while(true)
             {
                 Console.WriteLine("Trang thai nut nhan:" + Orionsystem.btn_checklight);
-                await Task.Delay(100);
+                if (Orionsystem.btn_checklight == true)
+                {
+                    //mc1.on_all_sig();
+                    //mc2.on_all_sig();
+                    //mc3.on_all_sig();
+                    //Orionsystem.on_all_sig_main();
+
+                    mc1.off_all_sig();
+                    mc2.off_all_sig();
+                    mc3.off_all_sig();
+                    Orionsystem.off_all_sig_main();
+                }
                 if (Orionsystem.btn_checklight == false)
                 {
                     mc1.on_all_sig();
                     mc2.on_all_sig();
                     mc3.on_all_sig();
                     Orionsystem.on_all_sig_main();
+
+
+                    //mc1.off_all_sig();
+                    //mc2.off_all_sig();
+                    //mc3.off_all_sig();
+                    //Orionsystem.off_all_sig_main();
                 }
+                //await Task.Delay(10);
             }    
         }
 
