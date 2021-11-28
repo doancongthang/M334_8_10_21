@@ -227,13 +227,15 @@ namespace M334_8_10_21
             vl_speed_engine = 0;
             vl_mainlineoilpressure = 0;
         }
-        public bool startauto(bool sw_start_auto, bool btn_start)
+        public void startauto()
         {
-            if (sw_start_auto == true & btn_start == true)
+            if(btn_start == false & sw_start_auto== true)
             {
-                _status_autostart = true;
-            }
-            return _status_autostart;
+                sig_mpa = true;
+                sig_vvd = true;
+                sig_vnd = true;
+                sig_count_rotate = true;
+            }    
         }
         public bool startmanual()
         {
