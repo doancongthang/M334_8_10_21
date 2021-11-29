@@ -53,6 +53,7 @@ namespace M334_8_10_21
 
         public bool sig_pumping_MPA;            //Signal Pumping out
         public bool sig_oil_no_pump;  		    //Signal Oil is not pumping out
+        public bool sig_otka;
         public bool sw_pumpout;                 //Bơm hút dầu nhờn
         #endregion
 
@@ -114,6 +115,8 @@ namespace M334_8_10_21
 
             sig_pumping_MPA = true;
             sig_oil_no_pump = true;
+            sig_otka = true;
+
 
             sig_pressure_oil = true;
             sig_temperature_oil = true;
@@ -158,6 +161,7 @@ namespace M334_8_10_21
 
             sig_pumping_MPA = false;
             sig_oil_no_pump = false;
+            sig_otka = false;
 
             sig_pressure_oil = false;
             sig_temperature_oil = false;
@@ -209,6 +213,7 @@ namespace M334_8_10_21
 
             sig_pumping_MPA = false;
             sig_oil_no_pump = false;
+            sig_otka = false;
             sw_pumpout = false;
 
             sig_pressure_oil = false;

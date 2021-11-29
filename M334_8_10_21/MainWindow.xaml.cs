@@ -45,11 +45,15 @@ namespace M334_8_10_21
 
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         public int i = 270, i_new = 0, stt_ang = 0, stt_ang2 = 0, val_ang1;
+        public Machine mc1 = new Machine();
+        public Machine mc2 = new Machine();
+        public Machine mc3 = new Machine();
         public MainWindow()
         {
             InitializeComponent();
             Angle1 = Angle2 = Angle3 = Angle4 = Angle5 = Angle6 = Angle7 = Angle8 = Angle9 = Angle10 = Angle11 = 270;
-            dispatcherTimer.Interval = TimeSpan.FromMilliseconds(1000);
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = TimeSpan.FromMilliseconds(100);
             SpinSpeed = TimeSpan.FromMilliseconds(200);
 
             dispatcherTimer.Start();
@@ -104,9 +108,9 @@ namespace M334_8_10_21
             //bool check = machineleft.startauto(a,b);
 
 
-            Machine mc1 = new Machine();
-            Machine mc2 = new Machine();
-            Machine mc3 = new Machine();
+            //Machine mc1 = new Machine();
+            //Machine mc2 = new Machine();
+            //Machine mc3 = new Machine();
             ModbusServices mb = new ModbusServices(mc1, mc2, mc3);
             LogicServices logic = new LogicServices(mc1, mc2, mc3);
             mb.Connect();
@@ -153,8 +157,8 @@ namespace M334_8_10_21
             var random = new Random();
             int num = random.Next(0, 360);
 
-            Angle1 = Angle2 = Angle3 = Angle4 = Angle5 = Angle6 = Angle7 = Angle8 = Angle9 = Angle10 = Angle11 = num;
-
+            //Angle1 = Angle2 = Angle3 = Angle4 = Angle5 = Angle6 = Angle7 = Angle8 = Angle9 = Angle10 = Angle11 = num;
+            Angle1 = Angle2 = Angle3 = Angle4 = Angle7 = mc1.vl_mainlineoilpressure;
         }
         private void angle_Click1(object sender, RoutedEventArgs e)
         {

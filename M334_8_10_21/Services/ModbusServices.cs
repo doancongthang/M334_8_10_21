@@ -446,7 +446,7 @@ namespace M334_8_10_21.Services
                                 coilsToSend1[2] = mc2.sig_vnd;
                                 coilsToSend1[3] = mc2.sig_mpa;
                                 coilsToSend1[4] = mc1.sig_mpa;
-                                coilsToSend1[5] = mc1.sig_vvd;
+                                coilsToSend1[5] = mc1.sig_vnd;
                                 coilsToSend1[6] = mc1.sig_vvd;
                                 coilsToSend1[7] = mc1.sig_oil_supply;
                                 coilsToSend1[8] = mc1.sig_upper_oil;
@@ -459,7 +459,7 @@ namespace M334_8_10_21.Services
                                 coilsToSend1[15] = mc3.sig_upper_oil;
                                 coilsToSend1[16] = mc3.sig_oil_supply;
                                 coilsToSend1[17] = mc3.sig_vvd;
-                                coilsToSend1[18] = mc3.sig_vvd;
+                                coilsToSend1[18] = mc3.sig_vnd;
                                 coilsToSend1[19] = mc3.sig_mpa;
                                 coilsToSend1[20] = mc3.sig_pumping_MPA;
                                 coilsToSend1[21] = mc2.sig_pumping_MPA;
@@ -467,9 +467,9 @@ namespace M334_8_10_21.Services
                                 coilsToSend1[23] = mc3.sig_oil_no_pump;
                                 coilsToSend1[24] = mc2.sig_oil_no_pump;
                                 coilsToSend1[25] = mc1.sig_oil_no_pump;
-                                coilsToSend1[26] = mc3.sig_pumping_MPA;
-                                coilsToSend1[27] = mc2.sig_pumping_MPA;
-                                coilsToSend1[28] = mc1.sig_pumping_MPA;
+                                coilsToSend1[26] = mc3.sig_otka;
+                                coilsToSend1[27] = mc2.sig_otka;
+                                coilsToSend1[28] = mc1.sig_otka;
                                 coilsToSend1[29] = mc1.sig_count_rotate;
                                 modbusClient.WriteMultipleCoils(0, coilsToSend1);
                                 int[] gausdwin8inch = new int[6];

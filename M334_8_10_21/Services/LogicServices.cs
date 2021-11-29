@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using M334_8_10_21;
 
@@ -20,8 +21,12 @@ namespace M334_8_10_21.Services
     enum STMC
     {
         IDLE,
+        PROCESS_AUTO_W,
         PROCESS_AUTO_START,
-        PROCESS_MANUAL
+        PROCESS_MANUAL,
+        PRESSURE_PREMINARY_PUMP,
+        READY_HIGH_PRESURE,
+        START_OK
     }
 
     class LogicServices
@@ -33,7 +38,7 @@ namespace M334_8_10_21.Services
         public Machine mc3;
 
         public int countdown_hydraulics_pump = 0;
-        public int sec = 0;
+        public int coundown_preminary_pump = 0;
 
         public LogicServices(Machine _mc1, Machine _mc2, Machine _mc3)
         {
@@ -44,11 +49,14 @@ namespace M334_8_10_21.Services
             stateMc1 = STMC.IDLE;
             stateMc2 = STMC.IDLE;
             stateMc3 = STMC.IDLE;
+
+            Thread delay100mdThread = new Thread(Timer1Second);
+            delay100mdThread.Start();
         }
 
         private async void loopUpdateActionsStateMachine()
         {
-            ///*
+            //***********************************************************************************************************//
             while (true)
             {
                 Console.WriteLine(stateMachine);
@@ -75,8 +83,10 @@ namespace M334_8_10_21.Services
                     case StateMachine.HYDRAULICS_PUMP:
                         if (Orionsystem.btn_checklight == false & stateMachine == StateMachine.MACHINE_ON)
                             stateMachine = StateMachine.TEST;
-                        if (Orionsystem.btn_checklight == false)
+                        if (Orionsystem.btn_checklight == false & Orionsystem.SW_power == true)
+                        {
                             stateMachine = StateMachine.TEST;
+                        }
                         if (Orionsystem.SW_power == false)
                         {
                             stateMachine = StateMachine.MACHINE_OFF;
@@ -104,10 +114,14 @@ namespace M334_8_10_21.Services
                         {
                             stateMachine = StateMachine.MACHINE_OFF;
                         }
-                        //if (Orionsystem.btn_checklight == true)
-                        //{
-                        //    stateMachine = StateMachine.HYDRAULICS_PUMP;
-                        //}
+                        if (countdown_hydraulics_pump == 0)
+                        {
+                            stateMachine = StateMachine.READY_HYDRAULICS_PUPM;
+                        }
+                        if (countdown_hydraulics_pump != 0)
+                        {
+                            stateMachine = StateMachine.HYDRAULICS_PUMP;
+                        }
                         break;
                     case StateMachine.TEST:
                         if (Orionsystem.btn_checklight == true & Orionsystem.SW_power == false)
@@ -118,6 +132,7 @@ namespace M334_8_10_21.Services
                         {
                             stateMachine = StateMachine.W_OFFTEST;
                         }
+                        //Moi them vao
                         break;
                 }
                 //***********************************************************************************************************//
@@ -135,23 +150,38 @@ namespace M334_8_10_21.Services
                         //stateMachine = StateMachine.MACHINE_OFF;
                         Orionsystem.sig_mainhas_pressure = false;
                         Orionsystem.sig_mainno_pressure = true;
+                        mc1.sig_nopressure = true;
+                        mc2.sig_nopressure = true;
+                        mc3.sig_nopressure = true;
+                        mc1.sig_oil_no_pump = true;
+                        mc2.sig_oil_no_pump = true;
+                        mc3.sig_oil_no_pump= true;
                         mc1.sig_park = true;
                         mc2.sig_park = true;
                         mc3.sig_park = true;
                         break;
                     case StateMachine.HYDRAULICS_PUMP:
                         Orionsystem.sig_mainno_pressure = true;
+                        mc1.sig_oil_no_pump = true;
+                        mc2.sig_oil_no_pump = true;
+                        mc3.sig_oil_no_pump = true;
+                        mc1.sig_park = true;
+                        mc2.sig_park = true;
+                        mc3.sig_park = true;
                         Orionsystem.vl_hydraulics = (int)((Params.COUNT_HYDRAULICS_PUMP - countdown_hydraulics_pump) * 0.3);
                         break;
                     case StateMachine.READY_HYDRAULICS_PUPM:
                         Orionsystem.sig_mainhas_pressure = true;
                         Orionsystem.sig_mainno_pressure = false;
+                        mc1.sig_nopressure = false;
+                        mc2.sig_nopressure = false;
+                        mc3.sig_nopressure = false;
+                        mc1.sig_park = true;
+                        mc2.sig_park = true;
+                        mc3.sig_park = true;
                         break;
                     case StateMachine.W_OFFTEST:
                         Orionsystem.sig_mainhas_pressure = true;
-                        mc1.startauto();
-                        mc2.startauto();
-                        mc3.startauto();
 
                         mc1.off_all_sig();
                         mc2.off_all_sig();
@@ -177,59 +207,265 @@ namespace M334_8_10_21.Services
                     stateMc1 = STMC.IDLE;
                     stateMc2 = STMC.IDLE;
                     stateMc3 = STMC.IDLE;
-                }
+                }   
                 if (stateMachine == StateMachine.READY_HYDRAULICS_PUPM)
                 {
+                    //State start///////////////////////////////////////////////////////////////////////////
                     switch (stateMc1)
                     {
                         case STMC.IDLE:
-                            if (mc1.sw_start_auto == true && mc1.btn_start == false)
-                                stateMc1 = STMC.PROCESS_AUTO_START;
+                            if (mc1.sw_start_auto == true)
+                            {
+                                stateMc1 = STMC.PROCESS_AUTO_W;
+                            }
                             if (mc1.sw_start_auto == false)
-                                stateMc1 = STMC.PROCESS_MANUAL;
+                            mc1.sig_mpa = false;
+                            mc1.sig_vnd = false;
+                            mc1.sig_vvd = false;
+                            mc1.sig_count_rotate = false;
+                            stateMc1 = STMC.PROCESS_MANUAL;
+                            break;
+                        case STMC.PROCESS_AUTO_W:
+                            if(mc1.btn_start == false)
+                            {
+                                coundown_preminary_pump = Params.COUNT_MAX_PREMINARY;  // 4s
+                                stateMc1 = STMC.PROCESS_AUTO_START;
+                            }    
                             break;
                         case STMC.PROCESS_MANUAL:
                             if (mc1.sw_start_auto == true)
-                                stateMc1 = STMC.PROCESS_AUTO_START;
-
+                                stateMc1 = STMC.PROCESS_AUTO_W;
                             break;
                         case STMC.PROCESS_AUTO_START:
-                                mc1.sig_mpa = true;
-                                sec = 10;
-                                mc1.sig_vvd = true;
-                                sec = 10;
-                                mc1.sig_vnd = true;
-                                sec = 10;
-                                mc1.sig_count_rotate = true;
+                            if (mc1.sw_start_auto == false)
+                                stateMc1 = STMC.PROCESS_MANUAL;
+                            if (coundown_preminary_pump == 0)
+                            {
+                                coundown_preminary_pump = Params.COUNT_MAX_LOWPRESSURE;  // 8s
+                                stateMc1 = STMC.PRESSURE_PREMINARY_PUMP;
+                            }
+                            break;
+                        case STMC.PRESSURE_PREMINARY_PUMP:
+                            if (coundown_preminary_pump == 0)
+                            {
+                                stateMc1 = STMC.READY_HIGH_PRESURE;
+                                coundown_preminary_pump = Params.COUNT_READY_FOR_SPEED;  //1s
+                            }
+                            break;
+                        case STMC.READY_HIGH_PRESURE:
+                            if (coundown_preminary_pump == 0)
+                            {
+                                stateMc1 = STMC.START_OK;
+                            }
+                            break;
+                        case STMC.START_OK:
+                            if(mc1.btn_estop == false)
+                            {
+                                mc1.offmachine();
+                            }
                             break;
                     }
+                    //Action start///////////////////////////////////////////////////////////////////////////
+                    switch (stateMc1)
+                    {
+                        case STMC.IDLE:
+                            mc1.sig_mpa = false;
+                            mc1.sig_vnd = false;
+                            mc1.sig_vvd = false;
+                            mc1.sig_count_rotate = false;
+                            break;
+                        case STMC.PROCESS_MANUAL:
+                            if(mc1.btn_on_preminary_pump == false)
+                            {
+                                mc1.sig_mpa = true;
+                                coundown_preminary_pump = Params.COUNT_MAX_LOWPRESSURE;  // 8s
+                            }
+                            if (mc1.btn_off_preminary_pump == true)
+                            {
+                                mc1.sig_mpa = false;
+                            }
+
+                            break;
+                        case STMC.PROCESS_AUTO_W:
+                            break;
+                        case STMC.PROCESS_AUTO_START:
+                            mc1.sig_mpa = true;
+                            mc1.vl_mainlineoilpressure = (int)((Params.COUNT_MAX_PREMINARY - coundown_preminary_pump) * 0.1);
+                            break;
+                        case STMC.PRESSURE_PREMINARY_PUMP:
+                            mc1.sig_vnd = true;
+                            if (coundown_preminary_pump % 5 == 0)
+                            {
+                                mc1.sig_count_rotate = !mc1.sig_count_rotate;
+                            }
+                            if(mc1.sw_start_auto == false)
+                            {
+
+                            }    
+                            break;
+                        case STMC.READY_HIGH_PRESURE:
+                            mc1.sig_vvd = true;
+                            break;
+                        case STMC.START_OK:
+                            mc1.sig_mpa = false;
+                            mc1.sig_vvd = false;
+                            mc1.sig_vnd = false;
+                            mc1.sig_count_rotate = false;
+                            break;
+                    }
+                    //***********Tương tác độc lập SW
+                    //if (stateMachine == StateMachine.MACHINE_ON)
+                    {
+                        #region btn for one machine
+                        if (mc1.sw_pumpout == true)
+                        {
+                            mc1.sig_otka = true;
+                            mc1.sig_oil_no_pump = false;
+                        }
+                        if (mc1.sw_pumpout == false)
+                        {
+                            mc1.sig_otka = false;
+                            mc1.sig_oil_no_pump = true;
+                        }
+
+                        if (mc2.sw_pumpout == true)
+                        {     
+                            mc2.sig_otka = true;
+                            mc2.sig_oil_no_pump = false;
+                        }     
+                        if (mc2.sw_pumpout == false)
+                        {     
+                            mc2.sig_otka = false;
+                            mc2.sig_oil_no_pump = true;
+                        }
+
+                        if (mc3.sw_pumpout == true)
+                        {     
+                            mc3.sig_otka = true;
+                            mc3.sig_oil_no_pump = false;
+                        }     
+                        if (mc3.sw_pumpout == false)
+                        {     
+                            mc3.sig_otka = false;
+                            mc3.sig_oil_no_pump = true;
+                        }
+                        //***************************************//
+                        if (mc1.sw_protect == true)
+                        {     
+                            mc1.sig_protect_on = true;
+                        }
+                        if (mc1.sw_protect == false)
+                        {
+                            mc1.sig_protect_on = false;
+                        }
+
+                        if (mc2.sw_protect == true)
+                        {     
+                            mc2.sig_protect_on = true;
+                        }     
+                        if (mc2.sw_protect == false)
+                        {     
+                            mc2.sig_protect_on = false;
+                        }
+
+                        if (mc3.sw_protect == true)
+                        {     
+                            mc3.sig_protect_on = true;
+                        }     
+                        if (mc3.sw_protect == false)
+                        {     
+                            mc3.sig_protect_on = false;
+                        }
+
+                        //***************************************//
+                        if (mc1.sw_zero_fuel_supply == true)
+                        {
+                            mc1.sig_pumping_MPA = true;
+                        }
+                        if (mc1.sw_zero_fuel_supply == false)
+                        {
+                            mc1.sig_pumping_MPA = false;
+                        }
+
+                        if (mc2.sw_zero_fuel_supply == true)
+                        {
+                            mc2.sig_pumping_MPA = true;
+                        }
+                        if (mc2.sw_zero_fuel_supply == false)
+                        {
+                            mc2.sig_pumping_MPA = false;
+                        }
+
+                        if (mc3.sw_zero_fuel_supply == true)
+                        {
+                            mc3.sig_pumping_MPA = true;
+                        }
+                        if (mc3.sw_zero_fuel_supply == false)
+                        {
+                            mc3.sig_pumping_MPA = false;
+                        }
+                        #endregion
+                        //***************************************//
+                        #region btn_main
+                        if (Orionsystem.btn_callheadcabin == false)
+                        {
+                            Orionsystem.sig_mainHMO = true;
+                        }
+                        if (Orionsystem.btn_callheadcabin == true)
+                        {
+                            Orionsystem.sig_mainHMO = false;
+                        }
+
+                        if (Orionsystem.btn_callbehindcabin == false)
+                        {
+                            Orionsystem.sig_mainKMO = true;
+                        }
+                        if (Orionsystem.btn_callbehindcabin == true)
+                        {
+                            Orionsystem.sig_mainKMO = false;
+                        }
+
+                        if (Orionsystem.btn_wheelhouse == false)
+                        {
+                            Orionsystem.sig_main_hobbyshirt = true;
+                        }
+                        if (Orionsystem.btn_wheelhouse == true)
+                        {
+                            Orionsystem.sig_main_hobbyshirt = false;
+                        }
+                        #endregion
+                        #region
+                        #endregion
+                    }
+
                 }
+                if (stateMachine == StateMachine.MACHINE_OFF)
+                {
+                    mc1.offmachine();
+                    mc2.offmachine();
+                    mc3.offmachine();
+                    Orionsystem.off_orion();
+                }    
                 await Task.Delay(1);
             }
         }
-        private async void Timer1Second()
+        private void Timer1Second()
         {
             while (true)
             {
                 if (countdown_hydraulics_pump > 0)
                     countdown_hydraulics_pump--;
-                await Task.Delay(100);
+                if (coundown_preminary_pump > 0)
+                    coundown_preminary_pump--;
+                // await Task.Delay(100);
+                Thread.Sleep(100);
             }
         }
-        private async void TimerSecond()
-        {
-            while (true)
-            {
-                if (sec > 0)
-                    sec--;
-                await Task.Delay(100);
-            }
-        }
+
         public void Subcribe()
         {
             Task control = Task.Run(() => loopUpdateActionsStateMachine());  // Khởi chạy loop services
-            Task timer1s = Task.Run(() => Timer1Second());
-            Task timer2 = Task.Run(() => TimerSecond());
+          //  Task timer1s = Task.Run(() => Timer1Second());
             Task stateEachMachine1 = Task.Run(() => parallel1_updateMachine());
         }
     }
