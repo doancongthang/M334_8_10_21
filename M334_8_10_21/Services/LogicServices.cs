@@ -15,7 +15,8 @@ namespace M334_8_10_21.Services
         HYDRAULICS_PUMP,
         READY_HYDRAULICS_PUPM,
         W_OFFTEST,
-        TEST
+        TEST,
+        CONTROLSPEED
     }
 
     enum STMC
@@ -23,10 +24,18 @@ namespace M334_8_10_21.Services
         IDLE,
         PROCESS_AUTO_W,
         PROCESS_AUTO_START,
-        PROCESS_MANUAL,
         PRESSURE_PREMINARY_PUMP,
         READY_HIGH_PRESURE,
-        START_OK
+        START_OK,
+
+        PROCESS_MANUAL,
+        PROCESS_MANUAL_START,
+        MANUAL_PRESSURE_PREMINARY_PUMP,
+        MANUAL_READY_HIGH_PRESURE,
+
+        MACHINEUP,
+        MACHINEHIGHSPEED,
+        MACHINEDOWN,
     }
 
     class LogicServices
@@ -219,11 +228,9 @@ namespace M334_8_10_21.Services
                                 stateMc1 = STMC.PROCESS_AUTO_W;
                             }
                             if (mc1.sw_start_auto == false)
-                            mc1.sig_mpa = false;
-                            mc1.sig_vnd = false;
-                            mc1.sig_vvd = false;
-                            mc1.sig_count_rotate = false;
-                            stateMc1 = STMC.PROCESS_MANUAL;
+                            {
+                                stateMc1 = STMC.PROCESS_MANUAL;
+                            }
                             break;
                         case STMC.PROCESS_AUTO_W:
                             if(mc1.btn_start == false)
@@ -232,13 +239,9 @@ namespace M334_8_10_21.Services
                                 stateMc1 = STMC.PROCESS_AUTO_START;
                             }    
                             break;
-                        case STMC.PROCESS_MANUAL:
-                            if (mc1.sw_start_auto == true)
-                                stateMc1 = STMC.PROCESS_AUTO_W;
-                            break;
                         case STMC.PROCESS_AUTO_START:
-                            if (mc1.sw_start_auto == false)
-                                stateMc1 = STMC.PROCESS_MANUAL;
+                            //if (mc1.sw_start_auto == false)
+                            //    stateMc1 = STMC.PROCESS_MANUAL;
                             if (coundown_preminary_pump == 0)
                             {
                                 coundown_preminary_pump = Params.COUNT_MAX_LOWPRESSURE;  // 8s
@@ -249,12 +252,14 @@ namespace M334_8_10_21.Services
                             if (coundown_preminary_pump == 0)
                             {
                                 stateMc1 = STMC.READY_HIGH_PRESURE;
-                                coundown_preminary_pump = Params.COUNT_READY_FOR_SPEED;  //1s
+                                coundown_preminary_pump = Params.COUNT_MAX_PREMINARY;  //1s
                             }
                             break;
                         case STMC.READY_HIGH_PRESURE:
                             if (coundown_preminary_pump == 0)
                             {
+                                mc1.sig_vnd = false;
+                                mc1.sig_count_rotate = false;
                                 stateMc1 = STMC.START_OK;
                             }
                             break;
@@ -263,28 +268,63 @@ namespace M334_8_10_21.Services
                             {
                                 mc1.offmachine();
                             }
+                            stateMachine = StateMachine.CONTROLSPEED;
+                            if (mc1.btn_up == false)
+                            {
+                                stateMc1 = STMC.MACHINEUP;
+                            }
+                            break;
+                        case STMC.PROCESS_MANUAL:
+                            if (mc1.sw_start_auto == true)
+                                stateMc1 = STMC.PROCESS_AUTO_W;
+                            if (mc1.btn_on_preminary_pump == false)
+                                coundown_preminary_pump = Params.COUNT_MAX_PREMINARY;  // 4s
+                            stateMc1 = STMC.PROCESS_MANUAL_START;
+                            break;
+                        case STMC.PROCESS_MANUAL_START:
+                            if (mc1.btn_on_low_airpressure == false)
+                                stateMc1 = STMC.MANUAL_PRESSURE_PREMINARY_PUMP;
+                            break;
+                        case STMC.MANUAL_PRESSURE_PREMINARY_PUMP:
+                            if (mc1.btn_on_hig_airpressure == false)
+                                stateMc1 = STMC.MANUAL_READY_HIGH_PRESURE;
+                            coundown_preminary_pump = Params.COUNT_MAX_PREMINARY;  // 1s
+                            break;
+                        case STMC.MANUAL_READY_HIGH_PRESURE:
+                            if(coundown_preminary_pump == 0)  // 
+                            stateMc1 = STMC.START_OK;
+                            //Khởi động xong thì qua điều khiển tốc độ
                             break;
                     }
                     //Action start///////////////////////////////////////////////////////////////////////////
                     switch (stateMc1)
                     {
                         case STMC.IDLE:
+                        case STMC.PROCESS_MANUAL:
                             mc1.sig_mpa = false;
                             mc1.sig_vnd = false;
                             mc1.sig_vvd = false;
                             mc1.sig_count_rotate = false;
                             break;
-                        case STMC.PROCESS_MANUAL:
-                            if(mc1.btn_on_preminary_pump == false)
-                            {
+                        case STMC.PROCESS_MANUAL_START:
+                            if (mc1.btn_on_preminary_pump == false)
                                 mc1.sig_mpa = true;
-                                coundown_preminary_pump = Params.COUNT_MAX_LOWPRESSURE;  // 8s
-                            }
-                            if (mc1.btn_off_preminary_pump == true)
-                            {
+                            if (mc2.btn_off_preminary_pump == false)        //Nút nhấn bị lỗi chưa fix. Đang dùng nút off của máy 2.
                                 mc1.sig_mpa = false;
+                                break;
+                        case STMC.MANUAL_PRESSURE_PREMINARY_PUMP:
+                            mc1.sig_vnd = true;
+                            coundown_preminary_pump = Params.COUNT_MAX_LOWPRESSURE;  // 8s
+                            if (coundown_preminary_pump % 5 == 0)
+                            {
+                                mc1.sig_count_rotate = !mc1.sig_count_rotate;
                             }
-
+                            break;
+                        case STMC.MANUAL_READY_HIGH_PRESURE:
+                            mc1.sig_mpa = true;
+                            mc1.sig_vvd = true;
+                            mc1.sig_vnd = false;
+                            mc1.sig_count_rotate = false;
                             break;
                         case STMC.PROCESS_AUTO_W:
                             break;
@@ -304,6 +344,8 @@ namespace M334_8_10_21.Services
                             }    
                             break;
                         case STMC.READY_HIGH_PRESURE:
+                            mc1.sig_vnd = false;
+                            mc1.sig_count_rotate = false;
                             mc1.sig_vvd = true;
                             break;
                         case STMC.START_OK:
@@ -437,7 +479,6 @@ namespace M334_8_10_21.Services
                         #region
                         #endregion
                     }
-
                 }
                 if (stateMachine == StateMachine.MACHINE_OFF)
                 {
@@ -445,6 +486,21 @@ namespace M334_8_10_21.Services
                     mc2.offmachine();
                     mc3.offmachine();
                     Orionsystem.off_orion();
+                }    
+                if (stateMachine == StateMachine.CONTROLSPEED)
+                {
+                    switch (stateMc1)
+                    {
+                        case STMC.MACHINEUP:
+                                mc1.vl_speed_engine = 800;
+                            mc1.sig_park = false;
+                                mc1.sig_goahead = true;
+                            break;
+                        case STMC.MACHINEDOWN:
+                            break;
+                        case STMC.MACHINEHIGHSPEED:
+                            break;
+                    }
                 }    
                 await Task.Delay(1);
             }
