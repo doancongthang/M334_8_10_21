@@ -47,7 +47,7 @@
                 </Border.RenderTransform>
             </Border>
 
-            <Border x:Name="rpm3" CornerRadius="0 15 15 0"   Background="#FFD15209" Margin="142,146,25,128" RenderTransformOrigin="0, 0.5" >
+            <Border x:Name="rpm3" CornerRadius="0 15 15 0"   Background="#FFD15209" Margin="142,143,25,131" RenderTransformOrigin="0, 0.5" >
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                 </Border.Effect>
@@ -55,7 +55,7 @@
                     <TransformGroup>
                         <ScaleTransform ScaleY="-1"/>
                         <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
+                        <RotateTransform Angle="{Binding xxRpm3}"/>
                         <TranslateTransform/>
                     </TransformGroup>
                 </Border.RenderTransform>
@@ -116,7 +116,7 @@
                 </Border.RenderTransform>
             </Border>
 
-            <Border x:Name="rpm2" CornerRadius="0 15 15 0"   Background="#FFD15209" Margin="142,145,76,129" RenderTransformOrigin="0, 0.5" >
+            <Border x:Name="rpm2" CornerRadius="0 15 15 0"   Background="#FFD15209" Margin="142,143,76,131" RenderTransformOrigin="0, 0.5" >
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                 </Border.Effect>
@@ -124,7 +124,7 @@
                     <TransformGroup>
                         <ScaleTransform ScaleY="-1"/>
                         <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
+                        <RotateTransform Angle="{Binding xxRpm2}"/>
                         <TranslateTransform/>
                     </TransformGroup>
                 </Border.RenderTransform>
@@ -146,7 +146,7 @@
                     <TransformGroup>
                         <ScaleTransform ScaleY="-1"/>
                         <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
+                        <RotateTransform Angle="{Binding xxRpm1}"/>
                         <TranslateTransform/>
                     </TransformGroup>
                 </Border.RenderTransform>

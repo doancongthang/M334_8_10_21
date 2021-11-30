@@ -281,11 +281,11 @@ namespace M334_8_10_21
         public static int vl_pressurefuel;             //Pressure fuel                     
         public static int vl_pressureptk;              //Pressure ptk
         public static int vl_hydraulicpressure_gidravl;//Pressure gidravl
-
+                      
         public static int vl_hydraulics;               //Pressure hydraulics        phụ thuộc vào 2 giá trị bên dưới. công tắc bật trước lọc và sau lọc thì show giá trị này lên               
         public static int vl_oilafterfilter;           //Value oil after filter 
         public static int vl_oilbeforefilter;          //Value oil before filter         
-
+                      
         public static int vl_time_hours;
         public static int vl_time_minute;
         public static int vl_time_second;

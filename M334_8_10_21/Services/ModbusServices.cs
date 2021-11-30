@@ -40,7 +40,7 @@ namespace M334_8_10_21.Services
             ///*
             while (true)
             {
-                Console.WriteLine("Update modbus");
+                //Console.WriteLine("Update modbus");
                 if (modbusClient.Connected)
                 {
                     try
@@ -122,12 +122,12 @@ namespace M334_8_10_21.Services
                                 break;
                         }
 
-                        Console.WriteLine("Day la doc trang thai");
+                        //Console.WriteLine("Day la doc trang thai");
 
                     }
                     catch (Exception exc)
                     {
-                        Console.WriteLine("Error read");
+                        //Console.WriteLine("Error read");
                     }
                 }
                 boardId++;
@@ -142,7 +142,7 @@ namespace M334_8_10_21.Services
             ///*
             while (true)
             {
-                Console.WriteLine("Update light status");
+                //Console.WriteLine("Update light status");
                 if (modbusClient.Connected)
                 {
                     try
@@ -259,7 +259,7 @@ namespace M334_8_10_21.Services
                     }
                     catch (Exception exc)
                     {
-                        Console.WriteLine("Error write coils");
+                        //Console.WriteLine("Error write coils");
                     }
                 }
 
@@ -273,7 +273,7 @@ namespace M334_8_10_21.Services
         public void UpdateReceiveData(object sender)
         {
             receiveData = "Rx: " + BitConverter.ToString(modbusClient.receiveData).Replace("-", " ");
-            Console.WriteLine("Nhận dữ liệu");
+            //Console.WriteLine("Nhận dữ liệu");
         }
 
         public void Subcribe()
@@ -297,7 +297,7 @@ namespace M334_8_10_21.Services
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Unable to connect to Server");
+                //Console.WriteLine("Unable to connect to Server");
             }
         }
         public async void blink()
@@ -367,7 +367,7 @@ namespace M334_8_10_21.Services
         {
             while (true)
             {
-                Console.WriteLine("Update light status");
+                //Console.WriteLine("Update light status");
                 if (modbusClient.Connected)
                 {
                     try
@@ -659,7 +659,7 @@ namespace M334_8_10_21.Services
                     }
                     catch (Exception exc)
                     {
-                        Console.WriteLine("Error write coils");
+                        //Console.WriteLine("Error write coils");
                     }
                 }
                 boardId++;

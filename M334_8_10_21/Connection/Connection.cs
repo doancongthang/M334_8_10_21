@@ -44,7 +44,7 @@ namespace M334_8_10_21
                 {
                     modbusClient.SerialPort = comport;
                     //
-                    Console.WriteLine("ĐÃ KẾT NỐI");
+                    //Console.WriteLine("ĐÃ KẾT NỐI");
                     //
 
                     //modbusClient.UnitIdentifier = 1;      //ID Mobbus

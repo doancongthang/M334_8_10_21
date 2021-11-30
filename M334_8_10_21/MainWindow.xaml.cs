@@ -51,12 +51,13 @@ namespace M334_8_10_21
         public static readonly DependencyProperty AngleProperty13 = DependencyProperty.Register("tempmc2", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
         public static readonly DependencyProperty AngleProperty14 = DependencyProperty.Register("tempmc3", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
 
-
-
-
         public static readonly DependencyProperty xRpmProperty1 = DependencyProperty.Register("xRpm1", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
         public static readonly DependencyProperty xRpmProperty2 = DependencyProperty.Register("xRpm2", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
         public static readonly DependencyProperty xRpmProperty3 = DependencyProperty.Register("xRpm3", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+
+        public static readonly DependencyProperty xxRpmProperty1 = DependencyProperty.Register("xxRpm1", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty xxRpmProperty2 = DependencyProperty.Register("xxRpm2", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty xxRpmProperty3 = DependencyProperty.Register("xxRpm3", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
 
         public static readonly DependencyProperty AngleProperty_press_mpa1 = DependencyProperty.Register("press_mpa1", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
         public static readonly DependencyProperty AngleProperty_press_mpa2 = DependencyProperty.Register("press_mpa2", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
@@ -85,7 +86,7 @@ namespace M334_8_10_21
 
             //mb.updatedata();
             //mb.blink();
-            tempmc1 = 145;      //Value 0;
+            tempmc1 = 145;      //Value 0;  Max: 400
             tempmc2 = 145;      //Value 0;
             tempmc3 = 145;      //Value 0;
 
@@ -149,13 +150,84 @@ namespace M334_8_10_21
             //Angle10 = num;
             //Angle11 = num;
 
-            tempmc1 = mc1.vl_temperature_gas * 35 + 145;
-            tempmc2 = mc2.vl_temperature_gas * 35 + 145;
-            tempmc3 = mc3.vl_temperature_gas * 35 + 145;
+            tempmc1 = mc1.vl_temperature_gas * 2.7 + 145;
+            tempmc2 = mc2.vl_temperature_gas * 2.7 + 145;
+            tempmc3 = mc3.vl_temperature_gas * 2.7 + 145;
 
-            xRpm1 = mc1.vl_speed_engine * 2.7 + 270;
-            xRpm2 = mc2.vl_speed_engine * 2.7 + 270;
-            xRpm3 = mc3.vl_speed_engine * 2.7 + 270;
+
+            #region Toc do dong co <1000
+            if (mc1.vl_speed_engine < 100)
+            {
+                xRpm1 = mc1.vl_speed_engine * 2.7 + 270;
+                xxRpm1 = mc1.vl_speed_engine / 3.6 + 270;
+            }
+            if (mc1.vl_speed_engine == 100)
+            {
+                xRpm1 = mc1.vl_speed_engine * 2.7 + 270;
+                xxRpm1 = 36 + 270;
+            }
+
+            if (mc2.vl_speed_engine < 100)
+            {
+                xRpm2 = mc2.vl_speed_engine * 2.7 + 270;
+                xxRpm2 = mc2.vl_speed_engine / 3.6 + 270;
+            }
+            if (mc2.vl_speed_engine == 100)
+            {
+                xRpm2 = mc2.vl_speed_engine * 2.7 + 270;
+                xxRpm2 = 36 + 270;
+            }
+
+            if (mc3.vl_speed_engine < 100)
+            {
+                xRpm3 = mc3.vl_speed_engine * 2.7 + 270;
+                xxRpm3 = (mc3.vl_speed_engine / 3.6) + 270;
+            }
+            if (mc3.vl_speed_engine == 100)
+            {
+                xRpm3 = mc3.vl_speed_engine * 2.7 + 270;
+                xxRpm3 = 36 + 270;
+            }
+            #endregion
+
+            #region Toc do dong co > 1000
+            if (mc1.vl_speed_engine >100)
+            {
+                xRpm1 = mc1.vl_speed_engine * 2.7 + 270;
+                xxRpm1 = mc1.vl_speed_engine / 3.6 + 270 +36;
+            }
+            if (mc1.vl_speed_engine == 200)
+            {
+                xRpm1 = mc1.vl_speed_engine * 2.7 + 270;
+                xxRpm1 = 36 + 270 + 36;
+            }
+
+            if (mc2.vl_speed_engine > 100)
+            {
+                xRpm2 = mc2.vl_speed_engine * 2.7 + 270;
+                xxRpm2 = mc2.vl_speed_engine / 3.6 + 270 +36;
+            }
+            if (mc2.vl_speed_engine == 200)
+            {
+                xRpm2 = mc2.vl_speed_engine * 2.7 + 270;
+                xxRpm2 = 36 + 270 + 36;
+            }
+
+            if (mc3.vl_speed_engine > 100)
+            {
+                xRpm3 = mc3.vl_speed_engine * 2.7 + 270;
+                xxRpm3 = (mc3.vl_speed_engine / 3.6) + 270 +36;
+            }
+            if (mc3.vl_speed_engine == 200)
+            {
+                xRpm3 = mc3.vl_speed_engine * 2.7 + 270;
+                xxRpm3 = 36 + 270 + 36;
+            }
+            #endregion
+
+            //xxRpm1 = mc1.vl_speed_engine * 2.7 + 270;
+            //xxRpm2 = mc2.vl_speed_engine * 2.7 + 270;
+            //xxRpm3 = mc3.vl_speed_engine * 2.7 + 270;
 
             press_mpa1 = 215 + mc1.vl_mainlineoilpressure * 8;
             press_mpa2 = 215 + mc2.vl_mainlineoilpressure * 8;
@@ -330,6 +402,24 @@ namespace M334_8_10_21
         {
             get { return (double)GetValue(xRpmProperty3); }
             set { SetValue(xRpmProperty3, value); }
+
+        }
+        public double xxRpm1
+        {
+            get { return (double)GetValue(xxRpmProperty1); }
+            set { SetValue(xxRpmProperty1, value); }
+
+        }
+        public double xxRpm2
+        {
+            get { return (double)GetValue(xxRpmProperty2); }
+            set { SetValue(xxRpmProperty2, value); }
+
+        }
+        public double xxRpm3
+        {
+            get { return (double)GetValue(xxRpmProperty3); }
+            set { SetValue(xxRpmProperty3, value); }
 
         }
         public double press_mpa1
