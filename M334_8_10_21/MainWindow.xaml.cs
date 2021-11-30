@@ -35,13 +35,32 @@ namespace M334_8_10_21
         Machine machineright = new Machine();
         connection ketnoi = new connection();
         public static readonly DependencyProperty SpinSpeedProperty = DependencyProperty.Register("SpinSpeed", typeof(TimeSpan), typeof(MainWindow), new PropertyMetadata(default(TimeSpan)));
-        public static readonly DependencyProperty AngleProperty1 = DependencyProperty.Register("Angle1", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double))); public static readonly DependencyProperty AngleProperty2 = DependencyProperty.Register("Angle2", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
-        public static readonly DependencyProperty AngleProperty3 = DependencyProperty.Register("Angle3", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double))); public static readonly DependencyProperty AngleProperty4 = DependencyProperty.Register("Angle4", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
-        public static readonly DependencyProperty AngleProperty5 = DependencyProperty.Register("Angle5", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double))); public static readonly DependencyProperty AngleProperty6 = DependencyProperty.Register("Angle6", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
-        public static readonly DependencyProperty AngleProperty7 = DependencyProperty.Register("Angle7", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double))); public static readonly DependencyProperty AngleProperty8 = DependencyProperty.Register("Angle8", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
-        public static readonly DependencyProperty AngleProperty9 = DependencyProperty.Register("Angle9", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double))); public static readonly DependencyProperty AngleProperty10 = DependencyProperty.Register("Angle10", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty AngleProperty1 = DependencyProperty.Register("Angle1", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty AngleProperty2 = DependencyProperty.Register("Angle2", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty AngleProperty3 = DependencyProperty.Register("Angle3", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty AngleProperty4 = DependencyProperty.Register("Angle4", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty AngleProperty5 = DependencyProperty.Register("Angle5", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty AngleProperty6 = DependencyProperty.Register("Angle6", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty AngleProperty7 = DependencyProperty.Register("Angle7", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty AngleProperty8 = DependencyProperty.Register("Angle8", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty AngleProperty9 = DependencyProperty.Register("Angle9", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty AngleProperty10 = DependencyProperty.Register("Angle10", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
         public static readonly DependencyProperty AngleProperty11 = DependencyProperty.Register("Angle11", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+
+        public static readonly DependencyProperty AngleProperty12 = DependencyProperty.Register("tempmc1", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty AngleProperty13 = DependencyProperty.Register("tempmc2", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty AngleProperty14 = DependencyProperty.Register("tempmc3", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+
+
+
+
         public static readonly DependencyProperty xRpmProperty1 = DependencyProperty.Register("xRpm1", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty xRpmProperty2 = DependencyProperty.Register("xRpm2", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty xRpmProperty3 = DependencyProperty.Register("xRpm3", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+
+        public static readonly DependencyProperty AngleProperty_press_mpa1 = DependencyProperty.Register("press_mpa1", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty AngleProperty_press_mpa2 = DependencyProperty.Register("press_mpa2", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty AngleProperty_press_mpa3 = DependencyProperty.Register("press_mpa3", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
 
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         public int i = 270, i_new = 0, stt_ang = 0, stt_ang2 = 0, val_ang1;
@@ -51,66 +70,12 @@ namespace M334_8_10_21
         public MainWindow()
         {
             InitializeComponent();
-            Angle1 = Angle2 = Angle3 = Angle4 = Angle5 = Angle6 = Angle7 = Angle8 = Angle9 = Angle10 = Angle11 = 270;
+            //Angle1 = Angle2 = Angle3 = Angle4 = Angle5 = Angle6 = Angle7 = Angle8 = Angle9 = Angle10 = Angle11 = 270;
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = TimeSpan.FromMilliseconds(100);
             SpinSpeed = TimeSpan.FromMilliseconds(200);
 
             dispatcherTimer.Start();
-            //modbusClient = new M334_8_10_21.ModbusClient();
-            //modbusClient.ReceiveDataChanged += new M334_8_10_21.ModbusClient.ReceiveDataChangedHandler(UpdateReceiveData);
-            //modbusClient.SendDataChanged += new M334_8_10_21.ModbusClient.SendDataChangedHandler(UpdateSendData);
-            //modbusClient.ConnectedChanged += new M334_8_10_21.ModbusClient.ConnectedChangedHandler(UpdateConnectedChanged);
-            //modbusClient.LogFileFilename = "logFiletxt.txt";
-            //connection();
-
-            //ketnoi.deviceconnect("COM1");
-            //while (true)
-            //{
-            //    //ketnoi.selectid(1);
-            //    //ketnoi.on_all_larm();
-            //    //Thread.Sleep(500);
-            //    //ketnoi.off_all_larm();
-            //    //Thread.Sleep(500);
-
-
-            //    //ketnoi.selectid(2);
-            //    //ketnoi.on_all_larm();
-            //    //Thread.Sleep(500);
-            //    //ketnoi.off_all_larm();
-            //    //Thread.Sleep(500);
-
-            //    //ketnoi.selectid(3);
-            //    //ketnoi.on_all_larm();
-            //    //Thread.Sleep(500);
-            //    //ketnoi.off_all_larm();
-            //    //Thread.Sleep(500);
-
-            //    ketnoi.selectid(1);
-            //    ketnoi.on_all_larm();
-            //    ketnoi.selectid(2);
-            //    ketnoi.on_all_larm();
-            //    ketnoi.selectid(3);
-            //    ketnoi.on_all_larm();
-            //    Thread.Sleep(100);
-
-            //    ketnoi.selectid(1);
-            //    ketnoi.off_all_larm();
-            //    ketnoi.selectid(2);
-            //    ketnoi.off_all_larm();
-            //    ketnoi.selectid(3);
-            //    ketnoi.off_all_larm();
-            //    Thread.Sleep(100);
-
-            //}
-            //bool a = true;
-            //bool b = false;
-            //bool check = machineleft.startauto(a,b);
-
-
-            //Machine mc1 = new Machine();
-            //Machine mc2 = new Machine();
-            //Machine mc3 = new Machine();
             ModbusServices mb = new ModbusServices(mc1, mc2, mc3);
             LogicServices logic = new LogicServices(mc1, mc2, mc3);
             mb.Connect();
@@ -120,8 +85,19 @@ namespace M334_8_10_21
 
             //mb.updatedata();
             //mb.blink();
-        }
+            tempmc1 = 145;      //Value 0;
+            tempmc2 = 145;      //Value 0;
+            tempmc3 = 145;      //Value 0;
 
+            xRpm1 = 270;        //Value 0;
+            xRpm2 = 270;        //Value 0;
+            xRpm3 = 270;        //Value 0;
+
+            press_mpa2 = 215;   //Value 0;
+            press_mpa3 = 215;   //Value 0;
+            press_mpa1 = 215;   //Value 0;  max 335
+
+        }
         //delegate void UpdateReceiveDataCallback();
         void UpdateReceiveData(object sender)
         {
@@ -158,7 +134,33 @@ namespace M334_8_10_21
             int num = random.Next(0, 360);
 
             //Angle1 = Angle2 = Angle3 = Angle4 = Angle5 = Angle6 = Angle7 = Angle8 = Angle9 = Angle10 = Angle11 = num;
-            Angle1 = Angle2 = Angle3 = Angle4 = Angle7 = mc1.vl_mainlineoilpressure;
+            //Angle1 = Angle2 = Angle3 = Angle4 = Angle7 = num;//mc1.vl_mainlineoilpressure;
+            //xRpm1 = 90;
+            ////SpinSpeed = num;
+            //Angle1 = num;
+            //Angle2 = num;
+            //Angle3 = 270;
+            //Angle4 = num;
+            //Angle5 = num;
+            //Angle6 = num;
+            //Angle7 = num;
+            //Angle8 = num;
+            //Angle9 = num;
+            //Angle10 = num;
+            //Angle11 = num;
+
+            tempmc1 = mc1.vl_temperature_gas * 35 + 145;
+            tempmc2 = mc2.vl_temperature_gas * 35 + 145;
+            tempmc3 = mc3.vl_temperature_gas * 35 + 145;
+
+            xRpm1 = mc1.vl_speed_engine * 2.7 + 270;
+            xRpm2 = mc2.vl_speed_engine * 2.7 + 270;
+            xRpm3 = mc3.vl_speed_engine * 2.7 + 270;
+
+            press_mpa1 = 215 + mc1.vl_mainlineoilpressure * 8;
+            press_mpa2 = 215 + mc2.vl_mainlineoilpressure * 8;
+            press_mpa3 = 215 + mc3.vl_mainlineoilpressure * 8;
+
         }
         private void angle_Click1(object sender, RoutedEventArgs e)
         {
@@ -294,10 +296,58 @@ namespace M334_8_10_21
             set { SetValue(AngleProperty11, value); }
 
         }
+        public double tempmc1
+        {
+            get { return (double)GetValue(AngleProperty12); }
+            set { SetValue(AngleProperty12, value); }
+
+        }
+        public double tempmc2
+        {
+            get { return (double)GetValue(AngleProperty13); }
+            set { SetValue(AngleProperty13, value); }
+
+        }
+        public double tempmc3
+        {
+            get { return (double)GetValue(AngleProperty14); }
+            set { SetValue(AngleProperty14, value); }
+
+        }
         public double xRpm1
         {
             get { return (double)GetValue(xRpmProperty1); }
             set { SetValue(xRpmProperty1, value); }
+
+        }
+        public double xRpm2
+        {
+            get { return (double)GetValue(xRpmProperty2); }
+            set { SetValue(xRpmProperty2, value); }
+
+        }
+        public double xRpm3
+        {
+            get { return (double)GetValue(xRpmProperty3); }
+            set { SetValue(xRpmProperty3, value); }
+
+        }
+        public double press_mpa1
+        {
+            get { return (double)GetValue(AngleProperty_press_mpa1); }
+            set { SetValue(AngleProperty_press_mpa1, value); }
+
+        }
+        public double press_mpa2
+        {
+            get { return (double)GetValue(AngleProperty_press_mpa2); }
+            set { SetValue(AngleProperty_press_mpa2, value); }
+
+        }
+        public double press_mpa3
+        {
+            get { return (double)GetValue(AngleProperty_press_mpa3); }
+            set { SetValue(AngleProperty_press_mpa3, value); }
 
         }
         private void Bug_OnLoaded(object sender, RoutedEventArgs e)

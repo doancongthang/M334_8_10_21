@@ -74,9 +74,9 @@ namespace M334_8_10_21
 
         #region Signal After start to main show
         // 3 giá trị
-        public int vl_temperature_gas;     //Giá trị nhiệt độ 
-        public int vl_speed_engine;        //Giá trị tốc độ vòng quay động cơ
-        public int vl_mainlineoilpressure; //Giá trị áp suất đường dẫn chính
+        public double vl_temperature_gas;     //Giá trị nhiệt độ 
+        public double vl_speed_engine;        //Giá trị tốc độ vòng quay động cơ
+        public double vl_mainlineoilpressure; //Giá trị áp suất đường dẫn chính
         #endregion
 
         //public Machine()
@@ -245,10 +245,6 @@ namespace M334_8_10_21
         public bool controlspeed()
         {
             return sig_nopressure;
-        }
-        public int presenttomain()
-        {
-            return vl_speed_engine;        //Tốc độ vòng quay động cơ
         }
         #endregion
     }

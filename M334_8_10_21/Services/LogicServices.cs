@@ -48,6 +48,7 @@ namespace M334_8_10_21.Services
 
         public int countdown_hydraulics_pump = 0;
         public int coundown_preminary_pump = 0;
+        public int coundown_speed_engine = 0;
 
         public LogicServices(Machine _mc1, Machine _mc2, Machine _mc3)
         {
@@ -253,6 +254,7 @@ namespace M334_8_10_21.Services
                             {
                                 stateMc1 = STMC.READY_HIGH_PRESURE;
                                 coundown_preminary_pump = Params.COUNT_MAX_PREMINARY;  //1s
+                                coundown_speed_engine = Params.COUNT_SPEED_ENGINE;      //Chuẩn bị khởi động
                             }
                             break;
                         case STMC.READY_HIGH_PRESURE:
@@ -260,6 +262,9 @@ namespace M334_8_10_21.Services
                             {
                                 mc1.sig_vnd = false;
                                 mc1.sig_count_rotate = false;
+                            }
+                            if(coundown_speed_engine == 0)
+                            {
                                 stateMc1 = STMC.START_OK;
                             }
                             break;
@@ -269,11 +274,11 @@ namespace M334_8_10_21.Services
                                 mc1.offmachine();
                             }
                             stateMachine = StateMachine.CONTROLSPEED;
-                            if (mc1.btn_up == false)
-                            {
-                                stateMc1 = STMC.MACHINEUP;
-                            }
                             break;
+
+
+
+
                         case STMC.PROCESS_MANUAL:
                             if (mc1.sw_start_auto == true)
                                 stateMc1 = STMC.PROCESS_AUTO_W;
@@ -288,10 +293,14 @@ namespace M334_8_10_21.Services
                         case STMC.MANUAL_PRESSURE_PREMINARY_PUMP:
                             if (mc1.btn_on_hig_airpressure == false)
                                 stateMc1 = STMC.MANUAL_READY_HIGH_PRESURE;
-                            coundown_preminary_pump = Params.COUNT_MAX_PREMINARY;  // 1s
+                            coundown_preminary_pump = Params.COUNT_MAX_PREMINARY;   // 1s
+                            coundown_speed_engine = Params.COUNT_SPEED_ENGINE;      //Tang toc dong co
                             break;
                         case STMC.MANUAL_READY_HIGH_PRESURE:
                             if(coundown_preminary_pump == 0)  // 
+                            {
+                                coundown_speed_engine = Params.COUNT_SPEED_ENGINE;
+                            }    
                             stateMc1 = STMC.START_OK;
                             //Khởi động xong thì qua điều khiển tốc độ
                             break;
@@ -300,32 +309,9 @@ namespace M334_8_10_21.Services
                     switch (stateMc1)
                     {
                         case STMC.IDLE:
-                        case STMC.PROCESS_MANUAL:
-                            mc1.sig_mpa = false;
-                            mc1.sig_vnd = false;
-                            mc1.sig_vvd = false;
-                            mc1.sig_count_rotate = false;
                             break;
-                        case STMC.PROCESS_MANUAL_START:
-                            if (mc1.btn_on_preminary_pump == false)
-                                mc1.sig_mpa = true;
-                            if (mc2.btn_off_preminary_pump == false)        //Nút nhấn bị lỗi chưa fix. Đang dùng nút off của máy 2.
-                                mc1.sig_mpa = false;
-                                break;
-                        case STMC.MANUAL_PRESSURE_PREMINARY_PUMP:
-                            mc1.sig_vnd = true;
-                            coundown_preminary_pump = Params.COUNT_MAX_LOWPRESSURE;  // 8s
-                            if (coundown_preminary_pump % 5 == 0)
-                            {
-                                mc1.sig_count_rotate = !mc1.sig_count_rotate;
-                            }
-                            break;
-                        case STMC.MANUAL_READY_HIGH_PRESURE:
-                            mc1.sig_mpa = true;
-                            mc1.sig_vvd = true;
-                            mc1.sig_vnd = false;
-                            mc1.sig_count_rotate = false;
-                            break;
+
+
                         case STMC.PROCESS_AUTO_W:
                             break;
                         case STMC.PROCESS_AUTO_START:
@@ -347,12 +333,44 @@ namespace M334_8_10_21.Services
                             mc1.sig_vnd = false;
                             mc1.sig_count_rotate = false;
                             mc1.sig_vvd = true;
+                            mc1.vl_speed_engine = ((Params.COUNT_SPEED_ENGINE - coundown_speed_engine));
                             break;
                         case STMC.START_OK:
                             mc1.sig_mpa = false;
                             mc1.sig_vvd = false;
                             mc1.sig_vnd = false;
                             mc1.sig_count_rotate = false;
+                            break;
+
+
+
+
+                        case STMC.PROCESS_MANUAL:
+                            mc1.sig_mpa = false;
+                            mc1.sig_vnd = false;
+                            mc1.sig_vvd = false;
+                            mc1.sig_count_rotate = false;
+                            break;
+                        case STMC.PROCESS_MANUAL_START:
+                            if (mc1.btn_on_preminary_pump == false)
+                                mc1.sig_mpa = true;
+                            if (mc2.btn_off_preminary_pump == false)        //Nút nhấn bị lỗi chưa fix. Đang dùng nút off của máy 2.
+                                mc1.sig_mpa = false;
+                            break;
+                        case STMC.MANUAL_PRESSURE_PREMINARY_PUMP:
+                            mc1.sig_vnd = true;
+                            coundown_preminary_pump = Params.COUNT_MAX_LOWPRESSURE;  // 8s
+                            if (coundown_preminary_pump % 5 == 0)
+                            {
+                                mc1.sig_count_rotate = !mc1.sig_count_rotate;
+                            }
+                            break;
+                        case STMC.MANUAL_READY_HIGH_PRESURE:
+                            mc1.sig_mpa = true;
+                            mc1.sig_vvd = true;
+                            mc1.sig_vnd = false;
+                            mc1.sig_count_rotate = false;
+                            mc1.vl_speed_engine = ((Params.COUNT_SPEED_ENGINE - coundown_speed_engine));
                             break;
                     }
                     //***********Tương tác độc lập SW
@@ -513,6 +531,8 @@ namespace M334_8_10_21.Services
                     countdown_hydraulics_pump--;
                 if (coundown_preminary_pump > 0)
                     coundown_preminary_pump--;
+                if (coundown_speed_engine > 0)
+                    coundown_speed_engine--;
                 // await Task.Delay(100);
                 Thread.Sleep(100);
             }
