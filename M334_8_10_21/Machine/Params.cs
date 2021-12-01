@@ -9,13 +9,16 @@ namespace M334_8_10_21
 {
     class Params
     {
-        public static int COUNT_HYDRAULICS_PUMP = 50;
-        public static int COUNT_DELAY_START = 100;      //
-        public static int COUNT_MAX_PREMINARY = 50;     //4s
-        public static int COUNT_MAX_LOWPRESSURE = 100;   //8s
-        public static int COUNT_READY_FOR_SPEED = 10;//1s
-        public static int COUNT_SPEED_ENGINE = 100;
-        public static int COUNT_TEMPERATURE_ENGINE = 50;
+        public static double COUNT_HYDRAULICS_PUMP = 50;
+        public static double COUNT_DELAY_START = 100;      //
+        public static double COUNT_MAX_PREMINARY = 50;     //4s
+        public static double COUNT_MAX_LOWPRESSURE = 100;   //8s
+        public static double COUNT_READY_FOR_SPEED = 10;//1s
+        public static double COUNT_SPEED_ENGINE = 75;
+        public static double COUNT_TEMPERATURE_ENGINE = 50;
+        public static double COUNT_STEP_ENGINE = 5;
+        public static double COUNT_SPEED_REVERS = 80;
+        public static double COUNT_QUICKDOWN = 100;
 
         //public static int COUNT_HYDRAULICS_PUMP = 50;
         //public static int COUNT_HYDRAULICS_PUMP = 50;

@@ -34,8 +34,11 @@ namespace M334_8_10_21.Services
         MANUAL_READY_HIGH_PRESURE,
 
         MACHINEUP,
+        PROCESS_MACHINE_UP,
         MACHINEHIGHSPEED,
         MACHINEDOWN,
+        QUICKDOWN,
+        REVERSE
     }
 
     class LogicServices
@@ -167,7 +170,7 @@ namespace M334_8_10_21.Services
                         mc3.sig_nopressure = true;
                         mc1.sig_oil_no_pump = true;
                         mc2.sig_oil_no_pump = true;
-                        mc3.sig_oil_no_pump= true;
+                        mc3.sig_oil_no_pump = true;
                         mc1.sig_park = true;
                         mc2.sig_park = true;
                         mc3.sig_park = true;
@@ -180,7 +183,7 @@ namespace M334_8_10_21.Services
                         mc1.sig_park = true;
                         mc2.sig_park = true;
                         mc3.sig_park = true;
-                        Orionsystem.vl_hydraulics = (int)((Params.COUNT_HYDRAULICS_PUMP*0.3 - countdown_hydraulics_pump*0.3));
+                        Orionsystem.vl_hydraulics = (int)((Params.COUNT_HYDRAULICS_PUMP * 0.3 - countdown_hydraulics_pump * 0.3));
                         break;
                     case StateMachine.READY_HYDRAULICS_PUPM:
                         Orionsystem.sig_mainhas_pressure = true;
@@ -212,13 +215,13 @@ namespace M334_8_10_21.Services
         private async void parallel1_updateMachine()
         {
             while (true)
-            { 
+            {
                 if (stateMachine == StateMachine.MACHINE_OFF)
                 {
                     stateMc1 = STMC.IDLE;
                     stateMc2 = STMC.IDLE;
                     stateMc3 = STMC.IDLE;
-                }   
+                }
                 if (stateMachine == StateMachine.READY_HYDRAULICS_PUPM)
                 {
                     btn_only();
@@ -236,7 +239,7 @@ namespace M334_8_10_21.Services
                             }
                             break;
                         case STMC.PROCESS_AUTO_W:
-                            if(mc1.btn_start == false)
+                            if (mc1.btn_start == false)
                             {
                                 coundown_preminary_pump = Params.COUNT_MAX_PREMINARY;  // 4s
                                 stateMc1 = STMC.PROCESS_AUTO_START;
@@ -272,7 +275,7 @@ namespace M334_8_10_21.Services
                                 mc1.sig_vnd = false;
                                 mc1.sig_count_rotate = false;
                             }
-                            if(coundown_speed_engine == 0)
+                            if (coundown_speed_engine == 0)
                             {
                                 stateMc1 = STMC.START_OK;
                             }
@@ -281,8 +284,8 @@ namespace M334_8_10_21.Services
                             Console.WriteLine("Da khoi dong xong");
                             stateMachine = StateMachine.CONTROLSPEED;
                             break;
-                     //***********************************************//
-                     //Các điều kiện chuyển Manual
+                        //***********************************************//
+                        //Các điều kiện chuyển Manual
                         case STMC.PROCESS_MANUAL:
                             if (mc1.sw_start_auto == true)
                                 stateMc1 = STMC.PROCESS_AUTO_W;
@@ -290,7 +293,7 @@ namespace M334_8_10_21.Services
                             {
                                 coundown_preminary_pump = Params.COUNT_MAX_LOWPRESSURE;  // 8s
                                 stateMc1 = STMC.PROCESS_MANUAL_START;
-                            }    
+                            }
                             break;
                         case STMC.PROCESS_MANUAL_START:
                             mc1.vl_mainlineoilpressure = ((Params.COUNT_MAX_LOWPRESSURE - coundown_preminary_pump) * 0.1);
@@ -306,10 +309,10 @@ namespace M334_8_10_21.Services
                             }
                             break;
                         case STMC.MANUAL_READY_HIGH_PRESURE:
-                            if(coundown_speed_engine == 0)  // 
+                            if (coundown_speed_engine == 0)  // 
                             {
                                 stateMc1 = STMC.START_OK;
-                            }    
+                            }
                             //Khởi động xong thì qua điều khiển tốc độ
                             break;
                     }
@@ -333,10 +336,10 @@ namespace M334_8_10_21.Services
                             {
                                 mc1.sig_count_rotate = !mc1.sig_count_rotate;
                             }
-                            if(mc1.sw_start_auto == false)
+                            if (mc1.sw_start_auto == false)
                             {
 
-                            }    
+                            }
                             break;
                         case STMC.READY_HIGH_PRESURE:
                             mc1.sig_vnd = false;
@@ -361,7 +364,7 @@ namespace M334_8_10_21.Services
                         case STMC.PROCESS_MANUAL_START:
                             if (mc1.btn_on_preminary_pump == false)
                                 mc1.sig_mpa = true;
-                            if (mc2.btn_off_preminary_pump == false)        //Nút nhấn bị lỗi chưa fix. Đang dùng nút off của máy 2.
+                            if (mc2.btn_off_preminary_pump == false)                //Nút nhấn bị lỗi chưa fix. Đang dùng nút off của máy 2.
                                 mc1.sig_mpa = false;
                             break;
                         case STMC.MANUAL_PRESSURE_PREMINARY_PUMP:
@@ -389,7 +392,7 @@ namespace M334_8_10_21.Services
                     mc2.offmachine();
                     mc3.offmachine();
                     Orionsystem.off_orion();
-                }    
+                }
                 if (stateMachine == StateMachine.CONTROLSPEED)
                 {
                     btn_only();
@@ -410,29 +413,125 @@ namespace M334_8_10_21.Services
                             {
                                 stateMc1 = STMC.MACHINEDOWN;
                             }
+                            if (mc1.btn_down == false)
+                            {
+                                coundown_speed_engine = Params.COUNT_SPEED_REVERS;           //Giảm để lùi
+                                stateMc1 = STMC.REVERSE;
+                            }
                             break;
                         case STMC.MACHINEUP:
-                            mc1.vl_speed_engine = 800;
+                            coundown_speed_engine = Params.COUNT_STEP_ENGINE;           //Tăng tốc dần
                             mc1.sig_park = false;
-                            mc1.sig_goahead = true;
-                            if (mc1.btn_up == true)
+                            mc1.sig_gobehind = false;
+                            if (mc2.btn_up == false)
+                            {
+                                stateMc1 = STMC.PROCESS_MACHINE_UP;
+                            }
+                            //Nếu dừng
+                            if (mc1.btn_estop == false)
+                            {
+                                mc1.offmachine();
+                                mc1.sig_nopressure = true;
+                                stateMc1 = STMC.IDLE;
+                            }
+
+                            if (mc1.btn_down == false)
+                            {
+                                coundown_speed_engine = Params.COUNT_STEP_ENGINE;           //Giảm tốc dần
+                                stateMc1 = STMC.MACHINEDOWN;
+                            }
+                            if (mc1.vl_speed_engine < 75)
                             {
                                 mc1.sig_goahead = false;
-                                stateMc1 = STMC.MACHINEHIGHSPEED;
+                                mc1.sig_highspeed = false;
+                                mc1.sig_park = true;
+                                mc1.vl_speed_engine = 75;
+                                stateMc1 = STMC.START_OK;
+                            }
+                            if (mc2.btn_down == false)
+                            {
+                                mc1.sig_goahead = false;
+                                mc1.sig_highspeed = false;
+                                mc1.sig_park = false;
+                                mc1.sig_gobehind = true;
+                            }
+
+
+                            if (mc1.btn_quickdown == false)
+                            {
+                                stateMc1 = STMC.START_OK;
+                            }
+                            break;
+                        case STMC.PROCESS_MACHINE_UP:
+                            mc1.vl_speed_engine = mc1.vl_speed_engine + ((Params.COUNT_STEP_ENGINE - coundown_speed_engine) / 10);
+                            mc1.sig_goahead = true;
+                            if (mc1.vl_speed_engine > 100)
+                            {
+                                mc1.sig_goahead = false;
+                                mc1.sig_highspeed = true;
+                            }
+
+                            if (coundown_speed_engine == 0)
+                            {
+                                stateMc1 = STMC.MACHINEUP;
                             }
                             break;
                         case STMC.MACHINEDOWN:
+                            mc1.vl_speed_engine = mc1.vl_speed_engine - ((Params.COUNT_STEP_ENGINE - coundown_speed_engine) / 10);
+                            //if (mc1.vl_speed_engine < 100)
+                            //{
+                            //    mc1.sig_goahead = true;
+                            //    mc1.sig_highspeed = false;
+                            //    stateMc1 = STMC.MACHINEUP;
+                            //}
+                            if (mc1.vl_speed_engine > 80)
+                            {
+                                mc1.sig_goahead = true;
+                                mc1.sig_highspeed = false;
+                                stateMc1 = STMC.MACHINEUP;
+                                //stateMc1 = STMC.PROCESS_MACHINE_UP;
+                            }
+                            if (mc1.vl_speed_engine > 100)
+                            {
+                                mc1.sig_goahead = false;
+                                mc1.sig_highspeed = true;
+                                stateMc1 = STMC.PROCESS_MACHINE_UP;
+                            }
+                            if (mc1.vl_speed_engine < 80)
+                            {
+                                mc1.sig_goahead = false;
+                                mc1.sig_highspeed = false;
+                                mc1.sig_park = true;
+                                stateMc1 = STMC.MACHINEUP;
+                                //mc1.vl_speed_engine = 80;
+                            }
+                            if (mc2.btn_up == false)     //Đang dùng nút nhấn mc2
+                            {
+                                stateMc1 = STMC.MACHINEUP;
+                            }
+                            if (mc1.btn_down == false)
+                            {
+                                stateMc1 = STMC.MACHINEDOWN;
+                            }
 
                             break;
-                        case STMC.MACHINEHIGHSPEED:
-                            if (mc1.btn_up == true)
+                        case STMC.REVERSE:
+                            mc1.vl_speed_engine = mc1.vl_speed_engine + ((Params.COUNT_SPEED_REVERS - coundown_speed_engine) / 10);
+                            mc1.sig_gobehind = true;
+                            mc1.sig_park = false;
+                            if(mc1.vl_speed_engine >= 80)
                             {
-                                mc1.sig_highspeed = true;
+                                mc1.sig_gobehind = true;
+                                stateMc1 = STMC.START_OK;
                             }
+                            //stateMc1 = STMC.REVERSE;
+                            break;
+                        case STMC.QUICKDOWN:
+                            mc1.vl_speed_engine = mc1.vl_speed_engine - ((Params.COUNT_STEP_ENGINE - coundown_speed_engine) / 10);
+                            stateMc1 = STMC.START_OK;
                             break;
                     }
                 }
-                
                 await Task.Delay(1);
                 Console.WriteLine(stateMc1);
             }
@@ -440,12 +539,12 @@ namespace M334_8_10_21.Services
         public void btn_only()
         {
             //***********Tương tác độc lập SW
-            if(Orionsystem.SW_power == false)
+            if (Orionsystem.SW_power == false)
             {
                 stateMachine = StateMachine.MACHINE_OFF;
-            }    
+            }
             {
-                #region btn for one machine
+                #region btn for machine
                 if (mc1.sw_pumpout == true)
                 {
                     mc1.sig_otka = true;
@@ -562,6 +661,16 @@ namespace M334_8_10_21.Services
                 {
                     Orionsystem.sig_main_hobbyshirt = false;
                 }
+                if (Orionsystem.SW3 == true)
+                {
+                    Orionsystem.sig_remote_pump = true;
+                    Orionsystem.sig_main_pump = false;
+                }
+                if (Orionsystem.SW3 == false)
+                {
+                    Orionsystem.sig_remote_pump = false;
+                    Orionsystem.sig_main_pump = true;
+                }
                 #endregion
                 #region
                 #endregion
@@ -588,7 +697,7 @@ namespace M334_8_10_21.Services
         public void Subcribe()
         {
             Task control = Task.Run(() => loopUpdateActionsStateMachine());  // Khởi chạy loop services
-          //  Task timer1s = Task.Run(() => Timer1Second());
+                                                                             //  Task timer1s = Task.Run(() => Timer1Second());
             Task stateEachMachine1 = Task.Run(() => parallel1_updateMachine());
         }
     }

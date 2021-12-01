@@ -73,7 +73,7 @@
                 <ImageBrush ImageSource="/Img/gauge-1.png"/>
             </Grid.Background>
 
-            <Border x:Name="second" CornerRadius="0 19 19 0" Background="Black" Margin="140,142,65,132" RenderTransformOrigin="0, 0.5">
+            <Border x:Name="second" CornerRadius="0 19 19 0" Background="Black" Margin="142,143,63,131" RenderTransformOrigin="0, 0.5">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="13" ShadowDepth="10"/>
                 </Border.Effect>
@@ -138,7 +138,7 @@
 
 
 
-            <Border x:Name="rpm2_Copy" CornerRadius="0 15 15 0"   Background="#FFD15209" Margin="-191,142,409,132" RenderTransformOrigin="0, 0.5" >
+            <Border x:Name="rpm2_Copy" CornerRadius="0 15 15 0"   Background="#FFD15209" Margin="-191,143,409,131" RenderTransformOrigin="0, 0.5" >
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                 </Border.Effect>
