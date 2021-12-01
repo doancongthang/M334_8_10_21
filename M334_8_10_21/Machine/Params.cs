@@ -18,7 +18,7 @@ namespace M334_8_10_21
         public static double COUNT_TEMPERATURE_ENGINE = 50;
         public static double COUNT_STEP_ENGINE = 5;
         public static double COUNT_SPEED_REVERS = 80;
-        public static double COUNT_QUICKDOWN = 100;
+        public static double COUNT_QUICKDOWN;
 
         //public static int COUNT_HYDRAULICS_PUMP = 50;
         //public static int COUNT_HYDRAULICS_PUMP = 50;

@@ -38,7 +38,8 @@ namespace M334_8_10_21.Services
         MACHINEHIGHSPEED,
         MACHINEDOWN,
         QUICKDOWN,
-        REVERSE
+        REVERSE,
+        STOP_POSITION
     }
 
     class LogicServices
@@ -218,6 +219,7 @@ namespace M334_8_10_21.Services
             {
                 if (stateMachine == StateMachine.MACHINE_OFF)
                 {
+                    btn_only();
                     stateMc1 = STMC.IDLE;
                     stateMc2 = STMC.IDLE;
                     stateMc3 = STMC.IDLE;
@@ -418,6 +420,16 @@ namespace M334_8_10_21.Services
                                 coundown_speed_engine = Params.COUNT_SPEED_REVERS;           //Giảm để lùi
                                 stateMc1 = STMC.REVERSE;
                             }
+                            if (mc1.sig_gobehind == true & mc2.btn_up == false)
+                            {
+                                coundown_speed_engine = Params.COUNT_SPEED_REVERS;           //Giảm để lùi
+                                stateMc1 = STMC.STOP_POSITION;
+                            }
+                            //if(mc1.vl_speed_engine <=75)
+                            //{
+                            //    mc1.sig_gobehind = false;
+                            //    mc1.sig_park = true;
+                            //}    
                             break;
                         case STMC.MACHINEUP:
                             coundown_speed_engine = Params.COUNT_STEP_ENGINE;           //Tăng tốc dần
@@ -440,6 +452,14 @@ namespace M334_8_10_21.Services
                                 coundown_speed_engine = Params.COUNT_STEP_ENGINE;           //Giảm tốc dần
                                 stateMc1 = STMC.MACHINEDOWN;
                             }
+                            if (mc1.vl_speed_engine < 80)
+                            {
+                                mc1.sig_goahead = true;
+                                mc1.sig_highspeed = false;
+                                //mc1.sig_park = true;
+                                //mc1.vl_speed_engine = 75;
+                                //stateMc1 = STMC.START_OK;
+                            }
                             if (mc1.vl_speed_engine < 75)
                             {
                                 mc1.sig_goahead = false;
@@ -459,7 +479,9 @@ namespace M334_8_10_21.Services
 
                             if (mc1.btn_quickdown == false)
                             {
-                                stateMc1 = STMC.START_OK;
+                                coundown_speed_engine = mc1.vl_speed_engine - 80;
+                                Params.COUNT_QUICKDOWN = mc1.vl_speed_engine - 80;
+                                stateMc1 = STMC.QUICKDOWN;
                             }
                             break;
                         case STMC.PROCESS_MACHINE_UP:
@@ -519,16 +541,36 @@ namespace M334_8_10_21.Services
                             mc1.vl_speed_engine = mc1.vl_speed_engine + ((Params.COUNT_SPEED_REVERS - coundown_speed_engine) / 10);
                             mc1.sig_gobehind = true;
                             mc1.sig_park = false;
-                            if(mc1.vl_speed_engine >= 80)
+                            if (mc1.vl_speed_engine >= 80)
                             {
                                 mc1.sig_gobehind = true;
                                 stateMc1 = STMC.START_OK;
                             }
                             //stateMc1 = STMC.REVERSE;
                             break;
+                        case STMC.STOP_POSITION:
+
+                            mc1.vl_speed_engine = mc1.vl_speed_engine - ((Params.COUNT_SPEED_REVERS - coundown_speed_engine) / 10);
+                            if (mc1.vl_speed_engine < 75)                    //Đang sai phần cứng. cần sửa lại nút nhấn Up1
+                            {
+                                //coundown_speed_engine = Params.COUNT_SPEED_REVERS;           //Giảm để lùi
+                                mc1.sig_park = true;
+                                mc1.sig_highspeed = false;
+                                mc1.sig_goahead = false;
+                                mc1.sig_gobehind = false;
+                                mc1.vl_speed_engine = 75;
+                                stateMc1 = STMC.START_OK;
+                            }
+                            break;
                         case STMC.QUICKDOWN:
-                            mc1.vl_speed_engine = mc1.vl_speed_engine - ((Params.COUNT_STEP_ENGINE - coundown_speed_engine) / 10);
-                            stateMc1 = STMC.START_OK;
+                            mc1.vl_speed_engine = mc1.vl_speed_engine - ((Params.COUNT_QUICKDOWN - coundown_speed_engine) / 10);
+                            if (mc1.vl_speed_engine <= 78)
+                            {
+                                mc1.sig_park = true;
+                                mc1.sig_highspeed = false;
+                                mc1.sig_goahead = false;
+                                stateMc1 = STMC.START_OK;
+                            }
                             break;
                     }
                 }
