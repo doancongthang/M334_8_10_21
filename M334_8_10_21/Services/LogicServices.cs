@@ -16,9 +16,10 @@ namespace M334_8_10_21.Services
         READY_HYDRAULICS_PUPM,
         W_OFFTEST,
         TEST,
-        CONTROLSPEED
+        CONTROLSPEED,
+        CONTROLSPEED2,
+        CONTROLSPEED3
     }
-
     enum STMC
     {
         IDLE,
@@ -56,6 +57,18 @@ namespace M334_8_10_21.Services
         public double coundown_increte_pump = 0;
         public double coundown_temp_engine = 0;
 
+        public double countdown_hydraulics_pump2 = 0;
+        public double coundown_preminary_pump2 = 0;
+        public double coundown_speed_engine2 = 0;
+        public double coundown_increte_pump2 = 0;
+        public double coundown_temp_engine2 = 0;
+
+        public double countdown_hydraulics_pump3 = 0;
+        public double coundown_preminary_pump3 = 0;
+        public double coundown_speed_engine3 = 0;
+        public double coundown_increte_pump3 = 0;
+        public double coundown_temp_engine3 = 0;
+
         public LogicServices(Machine _mc1, Machine _mc2, Machine _mc3)
         {
             mc1 = _mc1;
@@ -66,13 +79,17 @@ namespace M334_8_10_21.Services
             stateMc2 = STMC.IDLE;
             stateMc3 = STMC.IDLE;
 
-            Thread delay100mdThread = new Thread(Timer1Second);
-            delay100mdThread.Start();
+            Thread delay1Thread = new Thread(Timer1Second);
+            Thread delay2Thread = new Thread(Timer2Second);
+            Thread delay3Thread = new Thread(Timer3Second);
+
+            delay1Thread.Start();
+            delay2Thread.Start();
+            delay3Thread.Start();
         }
 
         private async void loopUpdateActionsStateMachine()
         {
-            //***********************************************************************************************************//
             while (true)
             {
                 //Console.WriteLine(stateMachine);
@@ -366,7 +383,7 @@ namespace M334_8_10_21.Services
                         case STMC.PROCESS_MANUAL_START:
                             if (mc1.btn_on_preminary_pump == false)
                                 mc1.sig_mpa = true;
-                            if (mc2.btn_off_preminary_pump == false)                //Nút nhấn bị lỗi chưa fix. Đang dùng nút off của máy 2.
+                            if (mc1.btn_off_preminary_pump == false)                //Nút nhấn bị lỗi chưa fix. Đang dùng nút off của máy 2.
                                 mc1.sig_mpa = false;
                             break;
                         case STMC.MANUAL_PRESSURE_PREMINARY_PUMP:
@@ -407,7 +424,7 @@ namespace M334_8_10_21.Services
                                 mc1.sig_nopressure = true;
                                 stateMc1 = STMC.IDLE;
                             }
-                            if (mc2.btn_up == false)                    //Đang sai phần cứng. cần sửa lại nút nhấn Up1
+                            if (mc1.btn_up == false)                    //Đang sai phần cứng. cần sửa lại nút nhấn Up1
                             {
                                 stateMc1 = STMC.MACHINEUP;
                             }
@@ -420,7 +437,7 @@ namespace M334_8_10_21.Services
                                 coundown_speed_engine = Params.COUNT_SPEED_REVERS;           //Giảm để lùi
                                 stateMc1 = STMC.REVERSE;
                             }
-                            if (mc1.sig_gobehind == true & mc2.btn_up == false)
+                            if (mc1.sig_gobehind == true & mc1.btn_up == false)
                             {
                                 coundown_speed_engine = Params.COUNT_SPEED_REVERS;           //Giảm để lùi
                                 stateMc1 = STMC.STOP_POSITION;
@@ -435,7 +452,7 @@ namespace M334_8_10_21.Services
                             coundown_speed_engine = Params.COUNT_STEP_ENGINE;           //Tăng tốc dần
                             mc1.sig_park = false;
                             mc1.sig_gobehind = false;
-                            if (mc2.btn_up == false)
+                            if (mc1.btn_up == false)
                             {
                                 stateMc1 = STMC.PROCESS_MACHINE_UP;
                             }
@@ -468,7 +485,7 @@ namespace M334_8_10_21.Services
                                 mc1.vl_speed_engine = 75;
                                 stateMc1 = STMC.START_OK;
                             }
-                            if (mc2.btn_down == false)
+                            if (mc1.btn_down == false)
                             {
                                 mc1.sig_goahead = false;
                                 mc1.sig_highspeed = false;
@@ -527,7 +544,7 @@ namespace M334_8_10_21.Services
                                 stateMc1 = STMC.MACHINEUP;
                                 //mc1.vl_speed_engine = 80;
                             }
-                            if (mc2.btn_up == false)     //Đang dùng nút nhấn mc2
+                            if (mc1.btn_up == false)     //Đang dùng nút nhấn mc2
                             {
                                 stateMc1 = STMC.MACHINEUP;
                             }
@@ -575,9 +592,10 @@ namespace M334_8_10_21.Services
                     }
                 }
                 await Task.Delay(1);
-                Console.WriteLine(stateMc1);
+                //Console.WriteLine(stateMc1);
             }
         }
+        
         public void btn_only()
         {
             //***********Tương tác độc lập SW
@@ -736,11 +754,49 @@ namespace M334_8_10_21.Services
                 Thread.Sleep(100);
             }
         }
+        private void Timer2Second()
+        {
+            while (true)
+            {
+                if (countdown_hydraulics_pump2 > 0)
+                    countdown_hydraulics_pump2--;
+                if (coundown_preminary_pump2 > 0)
+                    coundown_preminary_pump2--;
+                if (coundown_increte_pump2 > 0)
+                    coundown_increte_pump2--;
+                if (coundown_speed_engine2 > 0)
+                    coundown_speed_engine2--;
+                if (coundown_temp_engine2 > 0)
+                    coundown_temp_engine2--;
+                // await Task.Delay(100);
+                Thread.Sleep(100);
+            }
+        }
+        private void Timer3Second()
+        {
+            while (true)
+            {
+                if (countdown_hydraulics_pump3 > 0)
+                    countdown_hydraulics_pump3--;
+                if (coundown_preminary_pump3 > 0)
+                    coundown_preminary_pump3--;
+                if (coundown_increte_pump3 > 0)
+                    coundown_increte_pump3--;
+                if (coundown_speed_engine3 > 0)
+                    coundown_speed_engine3--;
+                if (coundown_temp_engine3 > 0)
+                    coundown_temp_engine3--;
+                // await Task.Delay(100);
+                Thread.Sleep(100);
+            }
+        }
         public void Subcribe()
         {
             Task control = Task.Run(() => loopUpdateActionsStateMachine());  // Khởi chạy loop services
                                                                              //  Task timer1s = Task.Run(() => Timer1Second());
             Task stateEachMachine1 = Task.Run(() => parallel1_updateMachine());
+            //6Task stateEachMachine2 = Task.Run(() => parallel2_updateMachine());
+            //Task stateEachMachine3 = Task.Run(() => parallel3_updateMachine());
         }
     }
 }

@@ -172,26 +172,26 @@ namespace M334_8_10_21
                 xxRpm1 = (mc1.vl_speed_engine + 1) / 2.7 + 270;
             }
 
-            if (mc2.vl_speed_engine < 99)
+            if (mc2.vl_speed_engine < 100)
             {
                 xRpm2 = mc2.vl_speed_engine * 3.6 + 270;
-                xxRpm2 = mc2.vl_speed_engine / 3.6 + 270;
+                xxRpm2 = mc2.vl_speed_engine / 2.7 + 270;
             }
             if (mc2.vl_speed_engine == 99)
             {
                 xRpm2 = (mc2.vl_speed_engine + 1) * 3.6 + 270;
-                xxRpm2 = (mc2.vl_speed_engine + 1) * 2.7 + 270;
+                xxRpm2 = (mc2.vl_speed_engine + 1) / 2.7 + 270;
             }
 
-            if (mc3.vl_speed_engine < 99)
+            if (mc3.vl_speed_engine < 100)
             {
                 xRpm3 = mc3.vl_speed_engine * 3.6 + 270;
-                xxRpm3 = (mc3.vl_speed_engine / 3.6) + 270;
+                xxRpm3 = (mc3.vl_speed_engine / 2.7) + 270;
             }
             if (mc3.vl_speed_engine == 99)
             {
                 xRpm3 = (mc3.vl_speed_engine + 1) * 3.6 + 270;
-                xxRpm3 = (mc3.vl_speed_engine + 1) * 2.7 + 270;
+                xxRpm3 = (mc3.vl_speed_engine + 1) /2.7 + 270;
             }
             #endregion
 
@@ -201,33 +201,16 @@ namespace M334_8_10_21
                 xRpm1 = mc1.vl_speed_engine * 3.6 + 270;
                 xxRpm1 = (mc1.vl_speed_engine) / 2.7 + 270;
             }
-            //if (mc1.vl_speed_engine == 199)
-            //{
-            //    xRpm1 = mc1.vl_speed_engine * 3.6 + 270;
-            //    xxRpm1 = 36 + 270 + 36;
-            //}
-
             if (mc2.vl_speed_engine > 101)
             {
                 xRpm2 = mc2.vl_speed_engine * 3.6 + 270;
                 xxRpm2 = (mc2.vl_speed_engine) / 2.7 + 270;
             }
-            //if (mc2.vl_speed_engine == 199)
-            //{
-            //    xRpm2 = mc2.vl_speed_engine * 3.6 + 270;
-            //    xxRpm2 = 36 + 270 + 36;
-            //}
-
             if (mc3.vl_speed_engine > 101)
             {
                 xRpm3 = mc3.vl_speed_engine * 3.6 + 270;
                 xxRpm3 = (mc3.vl_speed_engine) / 2.7 + 270;
             }
-            //if (mc3.vl_speed_engine == 199)
-            //{
-            //    xRpm3 = mc3.vl_speed_engine * 3.6 + 270;
-            //    xxRpm3 = 36 + 270 + 36;
-            //}
             #endregion
 
             //xxRpm1 = mc1.vl_speed_engine * 2.7 + 270;

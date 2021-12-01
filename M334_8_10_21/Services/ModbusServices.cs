@@ -509,8 +509,9 @@ namespace M334_8_10_21.Services
                                 mc3.btn_start = result2[22];
                                 mc1.btn_on_low_airpressure = result2[23];
                                 mc2.btn_start = result2[24];
-                                mc2.btn_off_preminary_pump = result2[25];
+                                mc1.btn_off_preminary_pump = result2[25];
                                 mc3.btn_on_hig_airpressure = result2[26];
+                                mc2.btn_on_low_airpressure = result2[27];
                                 mc2.btn_off_preminary_pump = result2[28];
                                 mc3.btn_on_low_airpressure = result2[29];
                                 //                              = result2[30];
