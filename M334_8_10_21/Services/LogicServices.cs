@@ -171,12 +171,15 @@ namespace M334_8_10_21.Services
                 switch (stateMachine)  // ACTIONS
                 {
                     case StateMachine.MACHINE_OFF:
-                        Orionsystem.sig_mainhas_pressure = false;
-                        Orionsystem.sig_mainno_pressure = false;
-                        mc1.offmachine();
-                        mc2.offmachine();
-                        mc3.offmachine();
-                        Orionsystem.off_orion();
+                        while (Orionsystem.SW_power == false)
+                        {
+                            Orionsystem.sig_mainhas_pressure = false;
+                            Orionsystem.sig_mainno_pressure = false;
+                            mc1.offmachine();
+                            mc2.offmachine();
+                            mc3.offmachine();
+                            Orionsystem.off_orion();
+                        }
                         break;
                     case StateMachine.MACHINE_ON:
                         //stateMachine = StateMachine.MACHINE_OFF;
@@ -208,6 +211,7 @@ namespace M334_8_10_21.Services
                         mc1.sig_nopressure = false;
                         mc2.sig_nopressure = false;
                         mc3.sig_nopressure = false;
+
                         //mc1.sig_park = true;
                         //mc2.sig_park = true;
                         //mc3.sig_park = true;
@@ -220,10 +224,13 @@ namespace M334_8_10_21.Services
                         Orionsystem.off_all_sig_main();
                         break;
                     case StateMachine.TEST:
-                        mc1.on_all_sig();
-                        mc2.on_all_sig();
-                        mc3.on_all_sig();
-                        Orionsystem.on_all_sig_main();
+                        while (Orionsystem.btn_checklight == false)
+                        {
+                            mc1.on_all_sig();
+                            mc2.on_all_sig();
+                            mc3.on_all_sig();
+                            Orionsystem.on_all_sig_main();
+                        }
                         break;
                 }
                 await Task.Delay(1);
@@ -340,6 +347,7 @@ namespace M334_8_10_21.Services
                     switch (stateMc1)
                     {
                         case STMC.IDLE:
+                            mc1.sig_park = true;
                             break;
 
                         case STMC.PROCESS_AUTO_W:
@@ -422,10 +430,11 @@ namespace M334_8_10_21.Services
                             if (mc1.btn_estop == false)
                             {
                                 mc1.offmachine();
+                                mc1.park();
                                 mc1.sig_nopressure = true;
                                 stateMc1 = STMC.IDLE;
                             }
-                            if (mc1.btn_up == false)                    //Đang sai phần cứng. cần sửa lại nút nhấn Up1
+                            if (mc1.btn_up == false)
                             {
                                 stateMc1 = STMC.MACHINEUP;
                             }
@@ -461,6 +470,7 @@ namespace M334_8_10_21.Services
                             if (mc1.btn_estop == false)
                             {
                                 mc1.offmachine();
+                                mc1.park();
                                 mc1.sig_nopressure = true;
                                 stateMc1 = STMC.IDLE;
                             }
@@ -491,7 +501,7 @@ namespace M334_8_10_21.Services
                                 mc1.sig_goahead = false;
                                 mc1.sig_highspeed = false;
                                 mc1.sig_park = false;
-                                mc1.sig_gobehind = true;
+                                //mc1.sig_gobehind = true;
                             }
 
 
@@ -583,7 +593,7 @@ namespace M334_8_10_21.Services
                             break;
                         case STMC.QUICKDOWN:
                             mc1.vl_speed_engine = mc1.vl_speed_engine - ((Params.COUNT_QUICKDOWN - coundown_speed_engine) / 10);
-                            if (mc1.vl_speed_engine <= 78)
+                            if (mc1.vl_speed_engine <= 79)
                             {
                                 mc1.sig_park = true;
                                 mc1.sig_highspeed = false;
@@ -708,6 +718,7 @@ namespace M334_8_10_21.Services
                     switch (stateMc2)
                     {
                         case STMC.IDLE:
+                            mc2.sig_park = true;
                             break;
 
                         case STMC.PROCESS_AUTO_W:
@@ -789,10 +800,11 @@ namespace M334_8_10_21.Services
                             if (mc2.btn_estop == false)
                             {
                                 mc2.offmachine();
+                                mc2.park();
                                 mc2.sig_nopressure = true;
                                 stateMc2 = STMC.IDLE;
                             }
-                            if (mc2.btn_up == false)                    
+                            if (mc2.btn_up == false)
                             {
                                 stateMc2 = STMC.MACHINEUP;
                             }
@@ -828,7 +840,8 @@ namespace M334_8_10_21.Services
                             if (mc2.btn_estop == false)
                             {
                                 mc2.offmachine();
-                                mc2.sig_nopressure = true;
+                                mc2.park();
+                                //mc2.sig_nopressure = true;
                                 stateMc2 = STMC.IDLE;
                             }
 
@@ -859,7 +872,7 @@ namespace M334_8_10_21.Services
                                 mc2.sig_goahead = false;
                                 mc2.sig_highspeed = false;
                                 mc2.sig_park = false;
-                                mc2.sig_gobehind = true;
+                                //mc2.sig_gobehind = true;
                             }
 
 
@@ -1075,6 +1088,7 @@ namespace M334_8_10_21.Services
                     switch (stateMc3)
                     {
                         case STMC.IDLE:
+                            mc3.sig_park = true;
                             break;
 
                         case STMC.PROCESS_AUTO_W:
@@ -1155,7 +1169,7 @@ namespace M334_8_10_21.Services
                             if (mc3.btn_estop == false)
                             {
                                 mc3.offmachine();
-                                mc3.sig_nopressure = true;
+                                mc3.park();
                                 stateMc3 = STMC.IDLE;
                             }
                             if (mc3.btn_up == false)                    //Đang sai phần cứng. cần sửa lại nút nhấn Up1
@@ -1194,7 +1208,7 @@ namespace M334_8_10_21.Services
                             if (mc3.btn_estop == false)
                             {
                                 mc3.offmachine();
-                                mc3.sig_nopressure = true;
+                                mc3.park();
                                 stateMc3 = STMC.IDLE;
                             }
 
@@ -1224,7 +1238,7 @@ namespace M334_8_10_21.Services
                                 mc3.sig_goahead = false;
                                 mc3.sig_highspeed = false;
                                 mc3.sig_park = false;
-                                mc3.sig_gobehind = true;
+                                //mc3.sig_gobehind = true;
                             }
 
 

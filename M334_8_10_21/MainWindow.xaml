@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:M334_8_10_21"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Loaded="Bug_OnLoaded"
-        mc:Ignorable="d" AllowsTransparency="True"  WindowStyle="None" ResizeMode="NoResize"  Background="{x:Null}" MouseDown="Window_MouseDown"
-        Height="908" Width="1100">
+        mc:Ignorable="d" AllowsTransparency="True"  WindowStyle="None" ResizeMode="CanMinimize"  Background="{x:Null}" MouseDown="Window_MouseDown"
+        Height="768" Width="1024">
     <Window.Resources>
 
     </Window.Resources>
@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
 
 
-        <Grid Height="284" Width="284" Grid.Row="0"  Margin="700,316,74,674">
+        <Grid Height="284" Width="284" Grid.Row="0"  Margin="644,313,130,677">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="231*"/>
                 <ColumnDefinition Width="53*"/>
@@ -67,13 +67,12 @@
                 </Ellipse.Effect>
             </Ellipse>
         </Grid>
-        <Grid Height="284" Width="284" Grid.Row="0" Grid.Column="0" Margin="28,316,746,674" >
+        <Grid Height="284" Width="284" Grid.Row="0" Grid.Column="0" Margin="28,312,746,678" >
 
             <Grid.Background>
                 <ImageBrush ImageSource="/Img/gauge-1.png"/>
             </Grid.Background>
-
-            <Border x:Name="second" CornerRadius="0 19 19 0" Background="Black" Margin="142,143,63,131" RenderTransformOrigin="0, 0.5">
+            <Border x:Name="second" Panel.ZIndex="3" CornerRadius="0 19 19 0" Background="Black" Margin="142,143,63,131" RenderTransformOrigin="0, 0.5">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="13" ShadowDepth="10"/>
                 </Border.Effect>
@@ -86,17 +85,15 @@
                     </TransformGroup>
                 </Border.RenderTransform>
             </Border>
-
-            <Ellipse Fill="Black" Width="14" Height="14" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" Visibility="Visible">
+            <Ellipse Fill="Black" Panel.ZIndex="1" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0">
                 <Ellipse.Effect>
                     <DropShadowEffect BlurRadius="9" ShadowDepth="1"/>
                 </Ellipse.Effect>
             </Ellipse>
-
         </Grid>
 
 
-        <Grid Height="284" Width="284" Grid.Row="0" Margin="361,316,413,674">
+        <Grid Height="284" Width="284" Grid.Row="0" Margin="339,311,435,679">
 
             <Grid.Background>
                 <ImageBrush ImageSource="/Img/gauge-1.png"></ImageBrush>
@@ -116,7 +113,7 @@
                 </Border.RenderTransform>
             </Border>
 
-            <Border x:Name="rpm2" CornerRadius="0 15 15 0"   Background="#FFD15209" Margin="142,143,76,131" RenderTransformOrigin="0, 0.5" >
+            <Border x:Name="rpm2" CornerRadius="0 15 15 0"   Background="#FFD15209" Margin="142,144,76,130" RenderTransformOrigin="0, 0.5" >
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                 </Border.Effect>
@@ -138,10 +135,15 @@
 
 
 
-            <Border x:Name="rpm2_Copy" CornerRadius="0 15 15 0"   Background="#FFD15209" Margin="-191,143,409,131" RenderTransformOrigin="0, 0.5" >
+            <Border x:Name="rpm2_Copy" Panel.ZIndex="2" CornerRadius="0 15 15 0"   Background="#FFD15209" Margin="-169,144,387,130" RenderTransformOrigin="0, 0.5" >
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                 </Border.Effect>
+                <Ellipse Panel.ZIndex="1" Fill="Black" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0">
+                    <Ellipse.Effect>
+                        <DropShadowEffect BlurRadius="9" ShadowDepth="1"/>
+                    </Ellipse.Effect>
+                </Ellipse>
                 <Border.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleY="-1"/>
@@ -151,6 +153,7 @@
                     </TransformGroup>
                 </Border.RenderTransform>
             </Border>
+
         </Grid>
 
 
@@ -158,7 +161,7 @@
 
 
 
-        <Grid Height="284" Width="284" Grid.Column="0" Margin="19,9,0,981" HorizontalAlignment="Left" >
+        <Grid Height="284" Width="284" Grid.Column="0" Margin="31,-3,0,993" HorizontalAlignment="Left" >
 
             <Grid.Background>
                 <ImageBrush ImageSource="/Img/gauge-2.png"/>
@@ -187,7 +190,7 @@
                 </Ellipse.Effect>
             </Ellipse>
         </Grid>
-        <Grid Height="284" Width="284" Margin="352,0,404,972">
+        <Grid Height="284" Width="284" Margin="341,-5,433,995">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -217,7 +220,7 @@
                 </Ellipse.Effect>
             </Ellipse>
         </Grid>
-        <Grid Height="284" Width="284"  Margin="691,0,65,972">
+        <Grid Height="284" Width="284"  Margin="648,-6,126,996">
 
 
             <Grid.Background>
@@ -246,12 +249,17 @@
         </Grid>
 
 
-        <Grid Height="151" Width="152" Margin="94,612,0,511" HorizontalAlignment="Left" >
+        <Grid Height="151" Width="152" Margin="96,616,0,507" HorizontalAlignment="Left" >
 
             <Grid.Background>
                 <ImageBrush ImageSource="/Img/gauge-4.png"/>
             </Grid.Background>
 
+            <Ellipse Panel.ZIndex="3" Fill="Black" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Ellipse.Effect>
+                    <DropShadowEffect BlurRadius="9" ShadowDepth="1"/>
+                </Ellipse.Effect>
+            </Ellipse>
 
 
 
@@ -296,7 +304,7 @@
                 </Border.RenderTransform>
             </Border>
         </Grid>
-        <Grid Height="151" Width="151" Margin="428,612,479,511">
+        <Grid Height="151" Width="151" Margin="410,616,497,507">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -305,7 +313,11 @@
             <Grid.Background>
                 <ImageBrush ImageSource="/Img/gauge-4.png"/>
             </Grid.Background>
-
+            <Ellipse Panel.ZIndex="3" Fill="Black" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,68,0,0" Grid.RowSpan="2">
+                <Ellipse.Effect>
+                    <DropShadowEffect BlurRadius="9" ShadowDepth="1"/>
+                </Ellipse.Effect>
+            </Ellipse>
             <Border x:Name="second7" CornerRadius="0 15 15 0" Background="Black" Margin="153,145,55,0" RenderTransformOrigin="0, 0.5">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
@@ -337,6 +349,7 @@
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="13" ShadowDepth="10"/>
                 </Border.Effect>
+
                 <Border.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleY="-1"/>
@@ -346,19 +359,30 @@
                     </TransformGroup>
                 </Border.RenderTransform>
             </Border>
+            <Ellipse Fill="Black" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="221,219,0,0">
+                <Ellipse.Effect>
+                    <DropShadowEffect BlurRadius="9" ShadowDepth="1"/>
+                </Ellipse.Effect>
+            </Ellipse>
         </Grid>
-        <Grid Height="151" Width="151"  Margin="766,612,140,511">
+        <Grid Height="151" Width="151"  Margin="716,615,191,508">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80*"/>
+                <RowDefinition Height="71*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="149*"/>
             </Grid.ColumnDefinitions>
-
-
             <Grid.Background>
                 <ImageBrush ImageSource="/Img/gauge-4.png"/>
             </Grid.Background>
-
-            <Border x:Name="second8" CornerRadius="0 15 15 0" Background="Black" Margin="151,145,-2,6" RenderTransformOrigin="0, 0.5" Grid.Column="1">
+            <Ellipse Panel.ZIndex="3" Fill="Black" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,68,0,0" Grid.RowSpan="2" Grid.Column="1">
+                <Ellipse.Effect>
+                    <DropShadowEffect BlurRadius="9" ShadowDepth="1"/>
+                </Ellipse.Effect>
+            </Ellipse>
+            <Border x:Name="second8" CornerRadius="0 15 15 0" Background="Black" Margin="151,65,-2,6" RenderTransformOrigin="0, 0.5" Grid.Column="1" Grid.Row="1">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                 </Border.Effect>
@@ -372,7 +396,7 @@
                 </Border.RenderTransform>
             </Border>
 
-            <Border x:Name="rpm8" CornerRadius="0 15 15 0"   Background="#FFD15209" Margin="151,145,-2,6" RenderTransformOrigin="0, 0.5" Grid.Column="1" >
+            <Border x:Name="rpm8" CornerRadius="0 15 15 0"   Background="#FFD15209" Margin="151,65,-2,6" RenderTransformOrigin="0, 0.5" Grid.Column="1" Grid.Row="1" >
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
                 </Border.Effect>
@@ -385,7 +409,7 @@
                     </TransformGroup>
                 </Border.RenderTransform>
             </Border>
-            <Border x:Name="rpm_Copy2" CornerRadius="0 19 19 0"   Background="Green" Margin="73,70,20,69" RenderTransformOrigin="0, 0.5" Grid.Column="1" >
+            <Border x:Name="rpm_Copy2" CornerRadius="0 19 19 0"   Background="Green" Margin="73,70,20,69" RenderTransformOrigin="0, 0.5" Grid.Column="1" Grid.RowSpan="2" >
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="13" ShadowDepth="10"/>
                 </Border.Effect>
@@ -402,7 +426,7 @@
 
 
 
-        <TextBox x:Name="angleinput1" TextAlignment="Center" TextWrapping="Wrap" Margin="590,667,374,584" RenderTransformOrigin="0.5,0.5">
+        <TextBox x:Name="angleinput1" TextAlignment="Center" TextWrapping="Wrap" Margin="590,703,374,548" RenderTransformOrigin="0.5,0.5">
             <TextBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="1"/>
@@ -412,7 +436,12 @@
                 </TransformGroup>
             </TextBox.RenderTransform>
         </TextBox>
-        <Button Click="angle_Click1" Margin="696,665,292,583" RenderTransformOrigin="1.602,3.355">Set Angle</Button>
+        <Button Click="angle_Click1" Margin="602,731,386,517" RenderTransformOrigin="1.602,3.355">Set Angle</Button>
+        <Ellipse Fill="Black" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="134,140,0,0">
+            <Ellipse.Effect>
+                <DropShadowEffect BlurRadius="9" ShadowDepth="1"/>
+            </Ellipse.Effect>
+        </Ellipse>
 
     </Grid>
 </Window>

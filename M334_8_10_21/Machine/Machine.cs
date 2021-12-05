@@ -246,6 +246,11 @@ namespace M334_8_10_21
         {
             return sig_nopressure;
         }
+        public void park()
+        {
+            sig_park = true;
+            //mc3.sig_nopressure = true;
+        }
         #endregion
     }
 

@@ -23,7 +23,7 @@ namespace M334_8_10_21.Services
             mc2 = _mc2;
             mc3 = _mc3;
             modbusClient = new M334_8_10_21.ModbusClient();
-            modbusClient.SerialPort = "COM8";
+            modbusClient.SerialPort = "COM1";
             modbusClient.Baudrate = 9600;
             modbusClient.Parity = System.IO.Ports.Parity.None;
             modbusClient.StopBits = System.IO.Ports.StopBits.One;
@@ -637,7 +637,7 @@ namespace M334_8_10_21.Services
                                 //coilsToSend3[10] = , );        //Undefine device
                                 //coilsToSend3[11] = , );        //Undefine device
                                 //coilsToSend3[12] = , );        //Undefine device
-                                //coilsToSend3[13] = , );        //Undefine device
+                                coilsToSend3[13] = mc3.sig_count_rotate;        //Undefine device
                                 //coilsToSend3[14] = , );        //Undefine device
                                 //coilsToSend3[15] = , );        //Undefine device
                                 //coilsToSend3[16] = , );        //Undefine device

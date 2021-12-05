@@ -30,10 +30,10 @@ namespace M334_8_10_21
         //public M334_8_10_21.ModbusClient modbusClient;
         public delegate void ThreadStart();
 
-        Machine machineleft = new Machine();
-        Machine machinemidl = new Machine();
-        Machine machineright = new Machine();
-        connection ketnoi = new connection();
+        //Machine machineleft = new Machine();
+        //Machine machinemidl = new Machine();
+        //Machine machineright = new Machine();
+        //connection ketnoi = new connection();
         public static readonly DependencyProperty SpinSpeedProperty = DependencyProperty.Register("SpinSpeed", typeof(TimeSpan), typeof(MainWindow), new PropertyMetadata(default(TimeSpan)));
         public static readonly DependencyProperty AngleProperty1 = DependencyProperty.Register("Angle1", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
         public static readonly DependencyProperty AngleProperty2 = DependencyProperty.Register("Angle2", typeof(double), typeof(MainWindow), new PropertyMetadata(default(double)));
@@ -101,8 +101,6 @@ namespace M334_8_10_21
             press_mpa1 = 215;   //Value 0;  max 335
 
             //xRpm1 = 360 + 270;
-
-
         }
         //delegate void UpdateReceiveDataCallback();
         void UpdateReceiveData(object sender)
