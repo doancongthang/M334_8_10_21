@@ -12,7 +12,6 @@ namespace M334_8_10_21
         Board2,
         Board3
     }
-
     public class Machine
     {
         #region Signal start
@@ -73,10 +72,12 @@ namespace M334_8_10_21
         #endregion
 
         #region Signal After start to main show
-        // 3 giá trị
+        // Các giá trị của máy
         public double vl_temperature_gas;     //Giá trị nhiệt độ 
         public double vl_speed_engine;        //Giá trị tốc độ vòng quay động cơ
         public double vl_mainlineoilpressure; //Giá trị áp suất đường dẫn chính
+        public double vl_temperature_oil;     //Giá trị nhiệt độ dầu
+        public double vl_temperature_water;   //Giá trị nhiệt độ nước
         #endregion
 
         //public Machine()
@@ -227,9 +228,11 @@ namespace M334_8_10_21
 
             //btn_burn = false;
             //sw_protect = false;
-            vl_temperature_gas = 0;
             vl_speed_engine = 0;
+            vl_temperature_gas = 0;
             vl_mainlineoilpressure = 0;
+            vl_temperature_oil = 0;
+            vl_temperature_water = 0;
         }
         public void startauto()
         {

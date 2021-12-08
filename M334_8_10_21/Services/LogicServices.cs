@@ -42,7 +42,6 @@ namespace M334_8_10_21.Services
         REVERSE,
         STOP_POSITION
     }
-
     class LogicServices
     {
         StateMachine stateMachine;
@@ -80,12 +79,12 @@ namespace M334_8_10_21.Services
             stateMc3 = STMC.IDLE;
 
             Thread delay1Thread = new Thread(Timer1Second);
-            Thread delay2Thread = new Thread(Timer2Second);
-            Thread delay3Thread = new Thread(Timer3Second);
+            //Thread delay2Thread = new Thread(Timer2Second);
+            //Thread delay3Thread = new Thread(Timer3Second);
 
             delay1Thread.Start();
-            delay2Thread.Start();
-            delay3Thread.Start();
+            //delay2Thread.Start();
+            //delay3Thread.Start();
         }
 
         private async void loopUpdateActionsStateMachine()
@@ -525,6 +524,11 @@ namespace M334_8_10_21.Services
                             {
                                 stateMc1 = STMC.MACHINEUP;
                             }
+                            if (mc1.btn_up == false)
+                            {
+                                //mc2.vl_speed_engine = mc2.vl_speed_engine + ((Params.COUNT_STEP_ENGINE - coundown_speed_engine2) / 10);
+                                stateMc1 = STMC.PROCESS_MACHINE_UP;
+                            }
                             break;
                         case STMC.MACHINEDOWN:
                             mc1.vl_speed_engine = mc1.vl_speed_engine - ((Params.COUNT_STEP_ENGINE - coundown_speed_engine) / 10);
@@ -896,6 +900,11 @@ namespace M334_8_10_21.Services
                             {
                                 stateMc2 = STMC.MACHINEUP;
                             }
+                            if (mc2.btn_up == false)
+                            {
+                                //mc2.vl_speed_engine = mc2.vl_speed_engine + ((Params.COUNT_STEP_ENGINE - coundown_speed_engine2) / 10);
+                                stateMc2 = STMC.PROCESS_MACHINE_UP;
+                            }
                             break;
                         case STMC.MACHINEDOWN:
                             mc2.vl_speed_engine = mc2.vl_speed_engine - ((Params.COUNT_STEP_ENGINE - coundown_speed_engine2) / 10);
@@ -1262,6 +1271,11 @@ namespace M334_8_10_21.Services
                             {
                                 stateMc3 = STMC.MACHINEUP;
                             }
+                            if (mc3.btn_up == false)
+                            {
+                                //mc2.vl_speed_engine = mc2.vl_speed_engine + ((Params.COUNT_STEP_ENGINE - coundown_speed_engine2) / 10);
+                                stateMc3 = STMC.PROCESS_MACHINE_UP;
+                            }
                             break;
                         case STMC.MACHINEDOWN:
                             mc3.vl_speed_engine = mc3.vl_speed_engine - ((Params.COUNT_STEP_ENGINE - coundown_speed_engine3) / 10);
@@ -1498,6 +1512,27 @@ namespace M334_8_10_21.Services
                 if (coundown_temp_engine > 0)
                     coundown_temp_engine--;
                 // await Task.Delay(100);
+                if (countdown_hydraulics_pump2 > 0)
+                    countdown_hydraulics_pump2--;
+                if (coundown_preminary_pump2 > 0)
+                    coundown_preminary_pump2--;
+                if (coundown_increte_pump2 > 0)
+                    coundown_increte_pump2--;
+                if (coundown_speed_engine2 > 0)
+                    coundown_speed_engine2--;
+                if (coundown_temp_engine2 > 0)
+                    coundown_temp_engine2--;
+                // await Task.Delay(100);
+                if (countdown_hydraulics_pump3 > 0)
+                    countdown_hydraulics_pump3--;
+                if (coundown_preminary_pump3 > 0)
+                    coundown_preminary_pump3--;
+                if (coundown_increte_pump3 > 0)
+                    coundown_increte_pump3--;
+                if (coundown_speed_engine3 > 0)
+                    coundown_speed_engine3--;
+                if (coundown_temp_engine3 > 0)
+                    coundown_temp_engine3--;
                 Thread.Sleep(100);
             }
         }

@@ -71,10 +71,9 @@ namespace M334_8_10_21
         public MainWindow()
         {
             InitializeComponent();
-            //Angle1 = Angle2 = Angle3 = Angle4 = Angle5 = Angle6 = Angle7 = Angle8 = Angle9 = Angle10 = Angle11 = 270;
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = TimeSpan.FromMilliseconds(100);
-            SpinSpeed = TimeSpan.FromMilliseconds(200);
+            //dispatcherTimer.Interval = TimeSpan.FromMilliseconds(100);
+            //SpinSpeed = TimeSpan.FromMilliseconds(200);
 
             dispatcherTimer.Start();
             ModbusServices mb = new ModbusServices(mc1, mc2, mc3);
@@ -95,7 +94,6 @@ namespace M334_8_10_21
             xRpm3 = 270;        //Value 0;
 
             //xxRpm1 = 270  + 36;
-
             press_mpa2 = 215;   //Value 0;
             press_mpa3 = 215;   //Value 0;
             press_mpa1 = 215;   //Value 0;  max 335
@@ -136,22 +134,6 @@ namespace M334_8_10_21
             angleinput1.Clear();
             var random = new Random();
             int num = random.Next(0, 360);
-
-            //Angle1 = Angle2 = Angle3 = Angle4 = Angle5 = Angle6 = Angle7 = Angle8 = Angle9 = Angle10 = Angle11 = num;
-            //Angle1 = Angle2 = Angle3 = Angle4 = Angle7 = num;//mc1.vl_mainlineoilpressure;
-            //xRpm1 = 90;
-            ////SpinSpeed = num;
-            //Angle1 = num;
-            //Angle2 = num;
-            //Angle3 = 270;
-            //Angle4 = num;
-            //Angle5 = num;
-            //Angle6 = num;
-            //Angle7 = num;
-            //Angle8 = num;
-            //Angle9 = num;
-            //Angle10 = num;
-            //Angle11 = num;
 
             tempmc1 = mc1.vl_temperature_gas * 2.7 + 145;
             tempmc2 = mc2.vl_temperature_gas * 2.7 + 145;
@@ -428,16 +410,18 @@ namespace M334_8_10_21
         }
         private void Bug_OnLoaded(object sender, RoutedEventArgs e)
         {
-            DoubleAnimation animation = new DoubleAnimation
-            {
-                From = 0,
-                To = 360,
-                RepeatBehavior = RepeatBehavior.Forever,
-                Duration = new Duration(TimeSpan.FromSeconds(1))
-            };
+            //DoubleAnimation animation = new DoubleAnimation
+            //{
+            //    From = 0,
+            //    To = 360,
+            //    RepeatBehavior = RepeatBehavior.Forever,
+            //    Duration = new Duration(TimeSpan.FromSeconds(1))
+            //};
+            //second.RenderTransform.BeginAnimation(RotateTransform.AngleProperty, animation);
 
-            second.RenderTransform.BeginAnimation(RotateTransform.AngleProperty, animation);
-
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            //dispatcherTimer.Interval = TimeSpan.FromMilliseconds(1);
+            dispatcherTimer.Start();
         }
         static float convertxRPM(float xrpm)
         {

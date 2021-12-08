@@ -67,7 +67,7 @@
                 </Ellipse.Effect>
             </Ellipse>
         </Grid>
-        <Grid Height="284" Width="284" Grid.Row="0" Grid.Column="0" Margin="28,312,746,678" >
+        <Grid Height="284" Width="284" Grid.Row="0" Grid.Column="0" Margin="28,313,746,679" >
 
             <Grid.Background>
                 <ImageBrush ImageSource="/Img/gauge-1.png"/>
@@ -156,20 +156,11 @@
 
         </Grid>
 
-
-
-
-
-
-        <Grid Height="284" Width="284" Grid.Column="0" Margin="31,-3,0,993" HorizontalAlignment="Left" >
+        <Grid Height="284" Width="284" Grid.Column="0" Margin="31,-5,0,996" HorizontalAlignment="Left" >
 
             <Grid.Background>
                 <ImageBrush ImageSource="/Img/gauge-2.png"/>
             </Grid.Background>
-
-
-
-
             <Border x:Name="second1" CornerRadius="0 15 15 0" Background="Black" Margin="142,133,66,139" RenderTransformOrigin="0, 0.5">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="3" ShadowDepth="1"/>
@@ -190,7 +181,7 @@
                 </Ellipse.Effect>
             </Ellipse>
         </Grid>
-        <Grid Height="284" Width="284" Margin="341,-5,433,995">
+        <Grid Height="284" Width="284" Margin="341,-5,433,996">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -220,7 +211,7 @@
                 </Ellipse.Effect>
             </Ellipse>
         </Grid>
-        <Grid Height="284" Width="284"  Margin="648,-6,126,996">
+        <Grid Height="284" Width="284"  Margin="648,-5,126,996">
 
 
             <Grid.Background>
@@ -249,7 +240,7 @@
         </Grid>
 
 
-        <Grid Height="151" Width="152" Margin="96,616,0,507" HorizontalAlignment="Left" >
+        <Grid Height="151" Width="152" Margin="96,616,0,508" HorizontalAlignment="Left" >
 
             <Grid.Background>
                 <ImageBrush ImageSource="/Img/gauge-4.png"/>
@@ -304,7 +295,7 @@
                 </Border.RenderTransform>
             </Border>
         </Grid>
-        <Grid Height="151" Width="151" Margin="410,616,497,507">
+        <Grid Height="151" Width="151" Margin="410,616,497,508">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -365,7 +356,7 @@
                 </Ellipse.Effect>
             </Ellipse>
         </Grid>
-        <Grid Height="151" Width="151"  Margin="716,615,191,508">
+        <Grid Height="151" Width="151"  Margin="716,616,191,508">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80*"/>
                 <RowDefinition Height="71*"/>
