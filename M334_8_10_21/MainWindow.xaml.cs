@@ -98,7 +98,13 @@ namespace M334_8_10_21
             press_mpa3 = 215;   //Value 0;
             press_mpa1 = 215;   //Value 0;  max 335
 
-            //xRpm1 = 360 + 270;
+            //while(true)
+            //{
+            //    Orionsystem.vl_temperature_oil_in = 120;
+            //    Orionsystem.vl_temperature_oil_out = 120;
+            //    Orionsystem.vl_temperature_water_in = 120;
+            //    Orionsystem.vl_temperature_water_out = 120;
+            //}    
         }
         //delegate void UpdateReceiveDataCallback();
         void UpdateReceiveData(object sender)
@@ -139,7 +145,6 @@ namespace M334_8_10_21
             tempmc2 = mc2.vl_temperature_gas * 2.7 + 145;
             tempmc3 = mc3.vl_temperature_gas * 2.7 + 145;
 
-
             #region Toc do dong co <1000
             if (mc1.vl_speed_engine < 100)
             {
@@ -171,7 +176,7 @@ namespace M334_8_10_21
             if (mc3.vl_speed_engine == 99)
             {
                 xRpm3 = (mc3.vl_speed_engine + 1) * 3.6 + 270;
-                xxRpm3 = (mc3.vl_speed_engine + 1) /2.7 + 270;
+                xxRpm3 = (mc3.vl_speed_engine + 1) / 2.7 + 270;
             }
             #endregion
 
@@ -201,6 +206,52 @@ namespace M334_8_10_21
             press_mpa2 = 215 + mc2.vl_mainlineoilpressure * 8;
             press_mpa3 = 215 + mc3.vl_mainlineoilpressure * 8;
 
+            //Núm xoay
+            if (Orionsystem.rswright == false & Orionsystem.rswmid == false)
+            {
+                //Đang ở vị trí trái
+                if (Orionsystem.SW1 == true)
+                {
+                    Orionsystem.vl_temperature_oil_in = (int)mc1.vl_temperature_oil+20;
+                    Orionsystem.vl_temperature_oil_out = (int)mc1.vl_temperature_oil ;
+                }
+                //Đang ở vị trí trái
+                if (Orionsystem.SW1 == false)
+                {
+                    Orionsystem.vl_temperature_oil_in = (int)mc1.vl_temperature_water + 20;
+                    Orionsystem.vl_temperature_oil_out = (int)mc1.vl_temperature_water;
+                }
+            }
+            if (Orionsystem.rswmid == true)
+            {
+                //Đang ở vị trí giữa
+                if (Orionsystem.SW1 == true)
+                {
+                    Orionsystem.vl_temperature_oil_in = (int)mc2.vl_temperature_oil + 20;
+                    Orionsystem.vl_temperature_oil_out = (int)mc2.vl_temperature_oil;
+                }
+                //Đang ở vị trí giữa
+                if (Orionsystem.SW1 == false)
+                {
+                    Orionsystem.vl_temperature_oil_in = (int)mc2.vl_temperature_water + 20;
+                    Orionsystem.vl_temperature_oil_out = (int)mc2.vl_temperature_water;
+                }
+            }
+            if (Orionsystem.rswright == true)
+            {
+                //Đang ở vị trí phải
+                if (Orionsystem.SW1 == true)
+                {
+                    Orionsystem.vl_temperature_oil_in = (int)mc3.vl_temperature_oil + 20;
+                    Orionsystem.vl_temperature_oil_out = (int)mc3.vl_temperature_oil;
+                }    
+                //Đang ở vị trí phải
+                if (Orionsystem.SW1 == false)
+                {
+                    Orionsystem.vl_temperature_oil_in = (int)mc3.vl_temperature_water + 20;
+                    Orionsystem.vl_temperature_oil_out = (int)mc3.vl_temperature_water;
+                }
+            }
         }
         private void angle_Click1(object sender, RoutedEventArgs e)
         {
@@ -234,34 +285,6 @@ namespace M334_8_10_21
 
         }
         private void btConnect_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void btFC02_Click(object sender, RoutedEventArgs e)
-        {
-            //try
-            //{
-            //    if (!modbusClient.Connected)
-            //    {
-            //        btConnect_Click(null, null);
-            //    }
-            //    bool[] serverResponse = modbusClient.ReadDiscreteInputs(int.Parse(txtStartingAddressInput.Text) - 1, int.Parse(txtNumberOfValuesInput.Text));
-            //    lsbAnswerFromServer.Items.Clear();
-            //    for (int i = 0; i < serverResponse.Length; i++)
-            //    {
-            //        lsbAnswerFromServer.Items.Add(serverResponse[i]);
-            //    }
-            //}
-            //catch (Exception exc)
-            //{
-            //    MessageBox.Show(exc.Message, "Exception Reading values from Server", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-        }
-        private void btFC05_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void btFC15_Click(object sender, RoutedEventArgs e)
         {
 
         }

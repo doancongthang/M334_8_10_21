@@ -428,11 +428,6 @@
             </TextBox.RenderTransform>
         </TextBox>
         <Button Click="angle_Click1" Margin="602,731,386,517" RenderTransformOrigin="1.602,3.355">Set Angle</Button>
-        <Ellipse Fill="Black" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="134,140,0,0">
-            <Ellipse.Effect>
-                <DropShadowEffect BlurRadius="9" ShadowDepth="1"/>
-            </Ellipse.Effect>
-        </Ellipse>
 
     </Grid>
 </Window>

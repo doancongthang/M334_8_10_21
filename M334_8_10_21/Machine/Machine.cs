@@ -234,21 +234,6 @@ namespace M334_8_10_21
             vl_temperature_oil = 0;
             vl_temperature_water = 0;
         }
-        public void startauto()
-        {
-            sig_mpa = true;
-            sig_vvd = true;
-            sig_vnd = true;
-            sig_count_rotate = true;
-        }
-        public bool startmanual()
-        {
-            return btn_start;
-        }
-        public bool controlspeed()
-        {
-            return sig_nopressure;
-        }
         public void park()
         {
             sig_park = true;
