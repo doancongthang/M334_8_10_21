@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:M334_8_10_21"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Loaded="Bug_OnLoaded"
-        mc:Ignorable="d" AllowsTransparency="True"  WindowStyle="None" ResizeMode="CanMinimize"  Background="{x:Null}" MouseDown="Window_MouseDown"
+        Loaded="Bug_OnLoaded"  
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" 
+        AllowsTransparency="True" 
+        WindowStyle="None" 
+        ResizeMode="CanMinimize"  
+        Background="{x:Null}" 
+        MouseDown="Window_MouseDown"
         Height="768" Width="1024">
     <Window.Resources>
 
