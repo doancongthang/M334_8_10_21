@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Media;
 using System.Threading;
+using System.Windows.Media;
+using System.Media;
 using System.Threading.Tasks;
 using M334_8_10_21;
 
@@ -44,6 +47,7 @@ namespace M334_8_10_21.Services
     }
     class LogicServices
     {
+        #region Valueble
         StateMachine stateMachine;
         STMC stateMc1, stateMc2, stateMc3;
         public Machine mc1;
@@ -74,6 +78,8 @@ namespace M334_8_10_21.Services
         public double coundown_temp_oil3 = 0;
         public double coundown_temp_water3 = 0;
 
+        public bool sound_ok = false;
+        #endregion
         public LogicServices(Machine _mc1, Machine _mc2, Machine _mc3)
         {
             mc1 = _mc1;
@@ -310,6 +316,8 @@ namespace M334_8_10_21.Services
                                 coundown_temp_engine = Params.COUNT_TEMPERATURE_ENGINE; //Chuẩn bị tăng nhiệt độ
                                 coundown_temp_oil = Params.COUNT_TEMP_OIL_ENGINE;       //
                                 coundown_temp_water = Params.COUNT_TEMP_WATER_ENGINE;   //
+                                sound_ok = true;
+
                             }
                             break;
                         case STMC.READY_HIGH_PRESURE:
@@ -325,11 +333,18 @@ namespace M334_8_10_21.Services
                             {
                                 mc1.sig_vnd = false;
                                 mc1.sig_count_rotate = false;
+                                Playsound2();
                             }
                             if (coundown_speed_engine == 0)
                             {
+                                //Playsound2();
                                 stateMc1 = STMC.START_OK;
                             }
+                            //while (sound_ok == true)
+                            //{
+                            //    sound_ok = false;
+                            //}
+                            sound_ok = true;
                             break;
                         #endregion
                         //***********************************************//
@@ -413,6 +428,11 @@ namespace M334_8_10_21.Services
                     switch (stateMc1)
                     {
                         case STMC.START_OK:
+                            while (sound_ok == true)
+                            {
+                                Playsound3();
+                                sound_ok = false;
+                            }
                             if (mc1.btn_estop == false)
                             {
                                 mc1.offmachine();
@@ -770,6 +790,11 @@ namespace M334_8_10_21.Services
                     switch (stateMc2)
                     {
                         case STMC.START_OK:
+                            while (sound_ok == true)
+                            {
+                                Playsound3();
+                                sound_ok = false;
+                            }
                             if (mc2.btn_estop == false)
                             {
                                 mc2.offmachine();
@@ -1127,6 +1152,11 @@ namespace M334_8_10_21.Services
                     switch (stateMc3)
                     {
                         case STMC.START_OK:
+                            while (sound_ok == true)
+                            {
+                                Playsound3();
+                                sound_ok = false;
+                            }
                             if (mc3.btn_estop == false)
                             {
                                 mc3.offmachine();
@@ -1538,6 +1568,53 @@ namespace M334_8_10_21.Services
                     coundown_temp_engine3--;
                 // await Task.Delay(100);
                 Thread.Sleep(100);
+            }
+        }
+        public void Playsound1()
+        {
+            Uri uri = new Uri(@"D:\MLTech\Orion\Project Visual\M334_8_10_21\M334_8_10_21\M334_8_10_21\Sounds\1.mp3");
+            var player = new MediaPlayer();
+            player.Open(uri);
+            //if(mc1.vl_speed_engine >=75)
+            //while(sound_ok == true)
+            {
+                player.Play();
+                //sound_ok = false;
+            }
+        }
+        public void Playsound2()
+        {
+            Uri uri = new Uri(@"D:\MLTech\Orion\Project Visual\M334_8_10_21\M334_8_10_21\M334_8_10_21\Sounds\2.mp3");
+            var player = new MediaPlayer();
+            player.Open(uri);
+            //if(mc1.vl_speed_engine >=75)
+            //while (sound_ok == true)
+            {
+                player.Play();
+            }
+        }
+        public void Playsound3()
+        {
+            Uri uri = new Uri(@"D:\MLTech\Orion\Project Visual\M334_8_10_21\M334_8_10_21\M334_8_10_21\Sounds\3.mp3");
+            var player = new MediaPlayer();
+            player.Open(uri);
+            //if(mc1.vl_speed_engine >=75)
+            //while (sound_ok == true)
+            {
+                player.Play();
+                //sound_ok = false;  
+            }
+        }
+        public void Playsound4()
+        {
+            Uri uri = new Uri(@"D:\MLTech\Orion\Project Visual\M334_8_10_21\M334_8_10_21\M334_8_10_21\Sounds\4.mp3");
+            var player = new MediaPlayer();
+            player.Open(uri);
+            //if(mc1.vl_speed_engine >=75)
+            //while (sound_ok == true)
+            {
+                player.Play();
+                //sound_ok = false;
             }
         }
         public void Subcribe()

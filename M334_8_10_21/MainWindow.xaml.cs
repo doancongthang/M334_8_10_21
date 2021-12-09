@@ -98,7 +98,7 @@ namespace M334_8_10_21
             press_mpa3 = 215;   //Value 0;
             press_mpa1 = 215;   //Value 0;  max 335
 
-            //while(true)
+            //while(true)               //Test show on DWIN 8 Inch
             //{
             //    Orionsystem.vl_temperature_oil_in = 120;
             //    Orionsystem.vl_temperature_oil_out = 120;
