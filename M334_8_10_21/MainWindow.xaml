@@ -28,7 +28,7 @@
         </Grid.ColumnDefinitions>
 
 
-        <Grid Height="284" Width="284" Grid.Row="0"  Margin="644,313,130,677">
+        <Grid Height="284" Width="284" Grid.Row="0"  Margin="676,313,98,677">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="231*"/>
                 <ColumnDefinition Width="53*"/>
@@ -73,7 +73,7 @@
                 </Ellipse.Effect>
             </Ellipse>
         </Grid>
-        <Grid Height="284" Width="284" Grid.Row="0" Grid.Column="0" Margin="28,313,746,679" >
+        <Grid Height="284" Width="284" Grid.Row="0" Grid.Column="0" Margin="60,313,714,677" >
 
             <Grid.Background>
                 <ImageBrush ImageSource="/Img/gauge-1.png"/>
@@ -99,7 +99,7 @@
         </Grid>
 
 
-        <Grid Height="284" Width="284" Grid.Row="0" Margin="339,311,435,679">
+        <Grid Height="284" Width="284" Grid.Row="0" Margin="371,311,403,679">
 
             <Grid.Background>
                 <ImageBrush ImageSource="/Img/gauge-1.png"></ImageBrush>
@@ -162,7 +162,7 @@
 
         </Grid>
 
-        <Grid Height="284" Width="284" Grid.Column="0" Margin="31,-5,0,996" HorizontalAlignment="Left" >
+        <Grid Height="284" Width="284" Grid.Column="0" Margin="63,-5,0,995" HorizontalAlignment="Left" >
 
             <Grid.Background>
                 <ImageBrush ImageSource="/Img/gauge-2.png"/>
@@ -187,7 +187,7 @@
                 </Ellipse.Effect>
             </Ellipse>
         </Grid>
-        <Grid Height="284" Width="284" Margin="341,-5,433,996">
+        <Grid Height="284" Width="284" Margin="373,-5,401,995">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -217,7 +217,7 @@
                 </Ellipse.Effect>
             </Ellipse>
         </Grid>
-        <Grid Height="284" Width="284"  Margin="648,-5,126,996">
+        <Grid Height="284" Width="284"  Margin="680,-5,94,995">
 
 
             <Grid.Background>
@@ -246,7 +246,7 @@
         </Grid>
 
 
-        <Grid Height="151" Width="152" Margin="96,616,0,508" HorizontalAlignment="Left" >
+        <Grid Height="151" Width="152" Margin="128,616,0,507" HorizontalAlignment="Left" >
 
             <Grid.Background>
                 <ImageBrush ImageSource="/Img/gauge-4.png"/>
@@ -301,7 +301,7 @@
                 </Border.RenderTransform>
             </Border>
         </Grid>
-        <Grid Height="151" Width="151" Margin="410,616,497,508">
+        <Grid Height="151" Width="151" Margin="442,616,465,507">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -362,7 +362,7 @@
                 </Ellipse.Effect>
             </Ellipse>
         </Grid>
-        <Grid Height="151" Width="151"  Margin="716,616,191,508">
+        <Grid Height="151" Width="151"  Margin="748,616,159,507">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80*"/>
                 <RowDefinition Height="71*"/>
@@ -420,20 +420,6 @@
                 </Border.RenderTransform>
             </Border>
         </Grid>
-
-
-
-        <TextBox x:Name="angleinput1" TextAlignment="Center" TextWrapping="Wrap" Margin="590,703,374,548" RenderTransformOrigin="0.5,0.5">
-            <TextBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </TextBox.RenderTransform>
-        </TextBox>
-        <Button Click="angle_Click1" Margin="602,731,386,517" RenderTransformOrigin="1.602,3.355">Set Angle</Button>
 
     </Grid>
 </Window>

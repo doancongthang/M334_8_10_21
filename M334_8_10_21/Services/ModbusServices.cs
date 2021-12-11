@@ -23,7 +23,7 @@ namespace M334_8_10_21.Services
             mc2 = _mc2;
             mc3 = _mc3;
             modbusClient = new M334_8_10_21.ModbusClient();
-            modbusClient.SerialPort = "COM15";
+            modbusClient.SerialPort = "COM1";
             modbusClient.Baudrate = 9600;
             modbusClient.Parity = System.IO.Ports.Parity.None;
             modbusClient.StopBits = System.IO.Ports.StopBits.One;
@@ -585,7 +585,7 @@ namespace M334_8_10_21.Services
                                 gausdwin7inch[2] = Orionsystem.vl_time_second;
                                 gausdwin7inch[3] = Orionsystem.vl_time_month;
                                 gausdwin7inch[4] = Orionsystem.vl_hydraulics;
-                                gausdwin7inch[5] = 20;
+                                //gausdwin7inch[5] = 20;
                                 modbusClient.WriteMultipleRegisters(0, gausdwin7inch);
                                 break;
                             case 3:

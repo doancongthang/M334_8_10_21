@@ -98,6 +98,13 @@ namespace M334_8_10_21
             press_mpa3 = 215;   //Value 0;
             press_mpa1 = 215;   //Value 0;  max 335
 
+            Orionsystem.vl_temperature_oil_out = 0;
+            Orionsystem.vl_temperature_oil_in = 0;
+            Orionsystem.vl_pressureptk = 0;
+            Orionsystem.vl_reverse_air_pressure = 0;
+            Orionsystem.vl_pressurefuel = 0;
+            Orionsystem.vl_hydraulicpressure_gidravl = 0;
+
             //while(true)               //Test show on DWIN 8 Inch
             //{
             //    Orionsystem.vl_temperature_oil_in = 120;
@@ -137,7 +144,6 @@ namespace M334_8_10_21
         delegate void UpdateReceiveDataCallback();
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            angleinput1.Clear();
             var random = new Random();
             int num = random.Next(0, 360);
 
@@ -255,16 +261,6 @@ namespace M334_8_10_21
         }
         private void angle_Click1(object sender, RoutedEventArgs e)
         {
-            float val_ang1;
-            bool result = float.TryParse(angleinput1.Text, out val_ang1);
-            if (!result)
-                return;
-
-            Angle1 = Angle2 = Angle3 = Angle4 = Angle5 = Angle6 = Angle7 = Angle8 = Angle9 = Angle10 = Angle11 = convert100ToDegree((float)convertyRPM(val_ang1));
-            xRpm1 = convert1KToDegree((int)convertxRPM(val_ang1));
-
-            angleinput1.Clear();
-
             dispatcherTimer.Start();
             // Console Output
             //for (int i = 0; i < readCoils.Length; i++)

@@ -78,7 +78,7 @@ namespace M334_8_10_21.Services
         public double coundown_temp_oil3 = 0;
         public double coundown_temp_water3 = 0;
 
-        public bool sound_ok = false;
+        public bool sound_ok;
         #endregion
         public LogicServices(Machine _mc1, Machine _mc2, Machine _mc3)
         {
@@ -89,6 +89,8 @@ namespace M334_8_10_21.Services
             stateMc1 = STMC.IDLE;
             stateMc2 = STMC.IDLE;
             stateMc3 = STMC.IDLE;
+
+            sound_ok = false;
 
             Thread delay1Thread = new Thread(Timer1Second);
             //Thread delay2Thread = new Thread(Timer2Second);
@@ -316,8 +318,6 @@ namespace M334_8_10_21.Services
                                 coundown_temp_engine = Params.COUNT_TEMPERATURE_ENGINE; //Chuẩn bị tăng nhiệt độ
                                 coundown_temp_oil = Params.COUNT_TEMP_OIL_ENGINE;       //
                                 coundown_temp_water = Params.COUNT_TEMP_WATER_ENGINE;   //
-                                sound_ok = true;
-
                             }
                             break;
                         case STMC.READY_HIGH_PRESURE:
@@ -333,17 +333,11 @@ namespace M334_8_10_21.Services
                             {
                                 mc1.sig_vnd = false;
                                 mc1.sig_count_rotate = false;
-                                Playsound2();
                             }
                             if (coundown_speed_engine == 0)
                             {
-                                //Playsound2();
                                 stateMc1 = STMC.START_OK;
                             }
-                            //while (sound_ok == true)
-                            //{
-                            //    sound_ok = false;
-                            //}
                             sound_ok = true;
                             break;
                         #endregion
@@ -428,11 +422,6 @@ namespace M334_8_10_21.Services
                     switch (stateMc1)
                     {
                         case STMC.START_OK:
-                            while (sound_ok == true)
-                            {
-                                Playsound3();
-                                sound_ok = false;
-                            }
                             if (mc1.btn_estop == false)
                             {
                                 mc1.offmachine();
@@ -760,6 +749,7 @@ namespace M334_8_10_21.Services
                             mc2.vl_temperature_oil = ((Params.COUNT_TEMP_OIL_ENGINE - coundown_temp_oil2));
                             if (coundown_speed_engine2 == 0)  // 
                             {
+                                sound_ok = true;
                                 stateMc2 = STMC.START_OK;
                             }
                             //Khởi động xong thì qua điều khiển tốc độ
@@ -790,11 +780,6 @@ namespace M334_8_10_21.Services
                     switch (stateMc2)
                     {
                         case STMC.START_OK:
-                            while (sound_ok == true)
-                            {
-                                Playsound3();
-                                sound_ok = false;
-                            }
                             if (mc2.btn_estop == false)
                             {
                                 mc2.offmachine();
@@ -1152,11 +1137,6 @@ namespace M334_8_10_21.Services
                     switch (stateMc3)
                     {
                         case STMC.START_OK:
-                            while (sound_ok == true)
-                            {
-                                Playsound3();
-                                sound_ok = false;
-                            }
                             if (mc3.btn_estop == false)
                             {
                                 mc3.offmachine();
@@ -1348,6 +1328,12 @@ namespace M334_8_10_21.Services
             if (Orionsystem.SW_power == false)
             {
                 stateMachine = StateMachine.MACHINE_OFF;
+                Orionsystem.vl_temperature_oil_out = 0;
+                Orionsystem.vl_temperature_oil_in = 0;
+                Orionsystem.vl_pressureptk = 0;
+                Orionsystem.vl_reverse_air_pressure = 0;
+                Orionsystem.vl_pressurefuel = 0;
+                Orionsystem.vl_hydraulicpressure_gidravl = 0;
             }
             {
                 #region btn for machine
@@ -1478,7 +1464,14 @@ namespace M334_8_10_21.Services
                     Orionsystem.sig_main_pump = true;
                 }
                 #endregion
-                #region
+
+                #region DEFAULT VALUE FOR 8_INCH SCREEN
+                //Orionsystem.vl_temperature_oil_out = 0;       //Dong ho 1
+                //Orionsystem.vl_temperature_oil_in = 0;        //Dong ho 2
+                Orionsystem.vl_pressureptk = 20;                //Dong ho 3
+                Orionsystem.vl_reverse_air_pressure = 20;        //Dong ho 4
+                Orionsystem.vl_pressurefuel = 10;                //Dong ho 5
+                Orionsystem.vl_hydraulicpressure_gidravl = 100;   //Dong ho 6
                 #endregion
             }
         }
@@ -1570,51 +1563,44 @@ namespace M334_8_10_21.Services
                 Thread.Sleep(100);
             }
         }
-        public void Playsound1()
+        private async void loopaudio()
         {
-            Uri uri = new Uri(@"D:\MLTech\Orion\Project Visual\M334_8_10_21\M334_8_10_21\M334_8_10_21\Sounds\1.mp3");
-            var player = new MediaPlayer();
-            player.Open(uri);
-            //if(mc1.vl_speed_engine >=75)
-            //while(sound_ok == true)
+            Uri uri = new Uri(@"C:\Sounds\3.mp3");
+            MediaPlayer player = new MediaPlayer();
+            while (true)
             {
-                player.Play();
-                //sound_ok = false;
-            }
-        }
-        public void Playsound2()
-        {
-            Uri uri = new Uri(@"D:\MLTech\Orion\Project Visual\M334_8_10_21\M334_8_10_21\M334_8_10_21\Sounds\2.mp3");
-            var player = new MediaPlayer();
-            player.Open(uri);
-            //if(mc1.vl_speed_engine >=75)
-            //while (sound_ok == true)
-            {
-                player.Play();
-            }
-        }
-        public void Playsound3()
-        {
-            Uri uri = new Uri(@"D:\MLTech\Orion\Project Visual\M334_8_10_21\M334_8_10_21\M334_8_10_21\Sounds\3.mp3");
-            var player = new MediaPlayer();
-            player.Open(uri);
-            //if(mc1.vl_speed_engine >=75)
-            //while (sound_ok == true)
-            {
-                player.Play();
-                //sound_ok = false;  
-            }
-        }
-        public void Playsound4()
-        {
-            Uri uri = new Uri(@"D:\MLTech\Orion\Project Visual\M334_8_10_21\M334_8_10_21\M334_8_10_21\Sounds\4.mp3");
-            var player = new MediaPlayer();
-            player.Open(uri);
-            //if(mc1.vl_speed_engine >=75)
-            //while (sound_ok == true)
-            {
-                player.Play();
-                //sound_ok = false;
+                if ((stateMc1 == STMC.PRESSURE_PREMINARY_PUMP)
+                    || (stateMc2 == STMC.PRESSURE_PREMINARY_PUMP)
+                    || (stateMc3 == STMC.PRESSURE_PREMINARY_PUMP)
+                    || (stateMc1 == STMC.MANUAL_PRESSURE_PREMINARY_PUMP)
+                    || (stateMc2 == STMC.MANUAL_PRESSURE_PREMINARY_PUMP)
+                    || (stateMc3 == STMC.MANUAL_PRESSURE_PREMINARY_PUMP))
+                {
+                    if (sound_ok == false)
+                    {
+                        sound_ok = true;
+
+                        player.Open(uri);
+                        player.Play();
+                    }
+                }
+                if ((stateMc1 == STMC.PROCESS_AUTO_W) && (stateMc2 == STMC.PROCESS_AUTO_W) && (stateMc3 == STMC.PROCESS_AUTO_W)
+                    || ((stateMc1 == STMC.PROCESS_MANUAL) && (stateMc2 == STMC.PROCESS_MANUAL) && (stateMc3 == STMC.PROCESS_MANUAL)))
+                {
+                    if (sound_ok == true)
+                    {
+                        sound_ok = false;
+                        player.Stop();
+                    }
+                }
+                if (stateMachine == StateMachine.MACHINE_OFF)
+                {
+                    if (sound_ok == true)
+                    {
+                        sound_ok = false;
+                        player.Stop();
+                    }
+                }
             }
         }
         public void Subcribe()
@@ -1624,6 +1610,7 @@ namespace M334_8_10_21.Services
             Task stateEachMachine1 = Task.Run(() => parallel1_updateMachine());
             Task stateEachMachine2 = Task.Run(() => parallel2_updateMachine());
             Task stateEachMachine3 = Task.Run(() => parallel3_updateMachine());
+            Task updateAudio = Task.Run(() => loopaudio());
         }
     }
 }

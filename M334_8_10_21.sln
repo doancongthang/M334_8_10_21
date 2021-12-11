@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M334_8_10_21", "M334_8_10_21\M334_8_10_21.csproj", "{3C03B2EA-1423-4C58-8FD7-66AA4C24FD6F}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ORION_M334", "ORION_M334\ORION_M334.vdproj", "{968F70BB-20C5-4161-940A-A51271304D8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{3C03B2EA-1423-4C58-8FD7-66AA4C24FD6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C03B2EA-1423-4C58-8FD7-66AA4C24FD6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C03B2EA-1423-4C58-8FD7-66AA4C24FD6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{968F70BB-20C5-4161-940A-A51271304D8E}.Debug|Any CPU.ActiveCfg = Debug
+		{968F70BB-20C5-4161-940A-A51271304D8E}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
