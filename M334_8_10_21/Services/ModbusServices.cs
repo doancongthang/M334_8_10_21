@@ -28,10 +28,6 @@ namespace M334_8_10_21.Services
             modbusClient.Parity = System.IO.Ports.Parity.None;
             modbusClient.StopBits = System.IO.Ports.StopBits.One;
             modbusClient.UnitIdentifier = 1;
-            //modbusClient.ReceiveDataChanged += new ModbusClient.ReceiveDataChangedHandler(UpdateReceiveData);
-            //modbusClient.SendDataChanged += new EasyModbus.ModbusClient.SendDataChangedHandler(UpdateSendData);
-            //modbusClient.ConnectedChanged += new EasyModbus.ModbusClient.ConnectedChangedHandler(UpdateConnectedChanged);
-            //modbusClient.ReceiveDataChanged += new ModbusClient.ReceiveDataChangedHandler(updatedata);
             modbusClient.LogFileFilename = "logFiletxt.txt";
 
         }
